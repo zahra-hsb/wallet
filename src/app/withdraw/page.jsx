@@ -1,7 +1,7 @@
 const withdraw = () => {
     return (
         <>
-            <Withdraw />
+            {/* <Withdraw /> */}
         </>
     )
 }

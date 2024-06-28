@@ -1,7 +1,7 @@
 const deposit = () => {
     return (
         <>
-            <Deposit />  
+            {/* <Deposit />   */}
         </>
     )
 }
