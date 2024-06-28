@@ -44,9 +44,9 @@ const Login = () => {
                         There are several wallet providers.</p>
                     <div className={styles.buttonContainer}>
                         {/* <ConnectButtonComp setConnected={setConnected} isConn={isConn} /> */}
-                        <ConnectWallet />
+                        {!isConn && <ConnectWallet /> }
                         <button
-                            className={isConn ? 'bg-transparent border border-[#20A1FF] cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
+                            className={isConn ? 'bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
                             disabled={isConn ? false : true}
                             onClick={handleClick}>Submit</button>
                     </div>
