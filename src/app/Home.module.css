@@ -29,6 +29,7 @@
   padding: 5px;
   border-radius: 50%;
   background: #9690A21A;
+  cursor: pointer;
 }
 .brain{
   width: 100vw;
