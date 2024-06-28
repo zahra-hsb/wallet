@@ -20,7 +20,7 @@ const ConnectWallet = () => {
         }
         if (isConnecting) return <div>Connecting…</div>
         if (isDisconnected) return <div>Disconnected</div>
-        if (isConnected) navigate()
+        // if (isConnected) navigate()
     }, [isConnected])
     return (
         <>

@@ -7,18 +7,19 @@ import styles from '../../app/Home.module.css';
 import bg from '../../../public/bg/opacity.png'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAccountEffect } from "wagmi";
+import { useAccount, useAccountEffect } from "wagmi";
 import ConnectWallet from "../ConnectWallet";
 
 const Login = () => {
     const router = useRouter()
+    const { isConnected } = useAccount()
     const [isConn, setConnected] = useState(false)
     useAccountEffect({
         onConnect() {
             setConnected(true)
         }
     })
-    
+
     const [isLoad, setLoad] = useState(false)
     useEffect(() => {
         function loadHandler() {
@@ -28,7 +29,9 @@ const Login = () => {
     }, [])
 
     function handleClick() {
-        router.push('dashboard')
+        if (isConnected) {
+            router.push('dashboard')
+        } 
     }
     return (
         <>
@@ -42,10 +45,10 @@ const Login = () => {
                     <div className={styles.buttonContainer}>
                         {/* <ConnectButtonComp setConnected={setConnected} isConn={isConn} /> */}
                         <ConnectWallet />
-                        <button 
-                        className={isConn ? 'bg-transparent border border-[#20A1FF] cursor-pointer w-full py-2 rounded-full' : styles.button}
-                        disabled={isConn ? false : true}
-                        onClick={handleClick}>Submit</button>
+                        <button
+                            className={isConn ? 'bg-transparent border border-[#20A1FF] cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
+                            disabled={isConn ? false : true}
+                            onClick={handleClick}>Submit</button>
                     </div>
                     <div className={styles.list}>
                         <h3>Choose Language</h3>
