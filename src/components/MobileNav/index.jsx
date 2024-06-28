@@ -1,3 +1,5 @@
+'use client'
+
 import Account from '../Dashboard/Account'
 import { RiMenu3Fill } from "react-icons/ri";
 import styles from '../../app/Home.module.css';

@@ -31,8 +31,6 @@ const Dashboard = () => {
             <section className={styles.section}>
                 <BrainComponent />
                 <TicketFeed />
-                <Referral />
-                <ActivityDashboard />
             </section>
             {/* <button onClick={() => disconnect}>disconnect</button> */}
         </>
