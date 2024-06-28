@@ -3,10 +3,10 @@ import './globals.css'
 
 import { headers } from 'next/headers'
 
-import { cookieToInitialState } from 'wagmi'
 
 import { config } from '@/config'
 import Web3ModalProvider from '@/context'
+import { cookieToInitialState } from 'wagmi'
 
 export const metadata = {
   title: 'Create Next App',

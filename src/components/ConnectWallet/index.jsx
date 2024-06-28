@@ -1,10 +1,11 @@
 'use client'
-import { useWeb3Modal } from "@web3modal/wagmi/react"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { useEffect } from "react"
 import { useAccount, useConnect } from "wagmi"
 import Icon1 from '../../../public/icons/SVG.png'
+import { useWeb3Modal } from "@web3modal/wagmi/react"
+// import { useWeb3Modal } from "@web3modal/wagmi/react"
 
 
 const ConnectWallet = () => {
@@ -14,9 +15,12 @@ const ConnectWallet = () => {
     const { open, close } = useWeb3Modal()
     const { connect } = useConnect()
     useEffect(() => {
+        function navigate() {
+            router.push('/dashboard')
+        }
         if (isConnecting) return <div>Connecting…</div>
         if (isDisconnected) return <div>Disconnected</div>
-        if (isConnected) router.push('/dashboard')
+        if (isConnected) navigate()
     }, [isConnected])
     return (
         <>
