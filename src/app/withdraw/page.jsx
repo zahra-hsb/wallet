@@ -1,7 +1,9 @@
+import Withdraw from "@/components/Withdraw"
+
 const withdraw = () => {
     return (
         <>
-            {/* <Withdraw /> */}
+            <Withdraw />
         </>
     )
 }
