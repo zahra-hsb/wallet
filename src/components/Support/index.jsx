@@ -71,7 +71,7 @@ const Support = () => {
                         <p>Submit a Ticket</p>
                         <div className="flex flex-col w-full gap-1">
                             <label>Subject</label>
-                            <input value={values.subject} name="subject" onChange={(e) => handleChange(e)} type="text" className="p-2 rounded text-gray-900" placeholder="Enter Subject" />
+                            <input value={values.subject} name="subject" onChange={(e) => handleChange(e)} type="text" className="p-2 rounded text-gray-900 outline-none" placeholder="Enter Subject" />
                         </div>
                         <div className="flex flex-col w-full gap-1">
                             <label>Details</label>
