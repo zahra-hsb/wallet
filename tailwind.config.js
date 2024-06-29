@@ -14,7 +14,9 @@ module.exports = {
         "main": 'url(../../public/bg/bg.png)'
       },
       boxShadow: {
-        "main": "0 0 3px 2px #20A1FF"
+        "main": "0 0 3px 2px #20A1FF",
+        "green": "0 0 3px 2px #05AD0C",
+        "red": "0 0 3px 2px #AD0505",
       }
     },
   },
