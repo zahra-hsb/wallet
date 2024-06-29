@@ -12,7 +12,7 @@ import ConnectWallet from "../ConnectWallet";
 
 const Login = () => {
     const router = useRouter()
-    const { isConnected } = useAccount()
+    const { isConnected, isConnecting } = useAccount()
     const [isConn, setConnected] = useState(false)
     useAccountEffect({
         onConnect() {
@@ -31,7 +31,7 @@ const Login = () => {
     function handleClick() {
         if (isConnected) {
             router.push('dashboard')
-        } 
+        }
     }
     return (
         <>
@@ -44,7 +44,7 @@ const Login = () => {
                         There are several wallet providers.</p>
                     <div className={styles.buttonContainer}>
                         {/* <ConnectButtonComp setConnected={setConnected} isConn={isConn} /> */}
-                        {!isConn && <ConnectWallet /> }
+                        {!isConn && <ConnectWallet />}
                         <button
                             className={isConn ? 'bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
                             disabled={isConn ? false : true}

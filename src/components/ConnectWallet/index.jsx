@@ -1,10 +1,11 @@
 'use client'
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { useAccount, useConnect } from "wagmi"
 import Icon1 from '../../../public/icons/SVG.png'
 import { useWeb3Modal } from "@web3modal/wagmi/react"
+import Loading from "../Loading"
 // import { useWeb3Modal } from "@web3modal/wagmi/react"
 
 
@@ -29,6 +30,8 @@ const ConnectWallet = () => {
                 <button className="w-full flex items-center justify-center gap-2 bg-transparent border border-[#20A1FF] cursor-pointer py-2 rounded-full shadow-main" onClick={() => open({ view: 'Connect' })}>
                     <Image src={Icon1} alt='' />
                     Connect Wallet
+                    {isConnecting && <Suspense fallback={<Loading />}>
+                    </Suspense>}
                 </button>
             </div>
         </>
