@@ -5,9 +5,19 @@ import commision from '../../../public/icons/Data.png'
 import deposit from '../../../public/icons/Row.png'
 import withdraw from '../../../public/icons/Body.png'
 import { useAccount, useBalance } from "wagmi"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 const Withdraw = () => {
+    const [amount, setAmount] = useState('')
+    const [note, setNote] = useState('')
+    const [password, setPassword] = useState('')
+
+    const [values, setValues] = useState({
+        amount: '',
+        note: '',
+        password: ''
+    })
+
     const dataArray = [
         { icon: commision, title: 'commision', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Amount', color: '#00FF7F' },
         { icon: deposit, title: 'deposit', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#FFF50A' },
@@ -27,6 +37,18 @@ const Withdraw = () => {
     // console.log(result.data.decimals);
     // console.log(result.data.symbol);
     // console.log(result.data?.value);
+
+    function handleChange(e) {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        console.log(values);
+    }
     return (
         <>
             <section className="py-20 bg-main">
@@ -40,19 +62,19 @@ const Withdraw = () => {
                     </div>
                 </Container>
                 <Container>
-                    <form className="w-full flex flex-col gap-3 items-start">
+                    <form onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">
                         <p>Submit a withdrawal request</p>
                         <div className="flex flex-col w-full gap-1">
                             <label>Amount</label>
-                            <input type="text" className="p-2 rounded" placeholder="Enter Amount" />
+                            <input type="number" value={values.amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
                         </div>
                         <div className="flex flex-col w-full gap-1">
                             <label>Note</label>
-                            <input type="text" className="p-2 rounded" placeholder="Enter notes (Optimal)" />
+                            <input type="text" value={values.note} onChange={(e) => handleChange(e)} name="note" className="p-2 rounded text-gray-800 outline-none" placeholder="Enter notes (Optimal)" />
                         </div>
                         <div className="flex flex-col w-full gap-1">
                             <label>Password</label>
-                            <input type="text" className="p-2 rounded" placeholder="Enter your password" />
+                            <input type="password" value={values.password} onChange={(e) => handleChange(e)} name='password' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter your password" />
                         </div>
                         <div className="flex gap-1 justify-start w-full">
                             <input type="checkbox" id="remember" className="rounded" />
