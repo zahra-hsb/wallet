@@ -25,7 +25,7 @@ const MobileNav = () => {
                 <span onClick={handleClick} className={styles.menuBtn}>
                     <RiMenu3Fill size={25} />
                 </span>
-                {isOpen ? <MobileMenu close={close} /> : null }
+                <MobileMenu isOpen={isOpen} close={close} /> 
                 <Account />
             </nav>
         </>
