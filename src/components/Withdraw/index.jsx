@@ -4,8 +4,9 @@ import Container from "../Container"
 import commision from '../../../public/icons/Data.png'
 import deposit from '../../../public/icons/Row.png'
 import withdraw from '../../../public/icons/Body.png'
-import { useAccount, useBalance } from "wagmi"
+import { useAccount, useBalance, useReadContract } from "wagmi"
 import { useEffect, useState } from "react"
+import { abi } from "@/app/abi"
 
 const Withdraw = () => {
     const [amount, setAmount] = useState('')
@@ -27,11 +28,11 @@ const Withdraw = () => {
         { icon: commision, title: '(Number_ID)', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#00FF7F' },
     ]
 
-    // const { address } = useAccount()
+    const { address } = useAccount()
 
-    
+
     const result = useBalance({
-        address: '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024',
+        address: address,
     })
     // console.log(result.data.formatted);
     // console.log(result.data.decimals);
@@ -47,8 +48,16 @@ const Withdraw = () => {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(values);
+        // console.log(values);
     }
+
+    console.log(address);
+    const result1 = useReadContract({
+        abi,
+        address: address,
+        functionName: 'balanceOf',
+    })
+    // console.log(result1);
     return (
         <>
             <section className="py-20 bg-main">
