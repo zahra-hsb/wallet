@@ -65,7 +65,7 @@ const Withdraw = () => {
 
                 </Container>
 
-                <div className='shadow-main text-white flex flex-col items-center gap-2 border border-[#00F0FF] rounded-2xl m-8 pt-3'>
+                <div className='shadow-main backdrop-blur-sm text-white flex flex-col items-center gap-2 border border-[#00F0FF] rounded-2xl m-8 pt-3'>
                     <h3 className='font-bold text-lg'>Transactions</h3>
                     <div className='w-full flex flex-col  gap-5 items-center border border-[#00F0FF] rounded-2xl p-3'>
                         {dataArray?.map((item, index) => (
