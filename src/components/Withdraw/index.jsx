@@ -1,8 +1,11 @@
+'use client'
 import Image from "next/image"
 import Container from "../Container"
 import commision from '../../../public/icons/Data.png'
 import deposit from '../../../public/icons/Row.png'
 import withdraw from '../../../public/icons/Body.png'
+import { useAccount, useBalance } from "wagmi"
+import { useEffect } from "react"
 
 const Withdraw = () => {
     const dataArray = [
@@ -13,12 +16,24 @@ const Withdraw = () => {
         { icon: commision, title: 'commision', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Amount', color: '#00FF7F' },
         { icon: commision, title: '(Number_ID)', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#00FF7F' },
     ]
+
+    // const { address } = useAccount()
+
+    
+    const result = useBalance({
+        address: '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024',
+    })
+    // console.log(result.data.formatted);
+    // console.log(result.data.decimals);
+    // console.log(result.data.symbol);
+    // console.log(result.data?.value);
     return (
         <>
             <section className="py-20 bg-main">
                 <Container>
                     <h3>Wallet Balance</h3>
-                    <p>3210.00 USDT</p>
+                    {/* <p>3210.00 USDT</p> */}
+                    <p>{result.data?.decimals} {result.data?.symbol}</p>
                     <div className="flex gap-3">
                         <button className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
                         <button className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</button>
