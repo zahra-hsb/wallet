@@ -14,19 +14,25 @@ const Login = () => {
     const router = useRouter()
     const { isConnected, isConnecting } = useAccount()
     const [isConn, setConnected] = useState(false)
+    const [referralCode, setReferralCode] = useState('')
+    const [isLoad, setLoad] = useState(false)
+
     useAccountEffect({
         onConnect() {
             setConnected(true)
         }
     })
 
-    const [isLoad, setLoad] = useState(false)
     useEffect(() => {
         function loadHandler() {
             setLoad(true)
         }
         loadHandler()
     }, [])
+
+    function createRefCode() {
+        
+    }
 
     function handleClick() {
         if (isConnected) {

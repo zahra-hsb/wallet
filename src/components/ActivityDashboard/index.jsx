@@ -15,7 +15,7 @@ const ActivityDashboard = () => {
     return (
         <>
             <section className="pt-10">
-                <div className='border shadow-main text-white border-[#00F0FF] rounded-3xl flex items-center flex-col'>
+                <div className='border shadow-main backdrop-blur-sm text-white border-[#00F0FF] rounded-3xl flex items-center flex-col'>
                     <div className="flex justify-between items-center p-4 w-full border-b border-b-[#00F0FF]">
                         <p>Recent Activity</p>
                         <span className="flex items-center gap-2 cursor-pointer rounded-full border border-[#00F0FF] py-1 px-4">
