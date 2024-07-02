@@ -52,7 +52,7 @@ const Login = () => {
     function handleClick() {
         if (isConnected) {
             router.push('dashboard')
-            saveUser()
+            // saveUser()
         }
     }
     return (
