@@ -13,7 +13,6 @@ const MobileNav = () => {
 
     function handleClick() {
         setOpen(true)
-        console.log('object');
     }
     function close() {
         setOpen(false)

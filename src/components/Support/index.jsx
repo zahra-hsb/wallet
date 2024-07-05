@@ -47,7 +47,6 @@ const Support = () => {
         setEmail(e.target.value)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setIsValid(emailRegex.test(e.target.value))
-        console.log('object');
     }
 
     useEffect(() => {

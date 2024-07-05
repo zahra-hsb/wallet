@@ -7,6 +7,7 @@ import withdraw from '../../../public/icons/Body.png'
 import { useAccount, useBalance, useReadContract } from "wagmi"
 import { useEffect, useState } from "react"
 import { abi } from "@/app/abi"
+import axios from "axios"
 
 const Withdraw = () => {
     const [amount, setAmount] = useState('')
@@ -51,13 +52,33 @@ const Withdraw = () => {
         // console.log(values);
     }
 
-    console.log(address);
+    // console.log(address);
     const result1 = useReadContract({
-        abi,
+        abi, 
         address: address,
         functionName: 'balanceOf',
     })
     // console.log(result1);
+
+    async function saveUser() {
+
+        try {
+            const res = await axios.get('/api/getUsers')
+
+            if (res.status !== 200) {
+                const errorData = await res.json();
+                throw new Error(`Failed to fetch users: ${errorData.message}`);
+            }
+            console.log(res.data);
+        } catch (err) {
+            console.error("Error fetching users:", err);
+            return null;
+        }
+    }
+
+    useEffect(() => {
+        saveUser()
+    }, [])
     return (
         <>
             <section className="py-20 bg-main">

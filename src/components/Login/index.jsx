@@ -45,14 +45,26 @@ const Login = () => {
 
     async function saveUser() {
         const referral = createRefCode()
-        setReferralCode('https://regalchain.vercel.app/' + referral) 
-        console.log(referral);
+        setReferralCode('https://regalchain.vercel.app/' + referral)
+        // console.log(referral);
         // await axios.post('/api/users', data)
+        try {
+            const res = await axios.get('/api/getUsers')
+
+            if (res.status !== 200) {
+                const errorData = await res.json();
+                throw new Error(`Failed to fetch users: ${errorData.message}`);
+            }
+            console.log(res.data);
+        } catch (err) {
+            console.error("Error fetching users:", err);
+            return null;
+        }
     }
     function handleClick() {
         if (isConnected) {
             router.push('dashboard')
-            // saveUser()
+            saveUser()
         }
     }
     return (
