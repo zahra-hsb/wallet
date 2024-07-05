@@ -54,7 +54,7 @@ const Withdraw = () => {
 
     // console.log(address);
     const result1 = useReadContract({
-        abi, 
+        abi,
         address: address,
         functionName: 'balanceOf',
     })
@@ -69,7 +69,9 @@ const Withdraw = () => {
                 const errorData = await res.json();
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
-            console.log(res.data);
+            const foundAddress = res.data?.some(item => item.address === address)
+            if(foundAddress) return
+            
         } catch (err) {
             console.error("Error fetching users:", err);
             return null;
