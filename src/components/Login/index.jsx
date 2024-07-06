@@ -21,7 +21,7 @@ const Login = () => {
     const [dataObj, setDataObj] = useState({})
 
     const data = { address, referralCode }
-    console.log(data);
+    // console.log(data);
     useAccountEffect({
         onConnect() {
             setConnected(true)
@@ -40,16 +40,16 @@ const Login = () => {
         return result;
     }
 
-    async function addUser() {
+    async function addUser(referral) {
         try {
-            console.log('referral: ', dataObj);
-            await axios.post('/api/postUser', data)
+            console.log('referral: ', referral);
+            await axios.post('/api/postUser', {address: address, referralCode: referral})
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function getUsers() {
+    async function getUsers(referral) {
         try {
             const res = await axios.get('/api/getUsers')
 
@@ -60,7 +60,7 @@ const Login = () => {
             const foundAddress = res.data?.some(item => item.address === address)
             if (foundAddress) return;
             // save user
-            addUser()
+            addUser(referral)
 
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -75,7 +75,7 @@ const Login = () => {
     async function saveUser() {
         const referral = createRefCode()
         setReferralCode('https://regalchain.vercel.app/' + referral)
-        getUsers()
+        getUsers(referral)
         // console.log(referral);
         // await axios.post('/api/users', data)
 
@@ -92,7 +92,7 @@ const Login = () => {
             setLoad(true)
         }
         loadHandler()
-        console.log(address);
+        // console.log(address);
         addToState(address, referralCode)
     }, [])
     return (

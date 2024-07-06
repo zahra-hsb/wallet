@@ -11,13 +11,41 @@ const Referral = () => {
         for (let i = 0; i < 12; i++) {
             result += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-        navigator.clipboard.writeText('https://regalchain.vercel.app/' + result);
+        const resultRefCode = 'https://regalchain.vercel.app/' + result
+        navigator.clipboard.writeText(resultRefCode);
         // if (document.execCommand('copy', false , result)) {
         setTimeout(() => {
             setCopy(true)
         }, 1000)
         // }
         // console.log(navigator.clipboard.writeText(result))
+        const isExistRefCode = getUsers()
+        
+        if(!isExistRefCode) {
+            resultRefCode
+        } 
+    }
+
+
+    async function getUsers() {
+        try {
+            const res = await axios.get('/api/getUsers')
+
+            if (res.status !== 200) {
+                const errorData = await res.json();
+                throw new Error(`Failed to fetch users: ${errorData.message}`);
+            }
+            const foundReferral = res.data?.find(item => item.address === address).referralCode
+            if (foundReferral === '') {
+                return false
+            } else {
+                return true
+            }
+
+        } catch (err) {
+            console.error("Error fetching users:", err);
+            return null;
+        }
     }
 
 
