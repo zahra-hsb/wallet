@@ -74,8 +74,8 @@ const Login = () => {
 
     async function saveUser() {
         const referral = createRefCode()
-        setReferralCode('https://regalchain.vercel.app/' + referral)
-        getUsers(referral)
+        const resultRef = 'https://regalchain.vercel.app/' + referral
+        getUsers(resultRef)
         // console.log(referral);
         // await axios.post('/api/users', data)
 
