@@ -14,6 +14,8 @@ const Withdraw = () => {
     const [note, setNote] = useState('')
     const [password, setPassword] = useState('')
 
+    const [dataObj, setDataObj] = useState({})
+
     const [values, setValues] = useState({
         amount: '',
         note: '',
@@ -30,11 +32,17 @@ const Withdraw = () => {
     ]
 
     const { address } = useAccount()
-
+    const referralCode = 'sdfsdf'
+    let data = { address: address, referralCode: referralCode }
 
     const result = useBalance({
         address: address,
     })
+
+    function addToState(address, referralCode) {
+        setDataObj({ address: address, referralCode: referralCode })
+    }
+
     // console.log(result.data.formatted);
     // console.log(result.data.decimals);
     // console.log(result.data.symbol);
@@ -49,16 +57,14 @@ const Withdraw = () => {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // console.log(values);
     }
 
-    // console.log(address);
     const result1 = useReadContract({
         abi,
         address: address,
         functionName: 'balanceOf',
     })
-    // console.log(result1);
+    
 
     async function saveUser() {
 
@@ -69,17 +75,18 @@ const Withdraw = () => {
                 const errorData = await res.json();
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
-            const foundAddress = res.data?.some(item => item.address === address)
-            if(foundAddress) return
+            const foundReferral = res.data?.find(item => item.address === address).referralCode
             
+
         } catch (err) {
             console.error("Error fetching users:", err);
             return null;
         }
     }
-
+    
     useEffect(() => {
-        saveUser()
+        // saveUser()
+        addToState(address, referralCode)
     }, [])
     return (
         <>
@@ -141,6 +148,7 @@ const Withdraw = () => {
                         ))}
                     </div>
                 </div>
+                <button onClick={() => addUser()} className="text-white">add user</button>
             </section>
         </>
     )

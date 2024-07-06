@@ -17,21 +17,18 @@ const Login = () => {
     const [isConn, setConnected] = useState(false)
     const [referralCode, setReferralCode] = useState('')
     const [isLoad, setLoad] = useState(false)
-    // const [address, setAddress] = useState('')
+    // const [addressState, setAddress] = useState('')
+    const [dataObj, setDataObj] = useState({})
 
     const data = { address, referralCode }
+    console.log(data);
     useAccountEffect({
         onConnect() {
             setConnected(true)
         }
     })
 
-    useEffect(() => {
-        function loadHandler() {
-            setLoad(true)
-        }
-        loadHandler()
-    }, [])
+
 
 
     function createRefCode() {
@@ -43,6 +40,15 @@ const Login = () => {
         return result;
     }
 
+    async function addUser() {
+        try {
+            console.log('referral: ', dataObj);
+            await axios.post('/api/postUser', data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async function getUsers() {
         try {
             const res = await axios.get('/api/getUsers')
@@ -52,20 +58,27 @@ const Login = () => {
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
             const foundAddress = res.data?.some(item => item.address === address)
-            if(foundAddress) return
-            
+            if (foundAddress) return;
+            // save user
+            addUser()
+
         } catch (err) {
             console.error("Error fetching users:", err);
             return null;
         }
     }
 
+    function addToState(address, referralCode) {
+        setDataObj({ address: address, referralCode: referralCode })
+    }
+
     async function saveUser() {
         const referral = createRefCode()
         setReferralCode('https://regalchain.vercel.app/' + referral)
+        getUsers()
         // console.log(referral);
         // await axios.post('/api/users', data)
-        
+
     }
     function handleClick() {
         if (isConnected) {
@@ -73,6 +86,15 @@ const Login = () => {
             saveUser()
         }
     }
+
+    useEffect(() => {
+        function loadHandler() {
+            setLoad(true)
+        }
+        loadHandler()
+        console.log(address);
+        addToState(address, referralCode)
+    }, [])
     return (
         <>
             <section className={styles.container}>
