@@ -3,18 +3,37 @@ import { useState } from "react"
 import Container from "../Container"
 import axios from "axios"
 import { useAccount } from "wagmi"
+import { useRouter } from "next/navigation"
 
 const Deposit = () => {
 
     const [amount, setAmount] = useState(0)
+    const [payLink, setPayLink] = useState('')
+    const router = useRouter()
     const { address } = useAccount()
-
+    const url = 'https://api.oxapay.com/merchants/request';
+    const data = JSON.stringify({
+        merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
+        amount: amount,
+    })
+    async function payout() {
+        await axios.post(url, data)
+            .then(response => {
+                setPayLink(response.data?.payLink);
+                // console.log(response.data?.payLink);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
     function handleChange(e) {
         setAmount(e.target.value)
     }
 
     async function handleSubmit(e) {
         e.preventDefault()
+        payout()
+        window.open(payLink, '_blank')
         // console.log(amount);
         await axios.put('/api/editUser', { address: address, price: amount })
     }
