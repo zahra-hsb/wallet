@@ -14,7 +14,6 @@ const Withdraw = () => {
     const [note, setNote] = useState('')
     const [password, setPassword] = useState('')
 
-    const [dataObj, setDataObj] = useState({})
 
     const [values, setValues] = useState({
         amount: '',
@@ -32,16 +31,12 @@ const Withdraw = () => {
     ]
 
     const { address } = useAccount()
-    const referralCode = 'sdfsdf'
-    let data = { address: address, referralCode: referralCode }
 
     const result = useBalance({
         address: address,
     })
 
-    function addToState(address, referralCode) {
-        setDataObj({ address: address, referralCode: referralCode })
-    }
+   
 
     // console.log(result.data.formatted);
     // console.log(result.data.decimals);
@@ -66,28 +61,9 @@ const Withdraw = () => {
     })
     
 
-    async function saveUser() {
-
-        try {
-            const res = await axios.get('/api/getUsers')
-
-            if (res.status !== 200) {
-                const errorData = await res.json();
-                throw new Error(`Failed to fetch users: ${errorData.message}`);
-            }
-            const foundReferral = res.data?.find(item => item.address === address).referralCode
-            
-
-        } catch (err) {
-            console.error("Error fetching users:", err);
-            return null;
-        }
-    }
     
-    useEffect(() => {
-        // saveUser()
-        addToState(address, referralCode)
-    }, [])
+    
+   
     return (
         <>
             <section className="py-20 bg-main">
@@ -148,7 +124,6 @@ const Withdraw = () => {
                         ))}
                     </div>
                 </div>
-                <button onClick={() => addUser()} className="text-white">add user</button>
             </section>
         </>
     )
