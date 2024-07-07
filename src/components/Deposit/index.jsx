@@ -1,21 +1,27 @@
 'use client'
 import { useState } from "react"
 import Container from "../Container"
+import axios from "axios"
+import { useAccount } from "wagmi"
 
 const Deposit = () => {
 
     const [amount, setAmount] = useState(0)
+    const { address } = useAccount()
 
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    function handleSubmit() {
-        
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        // console.log(amount);
+        await axios.put('/api/editUser', { address: address, price: amount })
     }
     return (
         <>
             <Container>
-                <form className="w-full px-2">
+                <form onSubmit={(e) => handleSubmit(e)} className="w-full px-2">
                     <p className="p-5">Deposit</p>
                     <div className="flex flex-col w-full gap-1">
                         <label>Amount</label>
