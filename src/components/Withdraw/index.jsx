@@ -8,12 +8,16 @@ import { useAccount, useBalance, useReadContract } from "wagmi"
 import { useEffect, useState } from "react"
 import { abi } from "@/app/abi"
 import axios from "axios"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 const Withdraw = () => {
     const [amount, setAmount] = useState('')
     const [note, setNote] = useState('')
     const [password, setPassword] = useState('')
 
+    const [priceValue, setPriceValue] = useState(0)
+    const router = useRouter()
 
     const [values, setValues] = useState({
         amount: '',
@@ -70,15 +74,15 @@ const Withdraw = () => {
                 <Container>
                     <h3>Wallet Balance</h3>
                     {/* <p>3210.00 USDT</p> */}
-                    <p>{result.data?.decimals} {result.data?.symbol}</p>
+                    <p>{priceValue} {result.data?.symbol}</p>
                     <div className="flex gap-3">
-                        <button className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
-                        <button className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</button>
+                        <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
+                        <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>
                     </div>
                 </Container>
                 <Container>
                     <form onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">
-                        <p>Submit a withdrawal request</p>
+                        <p id="withdraw">Submit a withdrawal request</p>
                         <div className="flex flex-col w-full gap-1">
                             <label>Amount</label>
                             <input type="number" value={values.amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />

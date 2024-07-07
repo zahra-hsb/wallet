@@ -8,6 +8,9 @@ const UserSchema = new Schema({
     },
     referralCode: {
         type: String
+    },
+    price: {
+        type: Number
     }
 })
 

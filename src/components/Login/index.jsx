@@ -43,7 +43,7 @@ const Login = () => {
     async function addUser(referral) {
         try {
             console.log('referral: ', referral);
-            await axios.post('/api/postUser', {address: address, referralCode: referral})
+            await axios.post('/api/postUser', { address: address, referralCode: referral, price: 0 })
         } catch (error) {
             console.log(error);
         }
