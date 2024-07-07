@@ -20,9 +20,8 @@ const Deposit = () => {
         await axios.post(url, data)
             .then(response => {
                 setPayLink(response.data?.payLink);
-                // console.log(response.data?.payLink);
-                window.open(payLink, '_blank')
-
+                console.log(response.data?.payLink);
+                if (response.data?.payLink) window.open(response.data?.payLink)
             })
             .catch(error => {
                 console.error(error);
@@ -34,9 +33,7 @@ const Deposit = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        payout()
-        console.log(await payLink);
-        // console.log(amount);
+        await payout()
         await axios.put('/api/editUser', { address: address, price: amount })
     }
     return (
