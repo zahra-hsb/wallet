@@ -21,7 +21,7 @@ const Login = () => {
     // const [addressState, setAddress] = useState('')
     const [dataObj, setDataObj] = useState({})
     const pathname = usePathname()
-
+    let isExistUser;
     const data = { address, referralCode }
     // console.log(data);
     useAccountEffect({
@@ -62,19 +62,24 @@ const Login = () => {
             }
             const foundAddress = res.data?.some(item => item.address === address)
 
-            if (foundAddress) return;
-            else {
+            if (foundAddress) {
+                isExistUser = true
+                return;
+            } else {
                 // save user
+                isExistUser = false
                 addUser(referral)
             }
 
-            console.log(res.data);
-            const link = 'https://regalchain.vercel.app' + pathname
-            console.log(link);
-            const foundFriend = res.data.find(item => item.referralCode === link)
+            // console.log(res.data);
+            // const link = 'https://regalchain.vercel.app' + pathname
+            // console.log(link);
+            // const foundFriend = res.data.find(item => item.referralCode === link)
+
+
             // console.log(foundFriend.friends);
             // if (isConnected) {
-            
+
             // update friends property
             // try {
             //     await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
@@ -95,6 +100,7 @@ const Login = () => {
 
     async function saveUser() {
         const referral = createRefCode()
+
         const resultRef = 'https://regalchain.vercel.app/' + referral
         getUsers(resultRef)
         setReferralCode(resultRef)
@@ -103,14 +109,15 @@ const Login = () => {
         }
 
         const data = [
-            {link: resultRef, address: address, amountOfInvest: 0, level: '1'}
+            { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
         ]
         try {
             const link = 'https://regalchain.vercel.app' + pathname
-            await axios.put('/api/editFriends', {data, link})
+            await axios.put('/api/editFriends', { data, link })
         } catch (err) {
             console.log(err);
         }
+
     }
     function handleClick() {
         if (isConnected) {
