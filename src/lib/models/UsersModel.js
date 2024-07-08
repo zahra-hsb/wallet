@@ -11,6 +11,18 @@ const UserSchema = new Schema({
     },
     price: {
         type: Number
+    },
+    friends: {
+        type: Array,
+        items: {
+            type: Object,
+            properties: {
+                address: { type: String },
+                amountOfInvest: { type: Number },
+                level: { type: String },
+                refCodeOfFriend: { type: String }
+            }
+        }
     }
 })
 
