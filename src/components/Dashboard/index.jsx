@@ -14,11 +14,54 @@ const Dashboard = () => {
     // const { disconnect } = useDisconnect()
     const { address, isConnecting, isDisconnected, isConnected } = useAccount()
 
-    // useEffect(() => {
-    //     if (!isConnected) {
-    //         router.push('/')
-    //     }
-    // }, [isConnected])
+
+
+    function createRefCode() {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+        for (let i = 0; i < 12; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+
+    async function addUser(referral) {
+        try {
+            await axios.post('/api/postUser', { address: address, referralCode: referral, price: 0 })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function getUsers(referral) {
+        try {
+            const res = await axios.get('/api/getUsers')
+
+            if (res.status !== 200) {
+                const errorData = await res.json();
+                throw new Error(`Failed to fetch users: ${errorData.message}`);
+            }
+            const foundAddress = res.data?.some(item => item.address === address)
+            console.log(foundAddress);
+            if (foundAddress != []) return;
+            // save user
+            addUser(referral)
+
+        } catch (err) {
+            console.error("Error fetching users:", err);
+            return null;
+        }
+    }
+
+    async function saveUser() {
+        const referral = createRefCode()
+        const resultRef = 'https://regalchain.vercel.app/' + referral
+        getUsers(resultRef)
+    }
+    useEffect(() => {
+        saveUser()
+    }, [])
 
     useAccountEffect({
         onDisconnect() {

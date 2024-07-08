@@ -6,19 +6,21 @@ import ConnectButtonComp from '../ConnectButtonComp'
 import styles from '../../app/Home.module.css';
 import bg from '../../../public/bg/opacity.png'
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAccount, useAccountEffect } from "wagmi";
 import ConnectWallet from "../ConnectWallet";
 import axios from "axios"
 
-const Login = ({ friendRef }) => {
+const Login = () => {
     const router = useRouter()
     const { isConnected, isConnecting, address } = useAccount()
     const [isConn, setConnected] = useState(false)
     const [referralCode, setReferralCode] = useState('')
     const [isLoad, setLoad] = useState(false)
+    const [users, setUsers] = useState([])
     // const [addressState, setAddress] = useState('')
     const [dataObj, setDataObj] = useState({})
+    const pathname = usePathname()
 
     const data = { address, referralCode }
     // console.log(data);
@@ -51,6 +53,7 @@ const Login = ({ friendRef }) => {
     async function getUsers(referral) {
         try {
             const res = await axios.get('/api/getUsers')
+            setUsers(res.data)
 
             if (res.status !== 200) {
                 const errorData = await res.json();
@@ -76,7 +79,7 @@ const Login = ({ friendRef }) => {
         const resultRef = 'https://regalchain.vercel.app/' + referral
         getUsers(resultRef)
         setReferralCode(resultRef)
-        if (router.pathname === `/${resultRef}`) {
+        if (pathname === `/${resultRef}`) {
             return router.query.slug
         }
     }
@@ -94,10 +97,11 @@ const Login = ({ friendRef }) => {
         loadHandler()
         // console.log(address);
         addToState(address, referralCode)
+        getUsers()
+        console.log(users);
     }, [])
 
-    // console.log(referralCode);
-    // if (router.pathname)
+    
     return (
         <>
             <section className={styles.container}>
