@@ -7,8 +7,10 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req) {
     try {
-        const { address, price } = await req.json()
-        const Price = Number(price)
+        const { address, price, prevPrice } = await req.json()
+        let Price = Number(prevPrice)
+        let newPrice = Number(price)
+        Price += newPrice
         if (!address || !price) {
             throw new Error('Missing required fields: address and price');
         }

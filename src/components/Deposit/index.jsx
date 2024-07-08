@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Container from "../Container"
 import axios from "axios"
 import { useAccount } from "wagmi"
@@ -31,13 +31,22 @@ const Deposit = () => {
     function handleChange(e) {
         setAmount(e.target.value)
     }
-
+    async function getPrice() {
+        const res = await axios.get('/api/getUsers')
+        return res.data?.find(item => item.address === address).price;
+    }
     async function handleSubmit(e) {
         e.preventDefault()
         await payout()
         console.log(address);
-        await axios.put('/api/editUser', { address: address, price: amount })
+        const prevPrice = await getPrice()
+        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
+
     }
+
+    useEffect(() => {
+        getPrice()
+    }, [])
     return (
         <>
             <Container>
