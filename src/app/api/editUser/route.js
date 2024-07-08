@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
 import { NextResponse } from "next/server";
 
@@ -7,13 +8,21 @@ import { NextResponse } from "next/server";
 export async function PUT(req) {
     try {
         const { address, price } = await req.json()
+        const Price = Number(price)
+        if (!address || !price) {
+            throw new Error('Missing required fields: address and price');
+        }
+
         await dbConnect()
         // await init();
         console.log('address: ', address);
-        await UsersModel.updateOne({ address: address }, { $set: { price: Number(price) } })
-        
+        const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { price: Price } })
+        if (!updatedDoc.modifiedCount) {
+            throw new Error('Document not found or not updated');
+        }
         return NextResponse.json({ message: 'updated successfully' });
     } catch (err) {
-        return NextResponse.json({ error: err.message });
+        console.error('Error updating document:', err);
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
