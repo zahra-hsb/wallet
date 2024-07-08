@@ -64,10 +64,20 @@ const Withdraw = () => {
         functionName: 'balanceOf',
     })
     
-
+    async function getUser() {
+        try {
+            const response = await axios.get('/api/getUsers')
+            setPriceValue(response.data?.find(item => item.address === address).price);
+            return response
+        } catch(error) {
+            console.log(error);
+        }
+    }
     
     
-   
+    useEffect(() => {
+        getUser()
+    }, [])
     return (
         <>
             <section className="py-20 bg-main">

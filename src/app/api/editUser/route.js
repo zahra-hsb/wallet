@@ -6,13 +6,13 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req) {
     try {
-        const value = await req.json()
-        console.log('value: ', value.price);
+        const { address, price } = await req.json()
         await dbConnect()
         // await init();
-        const updatedUser = await UsersModel.updateOne({ address: value.address }, { $set: { price: value.price } });
-        console.log(updatedUser);
-        return NextResponse.json(updatedUser);
+        console.log('address: ', address);
+        await UsersModel.updateOne({ address: address }, { $set: { price: Number(price) } })
+        
+        return NextResponse.json({ message: 'updated successfully' });
     } catch (err) {
         return NextResponse.json({ error: err.message });
     }

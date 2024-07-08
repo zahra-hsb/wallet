@@ -36,7 +36,7 @@ export async function POST(req, res) {
         await dbConnect();
 
 
-        const user = new UsersModel({ address: userBody.address, referralCode: userBody.referralCode, price: 0 });
+        const user = new UsersModel({ address: userBody.address, referralCode: userBody.referralCode, price: userBody.price });
         const response = await user.save();
 
 
