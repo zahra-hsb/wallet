@@ -72,10 +72,16 @@ const Login = () => {
             const link = 'https://regalchain.vercel.app' + pathname
             console.log(link);
             const foundFriend = res.data.find(item => item.referralCode === link)
-            console.log(foundFriend.friends);
-            if (isConnected) {
-                // update friends property
-            }
+            // console.log(foundFriend.friends);
+            // if (isConnected) {
+            
+            // update friends property
+            // try {
+            //     await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
+            // } catch (err) {
+            //     console.log(err);
+            // }
+            // }
 
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -94,6 +100,16 @@ const Login = () => {
         setReferralCode(resultRef)
         if (pathname === `/${resultRef}`) {
             return router.query.slug
+        }
+
+        const data = [
+            {link: resultRef, address: address, amountOfInvest: 0, level: '1'}
+        ]
+        try {
+            const link = 'https://regalchain.vercel.app' + pathname
+            await axios.put('/api/editFriends', {data, link})
+        } catch (err) {
+            console.log(err);
         }
     }
     function handleClick() {
