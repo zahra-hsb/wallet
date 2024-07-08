@@ -11,7 +11,7 @@ import { useAccount, useAccountEffect } from "wagmi";
 import ConnectWallet from "../ConnectWallet";
 import axios from "axios"
 
-const Login = () => {
+const Login = ({ friendRef }) => {
     const router = useRouter()
     const { isConnected, isConnecting, address } = useAccount()
     const [isConn, setConnected] = useState(false)
@@ -75,9 +75,10 @@ const Login = () => {
         const referral = createRefCode()
         const resultRef = 'https://regalchain.vercel.app/' + referral
         getUsers(resultRef)
-        // console.log(referral);
-        // await axios.post('/api/users', data)
-
+        setReferralCode(resultRef)
+        if (router.pathname === `/${resultRef}`) {
+            return router.query.slug
+        }
     }
     function handleClick() {
         if (isConnected) {
@@ -94,6 +95,9 @@ const Login = () => {
         // console.log(address);
         addToState(address, referralCode)
     }, [])
+
+    // console.log(referralCode);
+    // if (router.pathname)
     return (
         <>
             <section className={styles.container}>
