@@ -44,13 +44,14 @@ const Login = () => {
 
     async function addUser(referral) {
         try {
-            await axios.post('/api/postUser', { address: address, referralCode: referral, price: 0 })
+            if (isConnected)
+                await axios.post('/api/postUser', { address: address, referralCode: referral, price: 0 })
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function getUsers(referral) {
+    async function getUsers(referral, pathname) {
         try {
             const res = await axios.get('/api/getUsers')
             setUsers(res.data)
@@ -60,9 +61,21 @@ const Login = () => {
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
             const foundAddress = res.data?.some(item => item.address === address)
+
             if (foundAddress) return;
-            // save user
-            addUser(referral)
+            else {
+                // save user
+                addUser(referral)
+            }
+
+            console.log(res.data);
+            const link = 'https://regalchain.vercel.app' + pathname
+            console.log(link);
+            const foundFriend = res.data.find(item => item.referralCode === link)
+            console.log(foundFriend.friends);
+            if (isConnected) {
+                // update friends property
+            }
 
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -97,11 +110,11 @@ const Login = () => {
         loadHandler()
         // console.log(address);
         addToState(address, referralCode)
-        getUsers()
-        console.log(users);
+        getUsers(null, pathname)
+
     }, [])
 
-    
+
     return (
         <>
             <section className={styles.container}>
