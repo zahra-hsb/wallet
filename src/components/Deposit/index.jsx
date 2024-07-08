@@ -38,15 +38,11 @@ const Deposit = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         await payout()
-        console.log(address);
         const prevPrice = await getPrice()
         await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
 
     }
 
-    useEffect(() => {
-        getPrice()
-    }, [])
     return (
         <>
             <Container>
