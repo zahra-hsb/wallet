@@ -18,7 +18,7 @@ export async function PUT(req) {
     await dbConnect();
 
     // **Log for debugging:**
-    console.log('address:', data);
+    // console.log('address:', data);
 
     // **Update document using `findOneAndUpdate` for upsert:**
     const updatedDoc = await UsersModel.findOneAndUpdate(
