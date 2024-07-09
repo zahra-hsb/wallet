@@ -2,10 +2,10 @@ import mongoose, { connect } from "mongoose";
 import clientPromise from "./mongodb";
 
 const connection = {}
-// const uri = 'mongodb://localhost/wallet'
+const uri = 'mongodb://localhost/wallet'
 // const uri = process.env.MONGODB_URI
 
-const uri = 'mongodb://root:QYaR6wmpMzEZkPvEqlTAwW3W@wallet:27017/my-app?authSource=admin'
+// const uri = 'mongodb://root:QYaR6wmpMzEZkPvEqlTAwW3W@wallet:27017/my-app?authSource=admin'
 
 // if (!process.env.MONGODB_URI) {
 //   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')

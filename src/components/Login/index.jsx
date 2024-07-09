@@ -71,22 +71,22 @@ const Login = () => {
                 addUser(referral)
             }
 
-            // console.log(res.data);
-            // const link = 'https://aismart.liara.run' + pathname
-            // console.log(link);
-            // const foundFriend = res.data.find(item => item.referralCode === link)
+            console.log(res.data);
+            const link = 'https://aismart.liara.run' + pathname
+            console.log(link);
+            const foundFriend = res.data.find(item => item.referralCode === link)
 
 
-            // console.log(foundFriend.friends);
-            // if (isConnected) {
+            console.log(foundFriend.friends);
+            if (isConnected) {
 
             // update friends property
-            // try {
-            //     await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
-            // } catch (err) {
-            //     console.log(err);
-            // }
-            // }
+            try {
+                await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
+            } catch (err) {
+                console.log(err);
+            }
+            }
 
         } catch (err) {
             console.error("Error fetching users:", err);
