@@ -56,7 +56,7 @@ const Dashboard = () => {
 
     async function saveUser() {
         const referral = createRefCode()
-        const resultRef = 'https://regalchain.vercel.app/' + referral
+        const resultRef = 'https://aismart.network/' + referral
         getUsers(resultRef)
     }
     useEffect(() => {

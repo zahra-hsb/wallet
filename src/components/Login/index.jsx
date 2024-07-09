@@ -72,7 +72,7 @@ const Login = () => {
             }
 
             // console.log(res.data);
-            // const link = 'https://regalchain.vercel.app' + pathname
+            // const link = 'https://aismart.network' + pathname
             // console.log(link);
             // const foundFriend = res.data.find(item => item.referralCode === link)
 
@@ -101,7 +101,7 @@ const Login = () => {
     async function saveUser() {
         const referral = createRefCode()
 
-        const resultRef = 'https://regalchain.vercel.app/' + referral
+        const resultRef = 'https://aismart.network/' + referral
         getUsers(resultRef)
         setReferralCode(resultRef)
         if (pathname === `/${resultRef}`) {
@@ -112,7 +112,7 @@ const Login = () => {
             { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
         ]
         try {
-            const link = 'https://regalchain.vercel.app' + pathname
+            const link = 'https://aismart.network' + pathname
             await axios.put('/api/editFriends', { data, link })
         } catch (err) {
             console.log(err);

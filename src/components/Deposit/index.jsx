@@ -15,8 +15,8 @@ const Deposit = () => {
     const data = JSON.stringify({
         merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
         amount: amount,
-        callbackUrl: 'https://regalchain.vercel.app/reposit',
-        returnUrl: 'https://regalchain.vercel.app/reposit'
+        callbackUrl: 'https://aismart.network/reposit',
+        returnUrl: 'https://aismart.network/reposit'
     })
     async function payout() {
         await axios.post(url, data)
