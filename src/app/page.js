@@ -1,4 +1,3 @@
-import Image from "next/image";
 import RootLayout from "./layout";
 import Login from "@/components/Login";
 
