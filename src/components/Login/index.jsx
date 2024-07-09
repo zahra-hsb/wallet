@@ -60,33 +60,27 @@ const Login = () => {
                 const errorData = await res.json();
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
-            const foundAddress = res.data?.some(item => item.address === address)
-
-            if (foundAddress) {
-                isExistUser = true
-                return;
-            } else {
-                // save user
-                isExistUser = false
-                addUser(referral)
-            }
+            
 
             console.log(res.data);
-            const link = 'https://aismart.liara.run' + pathname
-            console.log(link);
-            const foundFriend = res.data.find(item => item.referralCode === link)
 
-
-            console.log(foundFriend.friends);
-            if (isConnected) {
-
-            // update friends property
-            try {
-                await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
-            } catch (err) {
-                console.log(err);
+            if (pathname === `/${referral}`) {
+                const link = 'https://aismart.liara.run' + pathname
+                console.log(link);
+                const foundFriend = res.data.find(item => item.referralCode === link)
+                console.log(foundFriend.friends);
+                if (isConnected) {
+    
+                    // update friends property
+                    try {
+                        await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
             }
-            }
+
+
 
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -133,7 +127,7 @@ const Login = () => {
         loadHandler()
         // console.log(address);
         addToState(address, referralCode)
-        getUsers(null, pathname)
+        // getUsers(null, pathname)
 
     }, [])
 

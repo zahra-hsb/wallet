@@ -8,6 +8,7 @@ import TicketFeed from "../TicketFeed"
 import Referral from "../Referral"
 import styles from '../../app/Home.module.css'
 import ActivityDashboard from "../ActivityDashboard"
+import axios from "axios"
 
 const Dashboard = () => {
     const router = useRouter()
@@ -37,13 +38,25 @@ const Dashboard = () => {
     async function getUsers(referral) {
         try {
             const res = await axios.get('/api/getUsers')
-
+            let isExistUser;
+            console.log(res.data);
             if (res.status !== 200) {
                 const errorData = await res.json();
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
-            const foundAddress = res.data?.some(item => item.address === address)
-            console.log(foundAddress);
+            else if (res.data != []) {
+                const foundAddress = res.data?.some(item => item.address === address)
+                console.log(foundAddress);
+            }
+            if (foundAddress) {
+                isExistUser = true
+                return;
+            } else {
+                // save user
+                isExistUser = false
+                addUser(referral)
+            }
+            
             if (foundAddress != []) return;
             // save user
             addUser(referral)
@@ -65,7 +78,7 @@ const Dashboard = () => {
 
     useAccountEffect({
         onDisconnect() {
-          router.push('/')
+            router.push('/')
         }
     })
     return (
