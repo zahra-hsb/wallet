@@ -56,7 +56,7 @@ const Dashboard = () => {
 
     async function saveUser() {
         const referral = createRefCode()
-        const resultRef = 'https://aismart.network/' + referral
+        const resultRef = 'https://aismart.liara.run/' + referral
         getUsers(resultRef)
     }
     useEffect(() => {
