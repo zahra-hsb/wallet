@@ -154,7 +154,7 @@ const Login = () => {
                         <button
                             className={isConn ? 'bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
                             disabled={isConn ? false : true}
-                            onClick={handleClick}>Submit</button>
+                            onClick={handleClick}>{isConnecting ? 'is connecting...' : 'Submit'}</button>
                     </div>
                     <div className={styles.list}>
                         <h3>Choose Language</h3>
