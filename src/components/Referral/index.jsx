@@ -11,32 +11,45 @@ const Referral = () => {
     const [refCode, setRefCode] = useState('')
     const { address } = useAccount()
 
-    // async function getUsers() {
-    //     try {
-    //         const res = await axios.get('/api/getUsers')
+    async function getUsers() {
+        try {
+            const res = await axios.get('/api/getUsers')
 
-    //         if (res.status !== 200) {
-    //             const errorData = await res.json();
-    //             throw new Error(`Failed to fetch users: ${errorData.message}`);
-    //         }
+            if (res.status !== 200) {
+                const errorData = await res.json();
+                throw new Error(`Failed to fetch users: ${errorData.message}`);
+            }
 
-    //         const result = res.data?.find(item => item.address === address).referralCode
-    //         setRefCode(result)
-    //         console.log('fg: ', result.toString());
-    //         return result; 
-    //     } catch (err) {
-    //         console.error("Error fetching users:", err);
-    //         return null;
-    //     }
-    // }
+            const result = res.data?.find(item => item.address === address).referralCode
+            setRefCode(result)
+            console.log('fg: ', res);
+            return result;
+        } catch (err) {
+            console.error("Error fetching users:", err);
+            return null;
+        }
+    }
+
+    async function updateUser(resultRef, address) {
+        try {
+            await axios.put('/api/editRef', { address, resultRef })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function copyRefCode() {
-        const result = createRefCode(); 
-        if (result) {
+        const userReferral = await getUsers()
+        let result;
+        if(userReferral === null) {
+            result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
-            navigator.clipboard.writeText(resultRef);
-            setCopy(true);
+            updateUser(resultRef, address)
+    
         }
+        navigator.clipboard.writeText(userReferral);
+        setCopy(true);
+        // console.log('object', result);
     }
 
     return (

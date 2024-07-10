@@ -123,6 +123,7 @@ const Login = () => {
     async function handleClick() {
         if (isConnected) {
             const data = await checkUser()
+            console.log(data);
             router.push('/dashboard')
         }
     }
