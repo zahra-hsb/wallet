@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from '../../app/Home.module.css'
 import axios from 'axios';
 import { useAccount } from 'wagmi';
+import { createRefCode } from '@/lib/methods';
 
 const Referral = () => {
 
@@ -10,30 +11,30 @@ const Referral = () => {
     const [refCode, setRefCode] = useState('')
     const { address } = useAccount()
 
-    async function getUsers() {
-        try {
-            const res = await axios.get('/api/getUsers')
+    // async function getUsers() {
+    //     try {
+    //         const res = await axios.get('/api/getUsers')
 
-            if (res.status !== 200) {
-                const errorData = await res.json();
-                throw new Error(`Failed to fetch users: ${errorData.message}`);
-            }
+    //         if (res.status !== 200) {
+    //             const errorData = await res.json();
+    //             throw new Error(`Failed to fetch users: ${errorData.message}`);
+    //         }
 
-            const result = res.data?.find(item => item.address === address).referralCode
-            setRefCode(result)
-            console.log('fg: ', result.toString());
-            return result; 
-        } catch (err) {
-            console.error("Error fetching users:", err);
-            return null;
-        }
-    }
+    //         const result = res.data?.find(item => item.address === address).referralCode
+    //         setRefCode(result)
+    //         console.log('fg: ', result.toString());
+    //         return result; 
+    //     } catch (err) {
+    //         console.error("Error fetching users:", err);
+    //         return null;
+    //     }
+    // }
 
     async function copyRefCode() {
-        const result = await getUsers(); 
+        const result = createRefCode(); 
         if (result) {
-            console.log(result);
-            navigator.clipboard.writeText(result);
+            const resultRef = 'https://aismart.liara.run/' + result
+            navigator.clipboard.writeText(resultRef);
             setCopy(true);
         }
     }

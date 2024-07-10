@@ -35,7 +35,6 @@ const Login = () => {
 
 
 
-
     async function addUser(referral) {
         try {
             if (isConnected)
@@ -101,7 +100,7 @@ const Login = () => {
             console.log('the users does not exist in database!!!');
         } else {
             const foundUser = users?.find(item => item.address === address)
-            console.log(foundUser);
+            return [foundUser, resultRef]
         }
 
         setReferralCode(resultRef)
@@ -121,10 +120,10 @@ const Login = () => {
         // }
 
     }
-    function handleClick() {
+    async function handleClick() {
         if (isConnected) {
-            router.push('dashboard')
-            checkUser()
+            const data = await checkUser()
+            router.push('/dashboard')
         }
     }
 
