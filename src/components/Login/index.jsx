@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAccount, useAccountEffect } from "wagmi";
 import ConnectWallet from "../ConnectWallet";
 import axios from "axios"
+import { createRefCode } from "@/lib/methods"
 
 const Login = () => {
     const router = useRouter()
@@ -33,14 +34,7 @@ const Login = () => {
 
 
 
-    function createRefCode() {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let result = "";
-        for (let i = 0; i < 12; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return result;
-    }
+    
 
     async function addUser(referral) {
         try {
@@ -62,8 +56,8 @@ const Login = () => {
             }
             
 
-            console.log(res.data);
-
+            return res.data;
+            // find friends
             if (pathname === `/${referral}`) {
                 const link = 'https://aismart.liara.run' + pathname
                 console.log(link);
@@ -88,35 +82,47 @@ const Login = () => {
         }
     }
 
-    function addToState(address, referralCode) {
-        setDataObj({ address: address, referralCode: referralCode })
-    }
+    // function addToState(address, referralCode) {
+    //     setDataObj({ address: address, referralCode: referralCode })
+    // }
 
-    async function saveUser() {
+    async function checkUser() {
         const referral = createRefCode()
 
         const resultRef = 'https://aismart.liara.run/' + referral
-        getUsers(resultRef)
-        setReferralCode(resultRef)
-        if (pathname === `/${resultRef}`) {
-            return router.query.slug
+
+
+        // get users
+        const users = await getUsers(resultRef)
+        console.log(users);
+        if (!users) {
+            console.log('the users does not exist in database!!!');
+        } else {
+            const foundUser = users?.find(item => item.address === address)
+            console.log(foundUser);
         }
 
-        const data = [
-            { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
-        ]
-        try {
-            const link = 'https://aismart.liara.run' + pathname
-            await axios.put('/api/editFriends', { data, link })
-        } catch (err) {
-            console.log(err);
-        }
+        setReferralCode(resultRef)
+        // referral 
+        // if (pathname === `/${resultRef}`) {
+        //     return router.query.slug
+        // }
+
+        // const data = [
+        //     { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
+        // ]
+        // try {
+        //     const link = 'https://aismart.liara.run' + pathname
+        //     await axios.put('/api/editFriends', { data, link })
+        // } catch (err) {
+        //     console.log(err);
+        // }
 
     }
     function handleClick() {
         if (isConnected) {
             router.push('dashboard')
-            saveUser()
+            checkUser()
         }
     }
 
@@ -126,7 +132,7 @@ const Login = () => {
         }
         loadHandler()
         // console.log(address);
-        addToState(address, referralCode)
+        // addToState(address, referralCode)
         // getUsers(null, pathname)
 
     }, [])

@@ -7,7 +7,7 @@ import BrainComponent from "../BrainComponent";
 import TicketFeed from "../TicketFeed";
 import Referral from "../Referral";
 import styles from "../../app/Home.module.css";
-import ActivityDashboard from "../ActivityDashboard";
+import ActivityDashboard from "../ActivityDashboard";  
 import axios from "axios";
 
 const Dashboard = () => {

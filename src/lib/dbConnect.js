@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// const uri = 'mongodb://localhost/wallet'
+const uri = 'mongodb://localhost/wallet'
 // const uri = process.env.MONGODB_URI
 
 // const uri = 'mongodb://root:QYaR6wmpMzEZkPvEqlTAwW3W@wallet:27017/my-app?authSource=admin'
@@ -10,13 +10,13 @@ import mongoose from "mongoose";
 // }
 
 
-const MONGODB_URI = process.env.MONGODB_URI;
+// const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
+// if (!MONGODB_URI) {
+//   throw new Error(
+//     "Please define the MONGODB_URI environment variable inside .env.local"
+//   );
+// }
 
 let cached = global.mongoose;
 
@@ -37,7 +37,10 @@ async function dbConnect() {
       useUnifiedTopology: true,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    // cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    //   return mongoose;
+    // });
+    cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
       return mongoose;
     });
   }
