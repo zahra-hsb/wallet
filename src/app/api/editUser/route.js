@@ -16,7 +16,7 @@ export async function PUT(req) {
         }
 
         await dbConnect()
-        // await init();
+
         console.log('address: ', address);
         const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { price: Price } })
         if (!updatedDoc.modifiedCount) {

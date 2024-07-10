@@ -15,14 +15,14 @@ const ConnectWallet = () => {
     const { address, isConnecting, isDisconnected, isConnected } = useAccount()
     const { open, close } = useWeb3Modal()
     const { connect } = useConnect()
-    useEffect(() => {
-        function navigate() {
-            router.push('/dashboard')
-        }
-        if (isConnecting) return <div>Connecting…</div>
-        if (isDisconnected) return <div>Disconnected</div>
+    // useEffect(() => {
+    //     function navigate() {
+    //         router.push('/dashboard')
+    //     }
+        // if (isConnecting) return <div>Connecting…</div>
+        // if (isDisconnected) return <div>Disconnected</div>
         // if (isConnected) navigate()
-    }, [isConnected])
+    // }, [isConnected])
     return (
         <>
             <div className="w-full">

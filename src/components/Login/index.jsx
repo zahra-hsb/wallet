@@ -34,7 +34,7 @@ const Login = () => {
 
 
 
-    
+
 
     async function addUser(referral) {
         try {
@@ -54,7 +54,7 @@ const Login = () => {
                 const errorData = await res.json();
                 throw new Error(`Failed to fetch users: ${errorData.message}`);
             }
-            
+
 
             return res.data;
             // find friends
@@ -64,7 +64,7 @@ const Login = () => {
                 const foundFriend = res.data.find(item => item.referralCode === link)
                 console.log(foundFriend.friends);
                 if (isConnected) {
-    
+
                     // update friends property
                     try {
                         await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
@@ -94,7 +94,9 @@ const Login = () => {
 
         // get users
         const users = await getUsers(resultRef)
-        console.log(users);
+        if (users) {
+            console.log(users);
+        }
         if (!users) {
             console.log('the users does not exist in database!!!');
         } else {
@@ -135,7 +137,7 @@ const Login = () => {
         // addToState(address, referralCode)
         // getUsers(null, pathname)
 
-    }, [])
+    }, [isConn, isConnected])
 
 
     return (
