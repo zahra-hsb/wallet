@@ -15,8 +15,8 @@ const Deposit = () => {
     const data = JSON.stringify({
         merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
         amount: amount,
-        callbackUrl: 'https://aismart.liara.run/reposit',
-        returnUrl: 'https://aismart.liara.run/reposit'
+        callbackUrl: 'https://aismart.liara.run/deposit',
+        returnUrl: 'https://aismart.liara.run/deposit'
     })
     async function payout() {
         await axios.post(url, data)
