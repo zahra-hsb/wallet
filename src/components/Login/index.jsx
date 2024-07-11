@@ -14,6 +14,7 @@ import { createRefCode } from "@/lib/methods"
 
 const Login = () => {
     const router = useRouter()
+    const [error, setError] = useState(false)
     const { isConnected, isConnecting, address } = useAccount()
     const [isConn, setConnected] = useState(false)
     const [referralCode, setReferralCode] = useState('')
@@ -81,22 +82,18 @@ const Login = () => {
         }
     }
 
-    // function addToState(address, referralCode) {
-    //     setDataObj({ address: address, referralCode: referralCode })
-    // }
 
     async function checkUser() {
-        // const referral = createRefCode()
-
-        // const resultRef = 'https://aismart.liara.run/' + referral
 
 
         // get users
         const users = await getUsers()
         if (users) {
             console.log(users);
+        } else {
+            setError(true)
         }
-        // const foundUser = users?.find(item => item.address === address)
+
         const foundRef = users?.some(item => item.referralCode === pathname)
 
         if (!users) {
@@ -157,7 +154,10 @@ const Login = () => {
                         <button
                             className={isConn ? 'bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
                             disabled={isConn ? false : true}
-                            onClick={handleClick}>{isConnecting ? 'is connecting...' : 'Submit'}</button>
+                            onClick={handleClick}>{isConnecting ? 'connecting...' : 'Submit'}</button>
+                    </div>
+                    <div>
+                        {error ? 'there is some error in database' : ''}
                     </div>
                     <div className={styles.list}>
                         <h3>Choose Language</h3>
