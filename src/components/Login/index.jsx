@@ -44,7 +44,7 @@ const Login = () => {
         }
     }
 
-    async function getUsers(referral, pathname) {
+    async function getUsers(pathname) {
         try {
             const res = await axios.get('/api/getUsers')
             setUsers(res.data)
@@ -57,21 +57,21 @@ const Login = () => {
 
             return res.data;
             // find friends
-            if (pathname === `/${referral}`) {
-                const link = 'https://aismart.liara.run' + pathname
-                console.log(link);
-                const foundFriend = res.data.find(item => item.referralCode === link)
-                console.log(foundFriend.friends);
-                if (isConnected) {
+            // if (pathname === `/${referral}`) {
+            //     const link = 'https://aismart.liara.run' + pathname
+            //     console.log(link);
+            //     const foundFriend = res.data.find(item => item.referralCode === link)
+            //     console.log(foundFriend.friends);
+            //     if (isConnected) {
 
-                    // update friends property
-                    try {
-                        await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
-                    } catch (err) {
-                        console.log(err);
-                    }
-                }
-            }
+            //         // update friends property
+            //         try {
+            //             await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
+            //         } catch (err) {
+            //             console.log(err);
+            //         }
+            //     }
+            // }
 
 
 
@@ -86,28 +86,31 @@ const Login = () => {
     // }
 
     async function checkUser() {
-        const referral = createRefCode()
+        // const referral = createRefCode()
 
-        const resultRef = 'https://aismart.liara.run/' + referral
+        // const resultRef = 'https://aismart.liara.run/' + referral
 
 
         // get users
-        const users = await getUsers(resultRef)
+        const users = await getUsers()
         if (users) {
             console.log(users);
         }
+        // const foundUser = users?.find(item => item.address === address)
+        const foundRef = users?.some(item => item.referralCode === pathname)
+
         if (!users) {
             console.log('the users does not exist in database!!!');
         } else {
-            const foundUser = users?.find(item => item.address === address)
-            return [foundUser, resultRef]
+            return [users]
         }
 
-        setReferralCode(resultRef)
+        setReferralCode(foundRef)
+
         // referral 
-        // if (pathname === `/${resultRef}`) {
-        //     return router.query.slug
-        // }
+        if (pathname === `/${foundRef}`) {
+            return router.query.slug
+        }
 
         // const data = [
         //     { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
@@ -123,7 +126,6 @@ const Login = () => {
     async function handleClick() {
         if (isConnected) {
             const data = await checkUser()
-            console.log(data);
             router.push('/dashboard')
         }
     }

@@ -17,13 +17,16 @@ const Dashboard = () => {
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
 
   // const { data } = router.query
+  // if (data) {
+  //   console.log(data[0].referralCode);
+  // }
 
   const addUser = useCallback(
-    async (referral) => {
+    async () => {
       try {
         await axios.post("/api/postUser", {
           address: address,
-          referralCode: referral,
+          referralCode: '',
           price: 0,
         });
       } catch (error) {
@@ -33,57 +36,56 @@ const Dashboard = () => {
     [address]
   );
 
-  // const getUsers = useCallback(
-  //   async (referral) => {
-  //     try {
-  //       const res = await axios.get("/api/getUsers");
+  const getUsers = useCallback(
+    async () => {
+      try {
+        const res = await axios.get("/api/getUsers");
 
-  //       let isExistUser;
-  //       let foundAddress;
-  //       console.log("getUsers:50 =>", res.data);
+        let foundAddress;
+        console.log("getUsers:45 =>", res.data);
 
-  //       if (res.status !== 200) {
-  //         const errorData = await res.json();
-  //         throw new Error(`Failed to fetch users: ${errorData.message}`);
-  //       } else if (res.data != []) {
-  //         foundAddress =
-  //           res.data?.some((item) => item.address === address) ?? [];
-  //         console.log("getUsers:58 =>", foundAddress);
-  //       }
+        if (res.status !== 200) {
+          const errorData = await res.json();
+          throw new Error(`Failed to fetch users: ${errorData.message}`);
+        } else if (res.data != []) {
+          foundAddress = res.data?.some((item) => item.address === address) ?? [];
+        }
+        console.log("getUsers:52 =>", foundAddress);
 
-  //       if (!!foundAddress?.length) {
-  //         isExistUser = true;
-  //         return;
-  //       } else {
-  //         // save user
-  //         isExistUser = false;
-  //         addUser(referral);
-  //       }
+        if (foundAddress === false) {
+          // save user
+          console.log(foundAddress);
+          await addUser();
+          console.log('responce=> ', res.data);
+          return res.data
+        }
 
-  //       if (!!foundAddress.length) return;
-  //       // save user
-  //       addUser(referral);
-  //     } catch (err) {
-  //       console.error("getUsers:50 =>", "Error fetching users:", err);
-  //       return null;
-  //     }
-  //   },
-  //   [address]
-  // );
+        // if (!!foundAddress.length) return;
+        // // save user
+        // addUser();
 
-  // async function saveUser() {
-  //   console.log(data);
-  //   if (data.foundUser) {
-  //     return null
-  //   } else {
-  //     addUser(data.resultRef);
-  //   }
-  // }
+      } catch (err) {
+        console.error("getUsers:50 =>", "Error fetching users:", err);
+        return null;
+      }
+    },
+    [address]
+  );
+
+  async function saveUser() {
+    const data = await getUsers()
+    console.log('80=> ', data);
+    // if (data.foundUser) {
+    //   return null
+    // } else {
+    //   addUser(data.resultRef);
+    // }
+  }
 
 
-  // useEffect(() => {
-  //   saveUser();
-  // }, []);
+  useEffect(() => {
+    saveUser();
+  }, []);
 
   // on disconnect from wallet  
   useAccountEffect({
