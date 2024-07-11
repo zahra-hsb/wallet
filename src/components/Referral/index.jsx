@@ -39,15 +39,15 @@ const Referral = () => {
     }
 
     async function copyRefCode() {
-        const userReferral = await getUsers()
+        // const userReferral = await getUsers()
         let result;
-        if(userReferral === null) {
-            result = createRefCode();
-            const resultRef = 'https://aismart.liara.run/' + result
-            updateUser(resultRef, address)
-    
-        }
-        navigator.clipboard.writeText(userReferral);
+
+        result = createRefCode();
+        const resultRef = 'https://aismart.liara.run/' + result
+        updateUser(resultRef, address)
+
+
+        navigator.clipboard.writeText(resultRef);
         setCopy(true);
         // console.log('object', result);
     }
