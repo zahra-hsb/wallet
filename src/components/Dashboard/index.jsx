@@ -47,18 +47,19 @@ const Dashboard = () => {
         if (res.status !== 200) {
           const errorData = await res.json();
           throw new Error(`Failed to fetch users: ${errorData.message}`);
-        } else if (res.data != []) {
-          foundAddress = res.data?.some((item) => item.address === address) ?? [];
-        }
-        console.log("getUsers:52 =>", foundAddress);
+        } 
+        // else if (res.data != []) {
+          // foundAddress = res.data?.some((item) => item.address === address) ?? [];
+        // }
+        // console.log("getUsers:52 =>", foundAddress);
 
-        if (foundAddress === false) {
+        // if (foundAddress === false) {
           // save user
           console.log(foundAddress);
           await addUser();
           console.log('responce=> ', res.data);
           return res.data
-        }
+        // }
 
         // if (!!foundAddress.length) return;
         // // save user
