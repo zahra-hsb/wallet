@@ -43,7 +43,7 @@ export async function POST(req, res) {
         return NextResponse.json({ result: response });
     } catch (err) {
         console.error(err);
-        await mongoose.connection.close();
+        // await mongoose.connection.close();
         return NextResponse.json({ error: "An error occurred while creating the user" }, { status: 500 });
     }
 }
