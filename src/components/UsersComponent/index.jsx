@@ -18,7 +18,7 @@ const UsersComponent = () => {
     }, [])
     return (
         <>
-            <section className="bg-main py-24 px-10 h-screen">
+            <section className="bg-main py-24 px-10">
                 <ul className="text-white grid grid-cols-1 sm:grid-cols-2 gap-10">
                     {usersArray.length !== 0 ? usersArray?.map((item, index) => (
                         <>
