@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function PUT(req) {
     try {
         const { address, resultRef } = await req.json()
-        console.log('object', resultRef);
+        // console.log('object', resultRef);
         if (!address || !resultRef) {
             throw new Error('Missing required fields: address and price');
         }

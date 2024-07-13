@@ -96,28 +96,31 @@ const Login = () => {
 
         const foundRef = users?.some(item => item.referralCode === pathname)
 
+        const data = [
+            { link: '', address: address, amountOfInvest: 0, level: '1' }
+        ]
+
+        setReferralCode(foundRef)
+        console.log('found referral: ', foundRef);
+        // referral 
+        if (pathname === `/${foundRef}`) {
+            console.log(pathname);
+            return router.query.slug
+        }
+
+
+        try {
+            const link = 'https://aismart.liara.run' + pathname
+            await axios.put('/api/editFriends', { data, link })
+        } catch (err) {
+            console.log(err);
+        }
+
         if (!users) {
             console.log('the users does not exist in database!!!');
         } else {
             return [users]
         }
-
-        setReferralCode(foundRef)
-
-        // referral 
-        if (pathname === `/${foundRef}`) {
-            return router.query.slug
-        }
-
-        // const data = [
-        //     { link: resultRef, address: address, amountOfInvest: 0, level: '1' }
-        // ]
-        // try {
-        //     const link = 'https://aismart.liara.run' + pathname
-        //     await axios.put('/api/editFriends', { data, link })
-        // } catch (err) {
-        //     console.log(err);
-        // }
 
     }
     async function handleClick() {
