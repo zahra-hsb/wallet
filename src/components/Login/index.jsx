@@ -21,10 +21,8 @@ const Login = () => {
     const [isLoad, setLoad] = useState(false)
     const [users, setUsers] = useState([])
     // const [addressState, setAddress] = useState('')
-    const [dataObj, setDataObj] = useState({})
     const pathname = usePathname()
-    let isExistUser;
-    const data = { address, referralCode }
+
     // console.log(data);
     useAccountEffect({
         onConnect() {
@@ -33,19 +31,7 @@ const Login = () => {
     })
 
 
-
-
-
-    async function addUser(referral) {
-        try {
-            if (isConnected)
-                await axios.post('/api/postUser', { address: address, referralCode: referral, price: 0 })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async function getUsers(pathname) {
+    async function getUsers() {
         try {
             const res = await axios.get('/api/getUsers')
             setUsers(res.data)
@@ -57,22 +43,6 @@ const Login = () => {
 
 
             return res.data;
-            // find friends
-            // if (pathname === `/${referral}`) {
-            //     const link = 'https://aismart.liara.run' + pathname
-            //     console.log(link);
-            //     const foundFriend = res.data.find(item => item.referralCode === link)
-            //     console.log(foundFriend.friends);
-            //     if (isConnected) {
-
-            //         // update friends property
-            //         try {
-            //             await axios.put('/api/editFriends', { link: link, address: address, amountOfInvest: 0, level: '1' })
-            //         } catch (err) {
-            //             console.log(err);
-            //         }
-            //     }
-            // }
 
 
 
@@ -135,9 +105,6 @@ const Login = () => {
             setLoad(true)
         }
         loadHandler()
-        // console.log(address);
-        // addToState(address, referralCode)
-        // getUsers(null, pathname)
 
     }, [isConn, isConnected])
 

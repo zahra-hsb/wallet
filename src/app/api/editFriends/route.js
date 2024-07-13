@@ -20,17 +20,24 @@ export async function PUT(req) {
     // **Log for debugging:**
     // console.log('address:', data);
 
+    const isExistFriend = await UsersModel.find({ friends: [{ address: data.address }]}, {})
+
+    console.log('isExistFriend: ', isExistFriend);
+
     // **Update document using `findOneAndUpdate` for upsert:**
     const updatedDoc = await UsersModel.findOneAndUpdate(
       { referralCode: data.link },
-      { $set: { friends: 
-        [{ 
-        address: data.data[0].address,
-        amountOfInvest: investAmount,
-        level: data.data[0].level, 
-        refCodeOfFriend: '' 
-    }]
-    } },
+      {
+        $push: {
+          friends:
+            [{
+              address: data.data[0].address,
+              amountOfInvest: investAmount,
+              level: data.data[0].level,
+              refCodeOfFriend: ''
+            }]
+        }
+      },
       { upsert: true, new: true } // Upsert if not found, return updated document
     );
 
