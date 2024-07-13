@@ -42,7 +42,7 @@ export async function POST(req, res) {
             return NextResponse.json({ result: response });
         } else {
             console.log('the user exists in database');
-            return NextResponse.json({ result: 'the user exists in database'})
+            return NextResponse.json({ result: users})
         }
 
 

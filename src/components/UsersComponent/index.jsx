@@ -30,7 +30,7 @@ const UsersComponent = () => {
                             </li>
                         </>
                     )) :
-                        <div>error</div>}
+                        <div>loading...</div>}
                 </ul>
             </section>
         </>

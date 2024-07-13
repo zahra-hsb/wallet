@@ -5,14 +5,12 @@ import UsersModel from "@/lib/models/UsersModel";
 
 let client
 let db
-let users
 
-console.log(users);
 
 export async function GET() {
     try {
         await dbConnect()
-        users = await UsersModel.find({})
+        const users = await UsersModel.find({})
 
         return NextResponse.json(users);
     } catch (err) {
