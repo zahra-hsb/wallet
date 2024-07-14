@@ -20,32 +20,37 @@ export async function PUT(req) {
     // **Log for debugging:**
     // console.log('address:', data);
 
-    const isExistFriend = await UsersModel.find({ friends: [{ address: data.address }]}, {})
+    const isExistFriend = await UsersModel.find({ friends: { address: data.data[0].address, level: data.data[0].level } }, {})
 
     console.log('isExistFriend: ', isExistFriend);
-
-    // **Update document using `findOneAndUpdate` for upsert:**
-    const updatedDoc = await UsersModel.findOneAndUpdate(
-      { referralCode: data.link },
-      {
-        $push: {
-          friends:
-            [{
+    if (!isExistFriend) {
+      // **Update document using `findOneAndUpdate` for upsert:**
+      const updatedDoc = await UsersModel.findOneAndUpdate(
+        { referralCode: data.link },
+        {
+          $push: {
+            friends:
+            {
               address: data.data[0].address,
-              amountOfInvest: investAmount,
+              // amountOfInvest: investAmount,
               level: data.data[0].level,
-              refCodeOfFriend: ''
-            }]
-        }
-      },
-      { upsert: true, new: true } // Upsert if not found, return updated document
-    );
+              // refCodeOfFriend: ''
+            }
+          }
+        },
+        { upsert: true, new: true } // Upsert if not found, return updated document
+      );
 
-    if (!updatedDoc) {
-      throw new Error('Document update failed.'); // More specific error message
+      if (!updatedDoc) {
+        throw new Error('Document update failed.'); // More specific error message
+      }
+
+      return NextResponse.json({ message: 'Document updated successfully!' });
+
+    } else {
+      console.log('the friend exists in the database');
+      return NextResponse.json({ isExistFriend })
     }
-
-    return NextResponse.json({ message: 'Document updated successfully!' });
   } catch (err) {
     console.error('Error updating document:', err);
     return NextResponse.json({ error: err.message }, { status: 500 });

@@ -67,11 +67,11 @@ const Login = () => {
         const foundRef = users?.some(item => item.referralCode === pathname)
 
         const data = [
-            { link: '', address: address, amountOfInvest: 0, level: '1' }
+            { address: address, level: '1' }
         ]
 
         setReferralCode(foundRef)
-        console.log('found referral: ', foundRef);
+
         // referral 
         if (pathname === `/${foundRef}`) {
             console.log(pathname);

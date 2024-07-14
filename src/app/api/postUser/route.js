@@ -34,15 +34,14 @@ export async function POST(req, res) {
         const userBody = await req.json();
         // console.log(res);
         await dbConnect();
-        const users = await UsersModel.findOne({address: userBody.address}, {})
-        console.log('found:', users);
+        const users = await UsersModel.findOne({ address: userBody.address }, {})
         if (users === null) {
             const user = new UsersModel({ address: userBody.address, referralCode: userBody.referralCode, price: userBody.price });
             const response = await user.save();
             return NextResponse.json({ result: response });
         } else {
             console.log('the user exists in database');
-            return NextResponse.json({ result: users})
+            return NextResponse.json({ result: users })
         }
 
 
