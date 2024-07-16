@@ -47,18 +47,18 @@ const Dashboard = () => {
         if (res.status !== 200) {
           const errorData = await res.json();
           throw new Error(`Failed to fetch users: ${errorData.message}`);
-        } 
+        }
         // else if (res.data != []) {
-          // foundAddress = res.data?.some((item) => item.address === address) ?? [];
+        // foundAddress = res.data?.some((item) => item.address === address) ?? [];
         // }
         // console.log("getUsers:52 =>", foundAddress);
 
         // if (foundAddress === false) {
-          // save user
-          console.log(foundAddress);
-          await addUser();
-          console.log('responce=> ', res.data);
-          return res.data
+        // save user
+        console.log(foundAddress);
+        await addUser();
+        console.log('responce=> ', res.data);
+        return res.data
         // }
 
         // if (!!foundAddress.length) return;
@@ -83,6 +83,20 @@ const Dashboard = () => {
     // }
   }
 
+  async function editFriends() {
+    try {
+      // const link = 'https://aismart.liara.run' + pathname
+      const address = 'https://aismart.liara.run/lJLXVixVNVay'
+      const level = 1
+      const data = [
+        { address, level }
+      ]
+      await axios.put('/api/editFriends', data)
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 
   useEffect(() => {
     saveUser();
@@ -101,7 +115,7 @@ const Dashboard = () => {
         <BrainComponent />
         <TicketFeed />
       </section>
-      {/* <button onClick={() => disconnect}>disconnect</button> */}
+      {/* <button onClick={() => editFriends()}>edit friend</button> */}
     </>
   );
 };

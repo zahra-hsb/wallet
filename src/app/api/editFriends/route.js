@@ -5,13 +5,14 @@ import { NextResponse } from "next/server";
 export async function PUT(req) {
   try {
     // const { link, address, invest, level } = await req.json();
-    const data = await req.json()
-    const investAmount = Number(data.data[0].amountOfInvest);
+    const data = await req.json();
+    console.log('data: ', data[0]);
+    const address = data.data[0].address;
+    const level = data.data[0].level;
     // const investAmount = 0
-
     // **Validate required fields:**
-    // if (!data.data || !data.resultRef) {
-    //   throw new Error('Missing required fields: data and result referral');
+    // if (!address || !level) {
+    //   throw new Error('Missing required fields: address and level');
     // }
 
     // **Establish database connection:**
@@ -20,36 +21,28 @@ export async function PUT(req) {
     // **Log for debugging:**
     // console.log('address:', data);
 
-    const isExistFriend = await UsersModel.find({ friends: { address: data.data[0].address, level: data.data[0].level } }, {})
+    const existingFriend = await UsersModel.find({ friends: { address, level } });
 
-    console.log('isExistFriend: ', isExistFriend);
-    if (!isExistFriend) {
+
+    console.log('isExistFriend: ', existingFriend);
+    if (existingFriend.length === 0) {
       // **Update document using `findOneAndUpdate` for upsert:**
       const updatedDoc = await UsersModel.findOneAndUpdate(
         { referralCode: data.link },
-        {
-          $push: {
-            friends:
-            {
-              address: data.data[0].address,
-              // amountOfInvest: investAmount,
-              level: data.data[0].level,
-              // refCodeOfFriend: ''
-            }
-          }
-        },
-        { upsert: true, new: true } // Upsert if not found, return updated document
+        { $push: { friends: { address, level } } },
+        { upsert: true, new: true }
       );
 
       if (!updatedDoc) {
         throw new Error('Document update failed.'); // More specific error message
       }
 
-      return NextResponse.json({ message: 'Document updated successfully!' });
+      return NextResponse.json({ updatedDoc });
 
     } else {
       console.log('the friend exists in the database');
-      return NextResponse.json({ isExistFriend })
+      return NextResponse.json({ message: 'Friend already exists in database' });
+
     }
   } catch (err) {
     console.error('Error updating document:', err);
