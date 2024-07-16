@@ -116,7 +116,7 @@ const Dashboard = () => {
         <BrainComponent />
         <TicketFeed />
       </section>
-      <button onClick={() => editFriends()}>edit friend</button>
+      {/* <button onClick={() => editFriends()}>edit friend</button> */}
     </>
   );
 };

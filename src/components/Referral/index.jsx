@@ -22,7 +22,6 @@ const Referral = () => {
 
             const result = res.data?.find(item => item.address === address).referralCode
             setRefCode(result)
-            console.log('fg: ', res);
             return result;
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -39,17 +38,20 @@ const Referral = () => {
     }
 
     async function copyRefCode() {
-        // const userReferral = await getUsers()
         let result;
+        const foundRef = await getUsers()
+        if (foundRef) {
+            navigator.clipboard.writeText(foundRef);
+            setCopy(true);
+            return null
+        } else {
+            result = createRefCode();
+            const resultRef = 'https://aismart.liara.run/' + result
+            updateUser(resultRef, address)
+            navigator.clipboard.writeText(resultRef); 
+            setCopy(true);
+        }
 
-        result = createRefCode();
-        const resultRef = 'https://aismart.liara.run/' + result
-        updateUser(resultRef, address)
-
-
-        navigator.clipboard.writeText(resultRef);
-        setCopy(true);
-        // console.log('object', result);
     }
 
     return (

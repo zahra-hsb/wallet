@@ -15,8 +15,8 @@ export async function PUT(req) {
 
         await dbConnect()
 
-        const foundRef = await UsersModel.findOne({ address: address, referralCode: resultRef }, {})
-        console.log('found ref: ', foundRef);
+        // const foundRef = await UsersModel.find({ referralCode: resultRef }, {})
+        // console.log('found ref: ', foundRef);
 
         const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { referralCode: resultRef } })
         if (!updatedDoc.modifiedCount) {
