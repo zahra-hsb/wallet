@@ -88,10 +88,11 @@ const Dashboard = () => {
       // const link = 'https://aismart.liara.run' + pathname
       const address = 'https://aismart.liara.run/lJLXVixVNVay'
       const level = 1
+      const link = ''
       const data = [
         { address, level }
       ]
-      await axios.put('/api/editFriends', data)
+      await axios.put('/api/editFriends', {link, data})
     } catch (err) {
       console.log(err);
     }
@@ -115,7 +116,7 @@ const Dashboard = () => {
         <BrainComponent />
         <TicketFeed />
       </section>
-      {/* <button onClick={() => editFriends()}>edit friend</button> */}
+      <button onClick={() => editFriends()}>edit friend</button>
     </>
   );
 };

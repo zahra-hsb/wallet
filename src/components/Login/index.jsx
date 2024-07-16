@@ -78,19 +78,22 @@ const Login = () => {
             return router.query.slug
         }
 
-
-        try {
-            const link = 'https://aismart.liara.run' + pathname
-            await axios.put('/api/editFriends', { data, link })
-        } catch (err) {
-            console.log(err);
+        if (pathname === '/') {
+            return null
+        } else {
+            try {
+                const link = 'https://aismart.liara.run' + pathname
+                await axios.put('/api/editFriends', { data, link })
+            } catch (err) {
+                console.log(err);
+            }
         }
-
         if (!users) {
             console.log('the users does not exist in database!!!');
         } else {
             return [users]
         }
+
 
     }
     async function handleClick() {

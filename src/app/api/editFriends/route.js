@@ -22,10 +22,10 @@ export async function PUT(req) {
     // console.log('address:', data);
 
     const existingFriend = await UsersModel.find({ friends: { address, level } });
-
-
+    const existingUser = await UsersModel.find({ address: address }, {})
+    console.log('existingUser: ', existingUser);
     console.log('isExistFriend: ', existingFriend);
-    if (existingFriend.length === 0) {
+    if (existingFriend.length === 0 && existingUser.length === 0) {
       // **Update document using `findOneAndUpdate` for upsert:**
       const updatedDoc = await UsersModel.findOneAndUpdate(
         { referralCode: data.link },
