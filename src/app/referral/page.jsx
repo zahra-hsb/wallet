@@ -6,7 +6,7 @@ const referral = () => {
     return (
         <>
             <MobileNav />
-            <section className="bg-main py-24 px-10">
+            <section className="bg-main py-24 px-10 bottom-0 ">
                 <Referral />
                 <ActivityDashboard />
             </section>
