@@ -3,7 +3,9 @@ import PayStatus from "@/components/PayStatus"
 const payStatus = () => {
     return (
         <>
-            <PayStatus />
+            <section className="bg-main py-24 px-10 h-screen">
+                <PayStatus />
+            </section>
         </>
     )
 }
