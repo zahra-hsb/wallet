@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Container from "../Container"
 import axios from "axios"
 import { useAccount } from "wagmi"
@@ -9,6 +9,7 @@ const Deposit = () => {
 
     const [amount, setAmount] = useState(0)
     const [payLink, setPayLink] = useState('')
+
     const router = useRouter()
     const { address } = useAccount()
     const url = 'https://api.oxapay.com/merchants/request';
@@ -16,16 +17,30 @@ const Deposit = () => {
         // merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
         merchant: 'sandbox',
         amount: amount,
-        callbackUrl: 'https://aismart.liara.run/payout',
-        returnUrl: 'https://aismart.liara.run/deposit'
+        callbackUrl: 'http://localhost:3000/api/payout',
+        returnUrl: 'http://localhost:3000/payStatus'
     })
 
-    
+    async function updatePrice() {
+        const prevPrice = await getPrice()
+        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
+
+    }
+
+
     async function payout() {
         await axios.post(url, data)
             .then(response => {
+                console.log(response.data);
                 setPayLink(response.data?.payLink);
                 if (response.data?.payLink) window.open(response.data?.payLink)
+                if (response.data?.message === 'success') {
+                    console.log('success');
+                    updatePrice()
+                    localStorage.setItem('message', response.data?.message)
+                } else if (response.data?.message === 'failed') {
+                    console.log('failed');
+                }
             })
             .catch(error => {
                 console.error(error);
@@ -41,8 +56,6 @@ const Deposit = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         await payout()
-        const prevPrice = await getPrice()
-        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
 
     }
 

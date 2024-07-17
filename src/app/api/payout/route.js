@@ -28,7 +28,7 @@ const http = require('http');
 const crypto = require('crypto');
 
 const server = http.createServer((req, res) => {
-    if (req.url === '/payout' && req.method === 'POST') {
+    if (req.url === '/api/payout' && req.method === 'POST') {
         // Validate HMAC signature
         let postData = '';
 
@@ -47,8 +47,8 @@ const server = http.createServer((req, res) => {
                 return;
             }
 
-            // const apiSecretKey = (data.type === 'payment') ? 'N1CGY7-7963BT-MCCLX7-V3F74B' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
-            const apiSecretKey = (data.type === 'payment') ? 'sandbox' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
+            const apiSecretKey = (data.type === 'payment') ? 'N1CGY7-7963BT-MCCLX7-V3F74B' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
+            // const apiSecretKey = (data.type === 'payment') ? 'sandbox' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
             const hmacHeader = req.headers['hmac'];
             const calculatedHmac = crypto
                 .createHmac('sha512', apiSecretKey)
@@ -69,6 +69,7 @@ const server = http.createServer((req, res) => {
                 // Return HTTP Response 200 with content "OK"
                 res.statusCode = 200;
                 res.end('OK');
+                console.log('hagsdf ', data);
             } else {
                 // HMAC signature is not valid
                 // Handle the error accordingly
@@ -84,5 +85,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(3001, () => {
-    console.log('Server listening on port 3000');
+    console.log('Server listening on port 3001');
 });

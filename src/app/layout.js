@@ -7,6 +7,7 @@ import { headers } from 'next/headers'
 import { config } from '@/config'
 import Web3ModalProvider from '@/context'
 import { cookieToInitialState } from 'wagmi'
+import { TrackIdProvider } from '@/context/trackIdContext'
 
 export const metadata = {
   title: 'Ai Market',
@@ -21,7 +22,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
 
-        <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
+        <Web3ModalProvider initialState={initialState}>
+          <TrackIdProvider>
+            {children}
+          </TrackIdProvider>
+        </Web3ModalProvider>
 
       </body>
     </html>
