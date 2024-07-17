@@ -13,11 +13,14 @@ const Deposit = () => {
     const { address } = useAccount()
     const url = 'https://api.oxapay.com/merchants/request';
     const data = JSON.stringify({
-        merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
+        // merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
+        merchant: 'sandbox',
         amount: amount,
-        callbackUrl: 'https://aismart.liara.run/deposit',
+        callbackUrl: 'https://aismart.liara.run/payout',
         returnUrl: 'https://aismart.liara.run/deposit'
     })
+
+    
     async function payout() {
         await axios.post(url, data)
             .then(response => {
@@ -47,23 +50,16 @@ const Deposit = () => {
         <>
             <Container>
                 <form onSubmit={(e) => handleSubmit(e)} className="w-full px-2">
-                    <p className="p-5">Deposit</p>
+                    <p className="p-5 text-lg">Deposit</p>
                     <div className="flex flex-col w-full gap-1">
-                        <label>Amount</label>
-                        <input type="number" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
+                        <label htmlFor="amount">Amount</label>
+                        <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
+                    </div>
+                    <div className="flex flex-col w-full gap-2 mt-5">
+                        <label htmlFor="upline">Upline Code</label>
+                        <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div>
                     <div className="w-full text-center py-5">
-                        <button className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
-                    </div>
-                </form>
-            </Container>
-            <Container>
-                <form className="w-full px-2">
-                    <div className="flex flex-col w-full gap-2">
-                        <label>Referral Code</label>
-                        <input type="text" name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
-                    </div>
-                    <div className="w-full text-center py-4">
                         <button className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
                     </div>
                 </form>
