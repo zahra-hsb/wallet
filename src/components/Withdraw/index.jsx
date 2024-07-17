@@ -31,7 +31,7 @@ const Withdraw = () => {
         { icon: withdraw, title: 'withdraw', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#FD625E' },
         { icon: withdraw, title: 'withdraw', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#FD625E' },
         { icon: commision, title: 'commision', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Amount', color: '#00FF7F' },
-        { icon: commision, title: '(Number_ID)', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#00FF7F' }, 
+        { icon: commision, title: '(Number_ID)', date: '14 Mar, 2021', title1: 'n(Matic)', action: 'Panel', color: '#00FF7F' },
     ]
 
     const { address } = useAccount()
@@ -40,7 +40,7 @@ const Withdraw = () => {
         address: address,
     })
 
-   
+
 
     // console.log(result.data.formatted);
     // console.log(result.data.decimals);
@@ -63,28 +63,28 @@ const Withdraw = () => {
         address: address,
         functionName: 'balanceOf',
     })
-    
-    async function getUser() {
-        try {
-            const response = await axios.get('/api/getUsers')
-            setPriceValue(response.data?.find(item => item.address === address).price);
-            return response
-        } catch(error) {
-            console.log(error);
-        }
-    }
-    
-    
+
+
+
     useEffect(() => {
+        async function getUser() {
+            try {
+                const response = await axios.get('/api/getUsers')
+                setPriceValue(response.data?.find(item => item.address === address).price);
+                return response
+            } catch (error) {
+                console.log(error);
+            }
+        }
         getUser()
-    }, [])
+    }, [address])
     return (
         <>
             <section className="py-20 bg-main">
                 <Container>
                     <h3>Wallet Balance</h3>
                     {/* <p>3210.00 USDT</p> */}
-                    <p>{priceValue} {result.data?.symbol}</p>
+                    <p>{priceValue ? priceValue : 'Loading...'} {result.data?.symbol}</p>
                     <div className="flex gap-3">
                         <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
                         <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>
