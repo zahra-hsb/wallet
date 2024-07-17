@@ -43,7 +43,7 @@ const ActivityDashboard = () => {
                                     <span className={`bg-${item.color} rounded-full px-3 py-1`}>
                                         <Image src={chainIcon} alt="" />
                                     </span>
-                                    <div className="">
+                                    <div className="overflow-hidden">
                                         <h3 className="text-white">
                                             {/* {item.details} */}
                                         </h3>
