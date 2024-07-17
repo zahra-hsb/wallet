@@ -17,8 +17,10 @@ const Deposit = () => {
         // merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
         merchant: 'sandbox',
         amount: amount,
-        callbackUrl: 'http://localhost:3000/api/payout',
-        returnUrl: 'http://localhost:3000/payStatus'
+        callbackUrl: 'http://aismart.liara.run/api/payout',
+        // callbackUrl: 'http://localhost:3000/api/payout',
+        returnUrl: 'http://aismart.liara.run/payStatus'
+        // returnUrl: 'http://localhost:3000/payStatus'
     })
 
     async function updatePrice() {
