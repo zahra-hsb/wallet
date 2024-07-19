@@ -7,24 +7,70 @@ import chainIcon2 from '../../../public/icons/Icon-chain1.png'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import { useWebSockets } from "@/customHooks/useWebSockets";
 
 const ActivityDashboard = () => {
     const [friends, setFriends] = useState([])
     const { address } = useAccount()
-    // const dataArray = [
-    //     { url: chainIcon, details: '24/05/2021, 18:24:56', address: '0xb77ad0099e21d4fca87fa4c...', color: 'orange-100' },
-    //     { url: chainIcon1, details: '24/05/2021, 18:24:56', address: '0xb77ad0099e21d4fca87fa4c...', color: 'blue-100' },
-    //     { url: chainIcon, details: '24/05/2021, 18:24:56', address: '0xb77ad0099e21d4fca87fa4c...', color: 'orange-100' },
-    //     { url: chainIcon2, details: '24/05/2021, 18:24:56', address: '0xb77ad0099e21d4fca87fa4c...', color: 'blue-100' },
-    //     { url: chainIcon, details: '24/05/2021, 18:24:56', address: '0xb77ad0099e21d4fca87fa4c...', color: 'orange-100' },
-    // ]
+    // const { address1, connect, subscribe, message, error } = useWebSockets();
+
+    // useEffect(() => {
+    //     connect();
+    // }, [connect]);
+
+    // useEffect(() => {
+    //     if (address1) {
+    //         subscribe('friend-list-updates', async () => {
+    //             // Fetch updated friends from database or cache (modify as needed)
+    //             const updatedFriends = await fetchFriends(address1);
+    //             setFriends(updatedFriends);
+    //         });
+    //     }
+    // }, [address1, subscribe]);
+
+    // useEffect(() => {
+    //     if (error) {
+    //         console.error('WebSocket error:', error);
+    //         // Implement error handling UI or retry logic
+    //     }
+    // }, [error]);
+
+    // const fetchFriends = async (userAddress) => {
+    //     try {
+    //         const response = await fetch(`/api/getFriends?address=${userAddress}`);
+    //         const data = await response.json();
+    //         return data?.friends || [];
+    //     } catch (err) {
+    //         console.error('Error fetching friends:', err);
+    //         // Handle errors gracefully
+    //         return [];
+    //     }
+    // };
+
     useEffect(() => {
-        async function getFriends() {
-            const res = await axios.get('/api/getUsers')
-            setFriends(res.data?.find(item => item.address === address).friends);
-        }
-        getFriends()
-    }, [])
+        const fetchFriends = async () => {
+          try {
+            const response = await fetch('/api/getUsers');
+    
+            if (!response.ok) {
+              throw new Error(`Error fetching friends: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+            const userFriends = data.find(item => item.address === address)?.friends;
+    
+            if (userFriends) {
+              setFriends(userFriends);
+            } else {
+              console.warn(`No friends found for address: ${address}`);
+            }
+          } catch (error) {
+            console.error('Error fetching friends:', error);
+          }
+        };
+    
+        fetchFriends();
+      }, [address]);
     return (
         <>
             <section className="pt-10">

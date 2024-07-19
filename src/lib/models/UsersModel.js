@@ -18,9 +18,9 @@ const UserSchema = new Schema({
             type: Object,
             properties: {
                 address: { type: String },
-                amountOfInvest: { type: Number },
+                // amountOfInvest: { type: Number },
                 level: { type: String },
-                refCodeOfFriend: { type: String }
+                // refCodeOfFriend: { type: String }
             }
         }
     }
