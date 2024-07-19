@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function PUT(req) {
@@ -23,8 +24,7 @@ export async function PUT(req) {
 
     const existingFriend = await UsersModel.find({ friends: { address, level } });
     const existingUser = await UsersModel.find({ address: address }, {})
-    console.log('existingUser: ', existingUser);
-    console.log('isExistFriend: ', existingFriend);
+    
     if (existingFriend.length === 0 && existingUser.length === 0) {
       // **Update document using `findOneAndUpdate` for upsert:**
       const updatedDoc = await UsersModel.findOneAndUpdate(
@@ -32,10 +32,11 @@ export async function PUT(req) {
         { $push: { friends: { address, level } } },
         { upsert: true, new: true }
       );
-
       if (!updatedDoc) {
         throw new Error('Document update failed.'); // More specific error message
       }
+      revalidatePath('/referral', 'page')
+      revalidatePath('/all', 'page')
 
       return NextResponse.json({ updatedDoc });
 

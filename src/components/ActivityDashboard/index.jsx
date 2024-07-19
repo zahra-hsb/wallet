@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
 import { useWebSockets } from "@/customHooks/useWebSockets";
+import { revalidatePath } from "next/cache";
 
 const ActivityDashboard = () => {
     const [friends, setFriends] = useState([])
@@ -55,10 +56,10 @@ const ActivityDashboard = () => {
             if (!response.ok) {
               throw new Error(`Error fetching friends: ${response.statusText}`);
             }
-    
+            
             const data = await response.json();
             const userFriends = data.find(item => item.address === address)?.friends;
-    
+            console.log(userFriends);
             if (userFriends) {
               setFriends(userFriends);
             } else {
