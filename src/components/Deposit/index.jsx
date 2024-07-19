@@ -14,28 +14,37 @@ const Deposit = () => {
     const { address } = useAccount()
     const url = 'https://api.oxapay.com/merchants/request';
     const data = JSON.stringify({
-        merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
-        // merchant: 'sandbox',
+        // merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
+        merchant: 'sandbox',
         amount: amount,
         callbackUrl: 'https://aismart.liara.run/api/payout',
         // callbackUrl: 'http://localhost:3000/api/payout',
         returnUrl: 'https://aismart.liara.run/payStatus'
         // returnUrl: 'http://localhost:3000/payStatus'
     })
-
+    const isIPhone = () => {
+        const userAgent = window.navigator.userAgent;
+        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
+    };
     async function updatePrice() {
         const prevPrice = await getPrice()
         await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
 
     }
 
-
-    async function payout() {
+    async function payout(windowReference) {
         await axios.post(url, data)
             .then(response => {
                 console.log(response.data);
                 setPayLink(response.data?.payLink);
-                if (response.data?.payLink) window.open(response.data?.payLink)
+                if (response.data?.payLink) {
+                    if (isIPhone()) {
+                        let windowReference = window.open();
+                        windowReference.location = response.data?.payLink
+                    } else {
+                        window.open(response.data?.payLink)
+                    }
+                }
                 if (response.data?.message === 'success') {
                     console.log('success');
                     updatePrice()
@@ -56,17 +65,11 @@ const Deposit = () => {
         return res.data?.find(item => item.address === address).price;
     }
 
-    const isIPhone = () => {
-        const userAgent = window.navigator.userAgent;
-        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
-    };
+
     async function handleSubmit(e) {
         e.preventDefault()
-        // if (isIPhone()) {
 
-        // } else {
-            await payout()
-        // }
+        await payout()
 
     }
 
