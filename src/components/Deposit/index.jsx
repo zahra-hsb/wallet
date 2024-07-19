@@ -14,8 +14,8 @@ const Deposit = () => {
     const { address } = useAccount()
     const url = 'https://api.oxapay.com/merchants/request';
     const data = JSON.stringify({
-        // merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
-        merchant: 'sandbox',
+        merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
+        // merchant: 'sandbox',
         amount: amount,
         callbackUrl: 'https://aismart.liara.run/api/payout',
         // callbackUrl: 'http://localhost:3000/api/payout',
