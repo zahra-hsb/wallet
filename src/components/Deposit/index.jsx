@@ -84,7 +84,7 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div>
                     <div className="w-full text-center py-5">
-                        <button className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+                        <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
                     </div>
                 </form>
             </Container>
