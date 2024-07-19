@@ -17,7 +17,7 @@ const deposit = () => {
             <MobileNav />
             <div className="bg-main py-24 px-10 min-h-screen h-full">
                 <Deposit />
-                {/* <div className="w-full">
+                <div className="w-full">
                     <table className="text-white w-full ">
                         <tr className="">
                             <th className="text-gray-400 py-5">from</th>
@@ -38,7 +38,7 @@ const deposit = () => {
                         ))}
 
                     </table>
-                </div> */}
+                </div>
             </div>
         </>
     )

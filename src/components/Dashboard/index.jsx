@@ -119,28 +119,6 @@ const Dashboard = () => {
       <section className={styles.section}>
         <BrainComponent />
         <TicketFeed />
-        <div className="w-full">
-          <table className="text-white w-full ">
-            <tr className="">
-              <th className="text-gray-400 py-5">from</th>
-              <th className="text-gray-400 py-5">to</th>
-              <th className="text-gray-400 py-5">APR</th>
-            </tr>
-
-            {dataArray?.map(item => (
-              <>
-                <tr className="text-center py-2 border-y border-y-gray-700">
-                  {item.map(item => (
-                    <>
-                      <td className="py-5">{item}</td>
-                    </>
-                  ))}
-                </tr>
-              </>
-            ))}
-
-          </table>
-        </div>
       </section>
       {/* <button onClick={() => editFriends()}>edit friend</button> */}
     </>
