@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 import UsersModel from "@/lib/models/UsersModel";
+import { revalidatePath } from "next/cache";
 
 
 let client

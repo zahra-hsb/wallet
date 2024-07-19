@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 
@@ -22,6 +23,7 @@ export async function PUT(req) {
         if (!updatedDoc.modifiedCount) {
             throw new Error('Document not found or not updated');
         }
+        revalidatePath('/withdraw', 'page')
         return NextResponse.json({ message: 'updated successfully' });
     } catch (err) {
         console.error('Error updating document:', err);
