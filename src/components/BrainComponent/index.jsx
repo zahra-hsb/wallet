@@ -19,9 +19,9 @@ const BrainComponent = () => {
             <div className='relative text-[#bbb]'>
 
                 <Image src={Line1} alt='' className={'w-1/2 translate-x-[93%] -mt-[50%] relative'} />
-                <p className='absolute bottom-[31%] right-[13%] text-sm w-[120px] text-right '>
-                    Offering Unique
-                    Services
+                <p className='absolute bottom-[30%] right-[13%] text-sm w-[120px] text-right '>
+                    Invest usdt and matic
+                    Get 1.5% daily profit
                 </p>
             </div>
         </>

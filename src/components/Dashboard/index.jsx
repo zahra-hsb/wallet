@@ -85,11 +85,6 @@ const Dashboard = () => {
   async function saveUser() {
     const data = await getUsers()
     console.log('80=> ', data);
-    // if (data.foundUser) {
-    //   return null
-    // } else {
-    //   addUser(data.resultRef);
-    // }
   }
 
   async function editFriends() {
