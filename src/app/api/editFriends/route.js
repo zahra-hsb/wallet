@@ -36,7 +36,6 @@ export async function PUT(req) {
         throw new Error('Document update failed.'); // More specific error message
       }
       revalidatePath('/referral', 'page')
-      revalidatePath('/all', 'page')
 
       return NextResponse.json({ updatedDoc });
 

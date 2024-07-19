@@ -11,6 +11,7 @@ export async function GET() {
     try {
         await dbConnect()
         const users = await UsersModel.find({})
+        revalidatePath('/all', 'page')
 
         return NextResponse.json(users);
     } catch (err) {
