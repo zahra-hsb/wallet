@@ -55,9 +55,18 @@ const Deposit = () => {
         const res = await axios.get('/api/getUsers')
         return res.data?.find(item => item.address === address).price;
     }
+
+    const isIPhone = () => {
+        const userAgent = window.navigator.userAgent;
+        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
+    };
     async function handleSubmit(e) {
         e.preventDefault()
-        await payout()
+        // if (isIPhone()) {
+
+        // } else {
+            await payout()
+        // }
 
     }
 

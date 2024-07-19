@@ -15,7 +15,7 @@ const Referral = () => {
             copy;
     
         function isOS() {
-            return navigator.userAgent.match(/ipad|iphone/i);
+            return navigator.userAgent.match(/ipad|ipod|iphone/i);
         }
     
         function createTextArea(text) {
