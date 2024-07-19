@@ -21,6 +21,15 @@ const Dashboard = () => {
   //   console.log(data[0].referralCode);
   // }
 
+  const dataArray = [
+    ['10$', '99.9$', '1 %'],
+    ['100$', '999.9$', '1.1 %'],
+    ['1000$', '2499.9$', '1.2 %'],
+    ['2500$', '4999.9$', '1.3 %'],
+    ['5000$', '9999.9$', '1.4 %'],
+    ['10000$', '24999.9$', '1.5 %'],
+  ]
+
   const addUser = useCallback(
     async () => {
       try {
@@ -92,7 +101,7 @@ const Dashboard = () => {
       const data = [
         { address, level }
       ]
-      await axios.put('/api/editFriends', {link, data})
+      await axios.put('/api/editFriends', { link, data })
     } catch (err) {
       console.log(err);
     }
@@ -115,6 +124,28 @@ const Dashboard = () => {
       <section className={styles.section}>
         <BrainComponent />
         <TicketFeed />
+        <div className="w-full">
+          <table className="text-white w-full ">
+            <tr className="">
+              <th className="text-gray-400 py-5">from</th>
+              <th className="text-gray-400 py-5">to</th>
+              <th className="text-gray-400 py-5">APR</th>
+            </tr>
+
+            {dataArray?.map(item => (
+              <>
+                <tr className="text-center py-2 border-y border-y-gray-700">
+                  {item.map(item => (
+                    <>
+                      <td className="py-5">{item}</td>
+                    </>
+                  ))}
+                </tr>
+              </>
+            ))}
+
+          </table>
+        </div>
       </section>
       {/* <button onClick={() => editFriends()}>edit friend</button> */}
     </>
