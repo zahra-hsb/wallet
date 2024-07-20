@@ -32,7 +32,7 @@ const Deposit = () => {
 
     }
 
-    async function payout(windowReference) {
+    async function payout() {
         await axios.post(url, data)
             .then(response => {
                 console.log(response.data);
@@ -71,7 +71,7 @@ const Deposit = () => {
         if (isIPhone) {
             
         }
-        await payout(windowReference)
+        await payout()
 
     }
 
