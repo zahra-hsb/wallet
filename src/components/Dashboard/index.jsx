@@ -117,7 +117,7 @@ const Dashboard = () => {
         <BrainComponent />
         <TicketFeed />
       </section>
-      <button onClick={handleMinimize}> Minimize the Chat </button>
+      {/* <button onClick={handleMinimize}> Minimize the Chat </button> */}
 
       <TawkMessengerReactUmd
         propertyId="669b6f9932dca6db2cb285bf"
