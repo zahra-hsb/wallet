@@ -25,7 +25,7 @@ const BrainComponent = () => {
             <div className='relative text-[#bbb]'>
                 <Image src={Line} alt='' className={'w-1/2 -mt-[50%] translate-x-[14%]'} />
                 <p className='absolute bottom-[27%] left-[17%] text-xs max-w-[150px] w-[120px] '>
-                    Ai Won't Replace Humans
+                    Ai Wont Replace Humans
                     But Humans With Ai Will
                     Replace Humans Without Ai
                 </p>
