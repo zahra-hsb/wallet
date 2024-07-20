@@ -4,11 +4,13 @@ import Container from "../Container"
 import axios from "axios"
 import { useAccount } from "wagmi"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 const Deposit = () => {
 
     const [amount, setAmount] = useState(0)
     const [payLink, setPayLink] = useState('')
+    const [isIos, setIos] = useState(false)
 
     const router = useRouter()
     const { address } = useAccount()
@@ -39,10 +41,14 @@ const Deposit = () => {
                 setPayLink(response.data?.payLink);
                 if (response.data?.payLink) {
                     if (isIPhone()) {
-                        let windowReference = window.open()
-                        windowReference.location = response.data?.payLink
+                        // let windowReference = window.open()
+                        // windowReference.location = response.data?.payLink
+                        // localStorage.setItem('link', response.data?.payLink)
+                        // const link = localStorage.getItem('link')
+                        setIos(true)
                     } else {
                         window.open(response.data?.payLink)
+                        setIos(false)
                     }
                 }
                 if (response.data?.message === 'success') {
@@ -69,7 +75,7 @@ const Deposit = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         if (isIPhone) {
-            
+
         }
         await payout()
 
@@ -89,7 +95,9 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div> */}
                     <div className="w-full text-center py-5">
-                        <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+                        {isIos ? <Link href={payLink} /> :
+                            <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+                        }
                     </div>
                 </form>
             </Container>
