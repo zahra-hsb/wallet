@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAccount, useAccountEffect, useDisconnect } from "wagmi";
 import MobileNav from "../MobileNav";
 import BrainComponent from "../BrainComponent";
@@ -10,16 +10,13 @@ import styles from "../../app/Home.module.css";
 import ActivityDashboard from "../ActivityDashboard";
 import axios from "axios";
 import { createRefCode } from "@/lib/methods";
+import TawkMessengerReactUmd from "@tawk.to/tawk-messenger-react";
 
 const Dashboard = () => {
   const router = useRouter();
-  // const { disconnect } = useDisconnect()
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
 
-  // const { data } = router.query
-  // if (data) {
-  //   console.log(data[0].referralCode);
-  // }
+
 
   const dataArray = [
     ['10$', '99.9$', '1 %'],
@@ -57,22 +54,13 @@ const Dashboard = () => {
           const errorData = await res.json();
           throw new Error(`Failed to fetch users: ${errorData.message}`);
         }
-        // else if (res.data != []) {
-        // foundAddress = res.data?.some((item) => item.address === address) ?? [];
-        // }
-        // console.log("getUsers:52 =>", foundAddress);
 
-        // if (foundAddress === false) {
         // save user
         console.log(foundAddress);
         await addUser();
         console.log('responce=> ', res.data);
         return res.data
-        // }
 
-        // if (!!foundAddress.length) return;
-        // // save user
-        // addUser();
 
       } catch (err) {
         console.error("getUsers:50 =>", "Error fetching users:", err);
@@ -113,6 +101,15 @@ const Dashboard = () => {
       router.push("/");
     },
   });
+
+  const tawkMessengerRef = useRef();
+
+  const handleMinimize = () => {
+    tawkMessengerRef.current.minimize();
+  };
+  const onLoad = () => {
+    console.log('onLoad works!');
+  };
   return (
     <>
       <MobileNav />
@@ -120,6 +117,14 @@ const Dashboard = () => {
         <BrainComponent />
         <TicketFeed />
       </section>
+      <button onClick={handleMinimize}> Minimize the Chat </button>
+
+      <TawkMessengerReactUmd
+        propertyId="669b6f9932dca6db2cb285bf"
+        widgetId="1i37io1qj"
+        ref={tawkMessengerRef}
+        onLoad={onLoad}
+      />
       {/* <button onClick={() => editFriends()}>edit friend</button> */}
     </>
   );
