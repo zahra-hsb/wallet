@@ -45,21 +45,21 @@ const Deposit = () => {
                 setPayLink(response.data.response.payLink);
                 if (response.data.response.payLink) {
                     postTransactions(response.data.response) 
-                    if (isIPhone()) {
-                        // let windowReference = window.open()
-                        // windowReference.location = response.data?.payLink
-                        console.log('it`s iphone device');
-                        // localStorage.setItem('link', response.data?.payLink)
-                        // const link = localStorage.getItem('link')
-                        setPayLink(response.data?.payLink)
-                        setIos(true)
-                    } else {
+                    // if (isIPhone()) {
+                    //     // let windowReference = window.open()
+                    //     // windowReference.location = response.data?.payLink
+                    //     console.log('it`s iphone device');
+                    //     // localStorage.setItem('link', response.data?.payLink)
+                    //     // const link = localStorage.getItem('link')
+                    //     setPayLink(response.data?.payLink)
+                    //     setIos(true)
+                    // } else {
                         window.open(response.data.response.payLink)
                         setPayLink(response.data.response.payLink)
                         localStorage.setItem('trackId', response.data?.response.trackId)
                         console.log('object', response.data.response.payLink);
                         setIos(false)
-                    }
+                    // }
                 }
                 // setTimeout(async () => {
                 //     const status = await checkPaymentStatus();
@@ -114,9 +114,9 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div> */}
                     <div className="w-full text-center py-5">
-                        {isIos ? <Link href={payLink} className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green" /> :
+                        {/* {isIos ? <Link href={payLink} className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green" /> : */}
                             <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
-                        }
+                        {/* } */}
                     </div>
                 </form>
             </Container>
