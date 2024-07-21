@@ -10,7 +10,7 @@ import axios from "axios"
 
 const PayStatus = () => {
     const [isPaid, setPaid] = useState(false)
-    // const message = localStorage.getItem('message')
+    const message = localStorage.getItem('message')
     // const trackId = localStorage.getItem('trackId')
     // console.log(trackId);
 
@@ -25,7 +25,7 @@ const PayStatus = () => {
         return res.data?.find(item => item.address === address).price;
     }
     async function getPayStatus() {
-        
+
 
     }
     async function updatePrice() {
@@ -35,35 +35,35 @@ const PayStatus = () => {
     }
 
 
-    // useEffect(() => {
-    //     async function getPayStatus() {
-    //         try {
-    //             const response = await axios.post(url, data, {
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             });
-    //             console.log('Response:', response.data);
-    //             if (response.data.result === '100') {
-    //                 await updatePrice()
-    //                 setPaid(true);
-    //             } else {
-    //                 setPaid(false);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //     }
-    //     getPayStatus()
-    //     setTimeout(() => {
-    //         localStorage.clear()
-    //     }, 10000)
-    // if (message === 'success') {
-    //     setPaid(true)
-    // } else {
-    //     setPaid(false)
-    // }
-    // }, [data])
+    useEffect(() => {
+        //     async function getPayStatus() {
+        //         try {
+        //             const response = await axios.post(url, data, {
+        //                 headers: {
+        //                     'Content-Type': 'application/json'
+        //                 }
+        //             });
+        //             console.log('Response:', response.data);
+        //             if (response.data.result === '100') {
+        //                 await updatePrice()
+        //                 setPaid(true);
+        //             } else {
+        //                 setPaid(false);
+        //             }
+        //         } catch (error) {
+        //             console.error('Error:', error);
+        //         }
+        //     }
+        //     getPayStatus()
+        //     setTimeout(() => {
+        //         localStorage.clear()
+        //     }, 10000)
+        if (message === 'success') {
+            setPaid(true)
+        } else {
+            setPaid(false)
+        }
+    }, [data])
 
 
 

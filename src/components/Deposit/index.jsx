@@ -57,6 +57,7 @@ const Deposit = () => {
                         window.open(response.data.response.payLink)
                         setPayLink(response.data.response.payLink)
                         localStorage.setItem('trackId', response.data?.response.trackId)
+                        localStorage.setItem('message', response.data?.response.message)
                         console.log('object', response.data.response.payLink);
                         setIos(false)
                     // }
@@ -74,13 +75,13 @@ const Deposit = () => {
                 // }, 10000);
 
 
-                // if (response.data?.message === 'success') {
-                //     console.log('success');
-                //     updatePrice()
-                //     localStorage.setItem('message', response.data?.message)
-                // } else if (response.data?.message === 'failed') {
-                //     console.log('failed');
-                // }
+                if (response.data?.message === 'success') {
+                    console.log('success');
+                    updatePrice()
+                    localStorage.setItem('message', response.data?.message)
+                } else if (response.data?.message === 'failed') {
+                    console.log('failed');
+                }
 
             })
             .catch(error => {
