@@ -27,7 +27,7 @@ const Deposit = () => {
     }
     async function checkPaymentStatus() {
         try {
-            const response = await axios.get('/api/payment-status');
+            const response = await axios.post('/api/payout', 'payment');
             return response.data.status;
         } catch (error) {
             console.error(error);
@@ -41,29 +41,33 @@ const Deposit = () => {
                 setPayLink(response.data.response.payLink);
                 if (response.data.response.payLink) {
                     if (isIPhone()) {
-                        // let windowReference = window.open()
-                        // windowReference.location = response.data?.payLink
+                        let windowReference = window.open()
+                        windowReference.location = response.data?.payLink
+                        console.log('it`s iphone device');
                         // localStorage.setItem('link', response.data?.payLink)
                         // const link = localStorage.getItem('link') 
                         setIos(true)
                     } else {
                         window.open(response.data.response.payLink)
                         setPayLink(response.data.response.payLink)
+                        localStorage.setItem('trackId', response.data?.response.trackId)
                         console.log('object', response.data.response.payLink);
                         setIos(false)
                     }
                 }
-                setTimeout(async () => {
-                    const status = await checkPaymentStatus();
-                    if (status === 'success') {
-                        console.log('Payment successful');
-                        updatePrice()
-                        localStorage.setItem('message', status)
-                    } else {
-                        console.log('Payment failed');
-                        localStorage.setItem('message', status)
-                    }
-                }, 5000);
+                // setTimeout(async () => {
+                //     const status = await checkPaymentStatus();
+                //     if (status === 'success') {
+                //         console.log('Payment successful');
+                //         updatePrice()
+                //         localStorage.setItem('message', status)
+                //     } else {
+                //         console.log('Payment failed');
+                //         localStorage.setItem('message', status)
+                //     }
+                // }, 10000);
+
+
                 // if (response.data?.message === 'success') {
                 //     console.log('success');
                 //     updatePrice()

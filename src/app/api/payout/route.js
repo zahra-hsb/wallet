@@ -3,7 +3,7 @@ import crypto from 'crypto';
 
 export async function POST(req) {
     const postData = await req.text();
-
+    
     // Parse the JSON data
     let data = null;
     try {
@@ -12,7 +12,8 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Invalid JSON data' }, { status: 400 });
     }
 
-    const apiSecretKey = (data.type === 'payment') ? 'N1CGY7-7963BT-MCCLX7-V3F74B' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
+    const apiSecretKey = (data.type === 'payment') ? 'sandbox' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
+    // const apiSecretKey = (data.type === 'payment') ? 'N1CGY7-7963BT-MCCLX7-V3F74B' : 'S35UYY-T3E96V-A3VNKK-SUDT3H';
     const hmacHeader = req.headers.get('hmac');
     const calculatedHmac = crypto
         .createHmac('sha512', apiSecretKey)
@@ -23,6 +24,7 @@ export async function POST(req) {
         // HMAC signature is valid
         if (data.type === 'payment') {
             console.log('Received payment callback:', data);
+
             // Process payment data here
         } else if (data.type === 'payout') {
             console.log('Received payout callback:', data);
