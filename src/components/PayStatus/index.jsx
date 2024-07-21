@@ -20,7 +20,14 @@ const PayStatus = () => {
     //     trackId: trackId
     // });
     // console.log(trackId);
+    async function getPrice() {
+        const res = await axios.get('/api/getUsers')
+        return res.data?.find(item => item.address === address).price;
+    }
+    async function getPayStatus() {
+        
 
+    }
     async function updatePrice() {
         const prevPrice = await getPrice()
         await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
@@ -51,11 +58,11 @@ const PayStatus = () => {
     //     setTimeout(() => {
     //         localStorage.clear()
     //     }, 10000)
-        // if (message === 'success') {
-        //     setPaid(true)
-        // } else {
-        //     setPaid(false)
-        // }
+    // if (message === 'success') {
+    //     setPaid(true)
+    // } else {
+    //     setPaid(false)
+    // }
     // }, [data])
 
 

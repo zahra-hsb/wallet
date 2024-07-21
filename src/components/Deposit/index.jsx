@@ -30,12 +30,21 @@ const Deposit = () => {
             return 'failed';
         }
     }
+
+    async function postTransactions(response) {
+        try {
+            await axios.post('/api/postTransaction', response)
+        } catch(error) {
+            console.log(error);
+        }
+    }
     async function payout() {
         await axios.post('/api/payment', amount)
             .then(response => {
                 console.log(response.data.response);
                 setPayLink(response.data.response.payLink);
                 if (response.data.response.payLink) {
+                    postTransactions(response.data.response) 
                     if (isIPhone()) {
                         // let windowReference = window.open()
                         // windowReference.location = response.data?.payLink
@@ -81,10 +90,7 @@ const Deposit = () => {
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    async function getPrice() {
-        const res = await axios.get('/api/getUsers')
-        return res.data?.find(item => item.address === address).price;
-    }
+    
 
 
     async function handleSubmit(e) {

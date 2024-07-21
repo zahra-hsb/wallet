@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import axios from 'axios';
 
 export async function POST(req) {
     const postData = await req.text();
-    
+
     // Parse the JSON data
     let data = null;
     try {
@@ -24,11 +25,12 @@ export async function POST(req) {
         // HMAC signature is valid
         if (data.type === 'payment') {
             console.log('Received payment callback:', data);
-
+           
             // Process payment data here
         } else if (data.type === 'payout') {
-            console.log('Received payout callback:', data);
+            console.log('Received payout callback:', data); 
             // Process payout data here
+            
         }
 
         return NextResponse.json({ message: 'OK' }, { status: 200 });
