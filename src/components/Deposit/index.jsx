@@ -25,7 +25,15 @@ const Deposit = () => {
         await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
 
     }
-
+    async function checkPaymentStatus() {
+        try {
+            const response = await axios.get('/api/payment-status');
+            return response.data.status;
+        } catch (error) {
+            console.error(error);
+            return 'failed';
+        }
+    }
     async function payout() {
         await axios.post('/api/payment', amount)
             .then(response => {
@@ -39,12 +47,23 @@ const Deposit = () => {
                         // const link = localStorage.getItem('link') 
                         setIos(true)
                     } else {
-                        // window.open(response.data.response.payLink)
+                        window.open(response.data.response.payLink)
                         setPayLink(response.data.response.payLink)
                         console.log('object', response.data.response.payLink);
                         setIos(false)
                     }
                 }
+                setTimeout(async () => {
+                    const status = await checkPaymentStatus();
+                    if (status === 'success') {
+                        console.log('Payment successful');
+                        updatePrice()
+                        localStorage.setItem('message', status)
+                    } else {
+                        console.log('Payment failed');
+                        localStorage.setItem('message', status)
+                    }
+                }, 5000);
                 // if (response.data?.message === 'success') {
                 //     console.log('success');
                 //     updatePrice()
@@ -52,6 +71,7 @@ const Deposit = () => {
                 // } else if (response.data?.message === 'failed') {
                 //     console.log('failed');
                 // }
+
             })
             .catch(error => {
                 console.error(error);
@@ -68,9 +88,7 @@ const Deposit = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if (isIPhone) {
 
-        }
         await payout()
 
     }
@@ -89,10 +107,9 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div> */}
                     <div className="w-full text-center py-5">
-                        {/* {isIos ? <Link href={payLink} /> :
-                            <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
-                        } */}
-                        <Link href={payLink} className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</Link>
+                        {/* {isIos ? <Link href={payLink} /> : */}
+                        <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+                        {/* } */}
                     </div>
                 </form>
             </Container>

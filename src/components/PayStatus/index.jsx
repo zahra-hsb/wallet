@@ -24,7 +24,7 @@ const PayStatus = () => {
     return (
         <>
             <Container>
-                {isPaid ?
+                {isPaid ? 
                     <>
                         <p>Payment Successful!</p>
                         <Image src={Successful} />
