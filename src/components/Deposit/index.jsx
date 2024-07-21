@@ -14,9 +14,10 @@ const Deposit = () => {
 
     const router = useRouter()
     const { address } = useAccount()
-    
+
     const isIPhone = () => {
         const userAgent = window.navigator.userAgent;
+        console.log(userAgent);
         return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
     };
     async function updatePrice() {
@@ -27,21 +28,23 @@ const Deposit = () => {
 
     async function payout() {
         await axios.post('/api/payment', amount)
-            // .then(response => {
-            //     console.log(response.data);
-                // setPayLink(response.data?.payLink);
-                // if (response.data?.payLink) {
-                //     if (isIPhone()) {
-                //         // let windowReference = window.open()
-                //         // windowReference.location = response.data?.payLink
-                //         // localStorage.setItem('link', response.data?.payLink)
-                //         // const link = localStorage.getItem('link')
-                //         setIos(true)
-                //     } else {
-                //         window.open(response.data?.payLink)
-                //         setIos(false)
-                //     }
-                // }
+            .then(response => {
+                console.log(response.data.response.payLink);
+                setPayLink(response.data.response.payLink);
+                if (response.data.response.payLink) {
+                    if (isIPhone()) {
+                        // let windowReference = window.open()
+                        // windowReference.location = response.data?.payLink
+                        // localStorage.setItem('link', response.data?.payLink)
+                        // const link = localStorage.getItem('link') 
+                        setIos(true)
+                    } else {
+                        // window.open(response.data.response.payLink)
+                        setPayLink(response.data.response.payLink)
+                        console.log('object', response.data.response.payLink);
+                        setIos(false)
+                    }
+                }
                 // if (response.data?.message === 'success') {
                 //     console.log('success');
                 //     updatePrice()
@@ -49,10 +52,10 @@ const Deposit = () => {
                 // } else if (response.data?.message === 'failed') {
                 //     console.log('failed');
                 // }
-            // })
-            // .catch(error => {
-            //     console.error(error);
-            // });
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
     function handleChange(e) {
         setAmount(e.target.value)
@@ -86,9 +89,10 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div> */}
                     <div className="w-full text-center py-5">
-                        {isIos ? <Link href={payLink} /> :
+                        {/* {isIos ? <Link href={payLink} /> :
                             <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
-                        }
+                        } */}
+                        <Link href={payLink} className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</Link>
                     </div>
                 </form>
             </Container>
