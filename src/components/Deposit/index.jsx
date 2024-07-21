@@ -14,16 +14,7 @@ const Deposit = () => {
 
     const router = useRouter()
     const { address } = useAccount()
-    const url = 'https://api.oxapay.com/merchants/request';
-    const data = JSON.stringify({
-        merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
-        // merchant: 'sandbox',
-        amount: amount,
-        callbackUrl: 'https://aismart.liara.run/api/payout',
-        // callbackUrl: 'http://localhost:3000/api/payout',
-        returnUrl: 'https://aismart.liara.run/payStatus'
-        // returnUrl: 'http://localhost:3000/payStatus'
-    })
+    
     const isIPhone = () => {
         const userAgent = window.navigator.userAgent;
         return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
@@ -35,33 +26,33 @@ const Deposit = () => {
     }
 
     async function payout() {
-        await axios.post(url, data)
-            .then(response => {
-                console.log(response.data);
-                setPayLink(response.data?.payLink);
-                if (response.data?.payLink) {
-                    if (isIPhone()) {
-                        // let windowReference = window.open()
-                        // windowReference.location = response.data?.payLink
-                        // localStorage.setItem('link', response.data?.payLink)
-                        // const link = localStorage.getItem('link')
-                        setIos(true)
-                    } else {
-                        window.open(response.data?.payLink)
-                        setIos(false)
-                    }
-                }
-                if (response.data?.message === 'success') {
-                    console.log('success');
-                    updatePrice()
-                    localStorage.setItem('message', response.data?.message)
-                } else if (response.data?.message === 'failed') {
-                    console.log('failed');
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        await axios.post('/api/payment', amount)
+            // .then(response => {
+            //     console.log(response.data);
+                // setPayLink(response.data?.payLink);
+                // if (response.data?.payLink) {
+                //     if (isIPhone()) {
+                //         // let windowReference = window.open()
+                //         // windowReference.location = response.data?.payLink
+                //         // localStorage.setItem('link', response.data?.payLink)
+                //         // const link = localStorage.getItem('link')
+                //         setIos(true)
+                //     } else {
+                //         window.open(response.data?.payLink)
+                //         setIos(false)
+                //     }
+                // }
+                // if (response.data?.message === 'success') {
+                //     console.log('success');
+                //     updatePrice()
+                //     localStorage.setItem('message', response.data?.message)
+                // } else if (response.data?.message === 'failed') {
+                //     console.log('failed');
+                // }
+            // })
+            // .catch(error => {
+            //     console.error(error);
+            // });
     }
     function handleChange(e) {
         setAmount(e.target.value)
