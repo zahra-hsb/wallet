@@ -59,6 +59,7 @@ const PayStatus = () => {
         //         localStorage.clear()
         //     }, 10000)
         if (message === 'success') {
+            updatePrice()
             setPaid(true)
         } else {
             setPaid(false)
