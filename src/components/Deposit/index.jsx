@@ -20,11 +20,7 @@ const Deposit = () => {
         console.log(userAgent);
         return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
     };
-    async function updatePrice() {
-        const prevPrice = await getPrice()
-        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
 
-    }
     async function checkPaymentStatus() {
         try {
             const response = await axios.post('/api/payout', 'payment');
@@ -37,15 +33,16 @@ const Deposit = () => {
     async function payout() {
         await axios.post('/api/payment', amount)
             .then(response => {
-                console.log(response.data.response.payLink);
+                console.log(response.data.response);
                 setPayLink(response.data.response.payLink);
                 if (response.data.response.payLink) {
                     if (isIPhone()) {
-                        let windowReference = window.open()
-                        windowReference.location = response.data?.payLink
+                        // let windowReference = window.open()
+                        // windowReference.location = response.data?.payLink
                         console.log('it`s iphone device');
                         // localStorage.setItem('link', response.data?.payLink)
-                        // const link = localStorage.getItem('link') 
+                        // const link = localStorage.getItem('link')
+                        setPayLink(response.data?.payLink)
                         setIos(true)
                     } else {
                         window.open(response.data.response.payLink)
@@ -111,9 +108,9 @@ const Deposit = () => {
                         <input type="text" id="upline" name='upline' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Referral Code" />
                     </div> */}
                     <div className="w-full text-center py-5">
-                        {/* {isIos ? <Link href={payLink} /> : */}
-                        <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
-                        {/* } */}
+                        {isIos ? <Link href={payLink} className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green" /> :
+                            <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+                        }
                     </div>
                 </form>
             </Container>
