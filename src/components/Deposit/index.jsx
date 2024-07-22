@@ -86,8 +86,9 @@ const Deposit = () => {
 
                 if (response.data?.response.message === 'success') {
                     console.log('success');
-                    updatePrice()
+                    // updatePrice()
                     localStorage.setItem('message', response.data?.response.message) 
+                    localStorage.setItem('amount', amount) 
                 } else if (response.data?.response.message === 'failed') {
                     console.log('failed');
                 }

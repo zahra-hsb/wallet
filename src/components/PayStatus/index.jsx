@@ -12,9 +12,10 @@ import { useAccount } from "wagmi"
 const PayStatus = () => {
     const [isPaid, setPaid] = useState(false)
     const message = localStorage.getItem('message')
+    const amount = localStorage.getItem('amount')
     // const trackId = localStorage.getItem('trackId')
     const { address } = useAccount()
-    console.log(message); 
+    console.log(message);
     // console.log(trackId);
 
     // const url = 'https://api.oxapay.com/api/inquiry';
@@ -80,7 +81,6 @@ const PayStatus = () => {
         // getPayStatus()
 
         if (message === 'success') {
-            // updatePrice()
             setPaid(true)
         } else {
             setPaid(false)
@@ -93,7 +93,10 @@ const PayStatus = () => {
 
 
 
-    function clearLocalStrg() {
+    async function clearLocalStrg() {
+        if (isPaid) {
+            await updatePrice()
+        }
         localStorage.clear()
     }
     return (
