@@ -11,9 +11,10 @@ import { useAccount } from "wagmi"
 
 const PayStatus = () => {
     const [isPaid, setPaid] = useState(false)
-    // const message = localStorage.getItem('message')
-    const trackId = localStorage.getItem('trackId')
+    const message = localStorage.getItem('message')
+    // const trackId = localStorage.getItem('trackId')
     const { address } = useAccount()
+    console.log(message); 
     // console.log(trackId);
 
     // const url = 'https://api.oxapay.com/api/inquiry';
@@ -35,27 +36,27 @@ const PayStatus = () => {
 
 
     useEffect(() => {
-        async function getPayStatus() {
-            try {
-                const transactions = await axios.get('/api/getTransaction')
-                const status = transactions.find(item => item.trackId === trackId).status
-                if (status !== undefined) {
-                    if (status === 'Paid') {
-                        await updatePrice()
-                        setPaid(true)
-                    } else {
-                        setPaid(false)
-                    }
-                } else {
-                    console.error('status undefined');
-                }
-            } catch (error) {
-                console.log(error);
-            }
+        // async function getPayStatus() {
+        //     try {
+        //         const transactions = await axios.get('/api/getTransaction')
+        //         const status = transactions.find(item => item.trackId === trackId).status
+        //         if (status !== undefined) {
+        //             if (status === 'Paid') {
+        //                 await updatePrice()
+        //                 setPaid(true)
+        //             } else {
+        //                 setPaid(false)
+        //             }
+        //         } else {
+        //             console.error('status undefined');
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
 
-        }
+        // }
 
-        getPayStatus()
+        // getPayStatus()
 
 
         // async function getPayStatus() {
@@ -77,11 +78,18 @@ const PayStatus = () => {
         //     }
         // }
         // getPayStatus()
-        setTimeout(() => {
-            localStorage.clear()
-        }, 8000)
 
-    }, [trackId])
+        if (message === 'success') {
+            // updatePrice()
+            setPaid(true)
+        } else {
+            setPaid(false)
+        }
+        // setTimeout(() => {
+        //     localStorage.clear()
+        // }, 8000)
+
+    }, [])
 
 
 

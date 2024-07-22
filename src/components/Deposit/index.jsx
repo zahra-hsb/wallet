@@ -38,6 +38,16 @@ const Deposit = () => {
             console.log(error);
         }
     }
+    async function getPrice() {
+        const res = await axios.get('/api/getUsers')
+        return res.data?.find(item => item.address === address).price;
+    }
+
+    async function updatePrice() {
+        const prevPrice = await getPrice()
+        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice }) 
+
+    }
     async function payout() {
         await axios.post('/api/payment', amount)
             .then(response => {
@@ -74,13 +84,13 @@ const Deposit = () => {
                 // }, 10000);
 
 
-                // if (response.data?.message === 'success') {
-                //     console.log('success');
-                //     // updatePrice()
-                //     localStorage.setItem('message', response.data?.message)
-                // } else if (response.data?.message === 'failed') {
-                //     console.log('failed');
-                // }
+                if (response.data?.response.message === 'success') {
+                    console.log('success');
+                    updatePrice()
+                    localStorage.setItem('message', response.data?.response.message) 
+                } else if (response.data?.response.message === 'failed') {
+                    console.log('failed');
+                }
 
             })
             .catch(error => {
