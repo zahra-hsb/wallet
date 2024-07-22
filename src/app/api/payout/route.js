@@ -25,12 +25,20 @@ export async function POST(req) {
         // HMAC signature is valid
         if (data.type === 'payment') {
             console.log('Received payment callback:', data);
-           
+            try {
+                await axios.put('/api/putTransaction', data)
+            } catch (err) { 
+                console.log(err);
+            }
             // Process payment data here
         } else if (data.type === 'payout') {
-            console.log('Received payout callback:', data); 
+            console.log('Received payout callback:', data);
             // Process payout data here
-            
+            try {
+                await axios.put('/api/putTransaction', data)
+            } catch (err) {
+                console.log(err);
+            }
         }
 
         return NextResponse.json({ message: 'OK' }, { status: 200 });

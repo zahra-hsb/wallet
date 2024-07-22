@@ -21,15 +21,15 @@ const Deposit = () => {
         return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
     };
 
-    async function checkPaymentStatus() {
-        try {
-            const response = await axios.post('/api/payout', 'payment');
-            return response.data.status;
-        } catch (error) {
-            console.error(error);
-            return 'failed';
-        }
-    }
+    // async function checkPaymentStatus() {
+    //     try {
+    //         const response = await axios.post('/api/payout', 'payment');
+    //         return response.data.status;
+    //     } catch (error) {
+    //         console.error(error);
+    //         return 'failed';
+    //     }
+    // }
 
     async function postTransactions(response) {
         try {
@@ -57,7 +57,6 @@ const Deposit = () => {
                         window.open(response.data.response.payLink)
                         setPayLink(response.data.response.payLink)
                         localStorage.setItem('trackId', response.data?.response.trackId)
-                        localStorage.setItem('message', response.data?.response.message)
                         console.log('object', response.data.response.payLink);
                         setIos(false)
                     // }
@@ -75,13 +74,13 @@ const Deposit = () => {
                 // }, 10000);
 
 
-                if (response.data?.message === 'success') {
-                    console.log('success');
-                    updatePrice()
-                    localStorage.setItem('message', response.data?.message)
-                } else if (response.data?.message === 'failed') {
-                    console.log('failed');
-                }
+                // if (response.data?.message === 'success') {
+                //     console.log('success');
+                //     // updatePrice()
+                //     localStorage.setItem('message', response.data?.message)
+                // } else if (response.data?.message === 'failed') {
+                //     console.log('failed');
+                // }
 
             })
             .catch(error => {
