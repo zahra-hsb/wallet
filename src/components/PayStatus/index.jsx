@@ -7,11 +7,13 @@ import Failed from '../../../public/icons/payment-failed.svg'
 import Successful from '../../../public/icons/digital-payment-successful.svg'
 import Link from "next/link"
 import axios from "axios"
+import { useAccount } from "wagmi"
 
 const PayStatus = () => {
     const [isPaid, setPaid] = useState(false)
     // const message = localStorage.getItem('message')
     const trackId = localStorage.getItem('trackId')
+    const { address } = useAccount()
     // console.log(trackId);
 
     // const url = 'https://api.oxapay.com/api/inquiry';
@@ -24,20 +26,7 @@ const PayStatus = () => {
         const res = await axios.get('/api/getUsers')
         return res.data?.find(item => item.address === address).price;
     }
-    async function getPayStatus() {
-        try {
-            const transactions = await axios.get('/api/getTransaction')
-            const status = transactions.find(item => item.trackId === trackId).status
-            if (status === 'Paid') {
-                setPaid(true)
-            } else {
-                setPaid(false)
-            }
-        } catch (error) {
-            console.log(error);
-        }
 
-    }
     async function updatePrice() {
         const prevPrice = await getPrice()
         await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
@@ -45,35 +34,54 @@ const PayStatus = () => {
     }
 
 
-    // useEffect(() => {
-    //     async function getPayStatus() {
-    //         try {
-    //             const response = await axios.post(url, data, {
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             });
-    //             console.log('Response:', response.data);
-    //             if (response.data.result === '100') {
-    //                 await updatePrice()
-    //                 setPaid(true);
-    //             } else {
-    //                 setPaid(false);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //     }
-    //     getPayStatus()
-    //     setTimeout(() => {
-    //         localStorage.clear()
-    //     }, 10000)
-    // if (message === 'success') {
-    //     setPaid(true)
-    // } else {
-    //     setPaid(false)
-    // }
-    // }, [data])
+    useEffect(() => {
+        async function getPayStatus() {
+            try {
+                const transactions = await axios.get('/api/getTransaction')
+                const status = transactions.find(item => item.trackId === trackId).status
+                if (status !== undefined) {
+                    if (status === 'Paid') {
+                        await updatePrice()
+                        setPaid(true)
+                    } else {
+                        setPaid(false)
+                    }
+                } else {
+                    console.error('status undefined');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        getPayStatus()
+
+
+        // async function getPayStatus() {
+        //     try {
+        //         const response = await axios.post(url, data, {
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             }
+        //         });
+        //         console.log('Response:', response.data);
+        //         if (response.data.result === '100') {
+        //             await updatePrice()
+        //             setPaid(true);
+        //         } else {
+        //             setPaid(false);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //     }
+        // }
+        // getPayStatus()
+        setTimeout(() => {
+            localStorage.clear()
+        }, 8000)
+
+    }, [trackId])
 
 
 
@@ -86,12 +94,12 @@ const PayStatus = () => {
                 {isPaid ?
                     <>
                         <p>Payment Successful!</p>
-                        <Image src={Successful} />
+                        <Image src={Successful} alt="payment successfully" />
                     </>
                     :
                     <>
                         <p>Payment failed!</p>
-                        <Image src={Failed} />
+                        <Image src={Failed} alt="payment failed" />
                     </>
                 }
                 <Link href={'/dashboard'} onClick={clearLocalStrg} className="bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full text-center my-2">return to dashboard</Link>

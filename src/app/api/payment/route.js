@@ -15,7 +15,7 @@ export async function POST(req) {
             merchant: 'N1CGY7-7963BT-MCCLX7-V3F74B',
             // merchant: 'sandbox',
             amount: amount,
-            callbackUrl: 'https://aismart.liara.run/payout',
+            callbackUrl: 'https://aismart.liara.run/api/payout',
             // callbackUrl: 'http://localhost:3001/api/payout',
             returnUrl: 'https://aismart.liara.run/payStatus'
             // returnUrl: 'http://localhost:3001/payStatus'
