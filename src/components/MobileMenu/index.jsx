@@ -5,6 +5,7 @@ import Referral from '../../../public/icons/referral.png'
 import Support from '../../../public/icons/support.png'
 import Logout from '../../../public/icons/logout.png'
 import about from '../../../public/icons/about.png'
+import guide from '../../../public/icons/guide.png'
 import Link from 'next/link'
 import Image from 'next/image'
 import { IoMdClose } from "react-icons/io";
@@ -22,6 +23,7 @@ const MobileMenu = ({ close, isOpen }) => {
         { name: 'Withdraw', url: '/withdraw', icon: Withdraw },
         { name: 'Referral', url: 'referral', icon: Referral },
         { name: 'Support', url: '/support', icon: Support },
+        { name: 'Guide', url: '/guide', icon: guide },
         { name: 'About', url: '/about', icon: about },
     ]
 
