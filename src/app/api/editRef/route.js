@@ -18,7 +18,7 @@ export async function PUT(req) {
         // const foundRef = await UsersModel.find({ referralCode: resultRef }, {})
         // console.log('found ref: ', foundRef);
 
-        const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { referralCode: resultRef } })
+        const updatedDoc = await UsersModel.findOneAndUpdate({ address: address }, { $set: { referralCode: resultRef } })
         if (!updatedDoc.modifiedCount) {
             throw new Error('Document not found or not updated');
         }

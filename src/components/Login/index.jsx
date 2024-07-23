@@ -74,7 +74,6 @@ const Login = () => {
 
         // referral 
         if (pathname === `/${foundRef}`) {
-            console.log(pathname);
             return router.query.slug
         }
 

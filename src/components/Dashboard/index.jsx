@@ -34,6 +34,8 @@ const Dashboard = () => {
           address: address,
           referralCode: '',
           price: 0,
+          totalInvestment: 0,
+          totalInvestmentLvl1: 0
         });
       } catch (error) {
         console.log(error);
@@ -47,8 +49,6 @@ const Dashboard = () => {
       try {
         const res = await axios.get("/api/getUsers");
 
-        let foundAddress;
-        console.log("getUsers:45 =>", res.data);
 
         if (res.status !== 200) {
           const errorData = await res.json();
@@ -56,11 +56,9 @@ const Dashboard = () => {
         }
 
         // save user
-        console.log(foundAddress);
         await addUser();
         console.log('responce=> ', res.data);
         return res.data
-
 
       } catch (err) {
         console.error("getUsers:50 =>", "Error fetching users:", err);
@@ -70,9 +68,8 @@ const Dashboard = () => {
     [address]
   );
 
-  async function saveUser() {
+  async function getUser() {
     const data = await getUsers()
-    console.log('80=> ', data);
   }
 
   async function editFriends() {
@@ -92,7 +89,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    saveUser();
+    getUser();
   }, []);
 
   // on disconnect from wallet  

@@ -12,6 +12,12 @@ const UserSchema = new Schema({
     price: {
         type: Number
     },
+    totalInvestment: {
+        type: Number
+    },
+    totalInvestmentLvl1: {
+        type: Number
+    },
     friends: {
         type: Array,
         items: {
