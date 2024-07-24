@@ -17,16 +17,6 @@ const Dashboard = () => {
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
 
 
-
-  const dataArray = [
-    ['10$', '99.9$', '1 %'],
-    ['100$', '999.9$', '1.1 %'],
-    ['1000$', '2499.9$', '1.2 %'],
-    ['2500$', '4999.9$', '1.3 %'],
-    ['5000$', '9999.9$', '1.4 %'],
-    ['10000$', '24999.9$', '1.5 %'],
-  ]
-
   const addUser = useCallback(
     async () => {
       try {
@@ -57,7 +47,7 @@ const Dashboard = () => {
 
         // save user
         await addUser();
-        console.log('responce=> ', res.data);
+
         return res.data
 
       } catch (err) {

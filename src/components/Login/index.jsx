@@ -82,7 +82,7 @@ const Login = () => {
         } else {
             try {
                 const link = 'https://aismart.liara.run' + pathname
-                await axios.put('/api/editFriends', { data, link })
+                await axios.put('/api/editFriends', { data, link, foundRef })
             } catch (err) {
                 console.log(err);
             }
