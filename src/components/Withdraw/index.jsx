@@ -84,7 +84,8 @@ const Withdraw = () => {
                 <Container>
                     <h3>Wallet Balance</h3>
                     {/* <p>3210.00 USDT</p> */}
-                    <p>{priceValue ? priceValue : 'Loading...'} {result.data?.symbol}</p>
+                    <p>{priceValue ? priceValue + ' USDT' : 'Loading...'}</p>
+                    {/* <p>{priceValue ? priceValue : 'Loading...'} {result.data?.symbol}</p> */}
                     <div className="flex gap-3">
                         <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
                         <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>

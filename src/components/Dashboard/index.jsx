@@ -62,21 +62,7 @@ const Dashboard = () => {
     const data = await getUsers()
   }
 
-  async function editFriends() {
-    try {
-      // const link = 'https://aismart.liara.run' + pathname
-      const address = 'https://aismart.liara.run/lJLXVixVNVay'
-      const level = 1
-      const link = ''
-      const data = [
-        { address, level }
-      ]
-      await axios.put('/api/editFriends', { link, data })
-    } catch (err) {
-      console.log(err);
-    }
-
-  }
+ 
 
   useEffect(() => {
     getUser();
