@@ -92,10 +92,10 @@ const ActivityDashboard = () => {
                                     </span>
                                     <div className="overflow-hidden">
                                         <h3 className="text-white">
-                                            {/* {item.details} */}
-                                        </h3>
-                                        <p className="text-gray-500">
                                             {item.address}
+                                            </h3>
+                                        <p className="text-gray-500">
+                                            {item.level}
                                         </p>
                                     </div>
                                 </div>
