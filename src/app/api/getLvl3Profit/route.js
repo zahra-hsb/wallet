@@ -20,7 +20,7 @@ export async function GET(req) {
             // item.price >= 10 && item.price <= 99 ?
             total += item.price
         })
-        const lvl3Profit = total * 10 / 100
+        const lvl3Profit = total * 5 / 100
         console.log('lvl3: ', usersWithPrices);
         console.log('lvl3: ', lvl3Profit);
         return NextResponse.json({ lvl3Profit })

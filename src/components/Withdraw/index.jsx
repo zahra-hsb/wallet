@@ -19,6 +19,7 @@ const Withdraw = () => {
     const [profitlvl1, setProfitLvl1] = useState(0)
     const [profitlvl2, setProfitLvl2] = useState(0)
     const [profitlvl3, setProfitLvl3] = useState(0)
+    const [totalProfit, setTotalProfit] = useState(0)
 
     const [priceValue, setPriceValue] = useState(0)
     const router = useRouter()
@@ -78,12 +79,13 @@ const Withdraw = () => {
                 const profitLvl2 = await axios.get(`/api/getLvl2Profit?address=${encodeURIComponent(address)}`)
                 const profitLvl3 = await axios.get(`/api/getLvl3Profit?address=${encodeURIComponent(address)}`)
                 if (profits.data && profitLvl1.data && profitLvl2.data) {
-                    console.log(profitLvl1.data.lvl1Profit);
+                    console.log(profitLvl3.data.total);
+                    let total = profits?.data.profitValue + profitLvl1?.data.lvl1Profit + profitLvl3?.data.lvl3Profit + profitLvl2?.data.lvl2Profit
                     setDailyProfit(profits?.data.profitValue)
                     setProfitLvl1(profitLvl1?.data.lvl1Profit)
                     setProfitLvl2(profitLvl2?.data.lvl2Profit)
                     setProfitLvl3(profitLvl3?.data.lvl3Profit)
-
+                    setTotalProfit(total)
                 } else {
                     console.log('error');
                 }
@@ -132,7 +134,7 @@ const Withdraw = () => {
                         </tr>
                         <tr className="border-y border-y-gray-700">
                             <th className="text-white py-5">{dailyProfit ? dailyProfit : 0}</th>
-                            <th className="text-white py-5">15%</th>
+                            <th className="text-white py-5">{totalProfit ? totalProfit : 0}</th>
                         </tr>
                     </table>
 
