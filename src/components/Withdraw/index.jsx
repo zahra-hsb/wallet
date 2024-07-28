@@ -16,6 +16,9 @@ const Withdraw = () => {
     const [note, setNote] = useState('')
     const [password, setPassword] = useState('')
     const [dailyProfit, setDailyProfit] = useState(0)
+    const [profitlvl1, setProfitLvl1] = useState(0)
+    const [profitlvl2, setProfitLvl2] = useState(0)
+    const [profitlvl3, setProfitLvl3] = useState(0)
 
     const [priceValue, setPriceValue] = useState(0)
     const router = useRouter()
@@ -65,15 +68,22 @@ const Withdraw = () => {
         functionName: 'balanceOf',
     })
 
-    
+
 
     useEffect(() => {
         async function getProfits() {
             try {
                 const profits = await axios.get(`/api/getProfits?address=${encodeURIComponent(address)}`)
-                if (profits.data) {
-                    console.log(profits?.data.profitValue);
+                const profitLvl1 = await axios.get(`/api/getLvl1Profit?address=${encodeURIComponent(address)}`)
+                const profitLvl2 = await axios.get(`/api/getLvl2Profit?address=${encodeURIComponent(address)}`)
+                const profitLvl3 = await axios.get(`/api/getLvl3Profit?address=${encodeURIComponent(address)}`)
+                if (profits.data && profitLvl1.data && profitLvl2.data) {
+                    console.log(profitLvl1.data.lvl1Profit);
                     setDailyProfit(profits?.data.profitValue)
+                    setProfitLvl1(profitLvl1?.data.lvl1Profit)
+                    setProfitLvl2(profitLvl2?.data.lvl2Profit)
+                    setProfitLvl3(profitLvl3?.data.lvl3Profit)
+
                 } else {
                     console.log('error');
                 }
@@ -133,9 +143,9 @@ const Withdraw = () => {
                             <th className="text-gray-400 py-5">lvl.3 Profit</th>
                         </tr>
                         <tr className="border-y border-y-gray-700">
-                            <th className="text-white py-5"></th>
-                            <th className="text-white py-5"></th>
-                            <th className="text-white py-5"></th>
+                            <th className="text-white py-5">{profitlvl1 != 0 ? profitlvl1 : 0}</th>
+                            <th className="text-white py-5">{profitlvl2 != 0 ? profitlvl2 : 0}</th>
+                            <th className="text-white py-5">{profitlvl3 != 0 ? profitlvl3 : 0}</th>
                         </tr>
                     </table>
                 </Container>

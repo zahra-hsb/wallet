@@ -25,7 +25,8 @@ const Dashboard = () => {
           referralCode: '',
           price: 0,
           totalInvestment: 0,
-          totalInvestmentLvl1: 0
+          totalInvestmentLvl1: 0,
+          dailyProfit: 0
         });
       } catch (error) {
         console.log(error);

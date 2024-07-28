@@ -18,6 +18,9 @@ const UserSchema = new Schema({
     totalInvestmentLvl1: {
         type: Number
     },
+    dailyProfit: {
+        type: Number
+    },
     friends: {
         type: Array,
         items: {
