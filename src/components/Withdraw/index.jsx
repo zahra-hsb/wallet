@@ -15,6 +15,7 @@ const Withdraw = () => {
     const [amount, setAmount] = useState('')
     const [note, setNote] = useState('')
     const [password, setPassword] = useState('')
+    const [dailyProfit, setDailyProfit] = useState(0)
 
     const [priceValue, setPriceValue] = useState(0)
     const router = useRouter()
@@ -64,19 +65,39 @@ const Withdraw = () => {
         functionName: 'balanceOf',
     })
 
-
+    
 
     useEffect(() => {
+        async function getProfits() {
+            try {
+                const profits = await axios.get(`/api/getProfits?address=${encodeURIComponent(address)}`)
+                if (profits.data) {
+                    console.log(profits?.data.profitValue);
+                    setDailyProfit(profits?.data.profitValue)
+                } else {
+                    console.log('error');
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
         async function getUser() {
             try {
                 const response = await axios.get('/api/getUsers')
-                setPriceValue(response.data?.find(item => item.address === address).price);
+                const price = await response.data.find(item => item.address === address).price
+                if (price) {
+                    setPriceValue(price);
+                } else {
+                    console.warn(`No price found: ${price}`);
+                }
                 return response
             } catch (error) {
                 console.log(error);
             }
         }
         getUser()
+        getProfits()
     }, [address])
     return (
         <>
@@ -84,12 +105,39 @@ const Withdraw = () => {
                 <Container>
                     <h3>Wallet Balance</h3>
                     {/* <p>3210.00 USDT</p> */}
-                    <p>{priceValue ? priceValue + ' USDT' : 'Loading...'}</p>
+                    <p>{priceValue != 0 ? priceValue : '0'} USDT</p>
                     {/* <p>{priceValue ? priceValue : 'Loading...'} {result.data?.symbol}</p> */}
                     <div className="flex gap-3">
                         <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-green border-[#20FF44]">Deposit</button>
                         <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>
                     </div>
+                </Container>
+                <Container>
+                    <h3 className="text-lg font-bold">Profits</h3>
+
+                    <table className="text-white w-full">
+                        <tr className="">
+                            <th className="text-gray-400 py-5">Daily Profit</th>
+                            <th className="text-gray-400 py-5">Total Profit</th>
+                        </tr>
+                        <tr className="border-y border-y-gray-700">
+                            <th className="text-white py-5">{dailyProfit ? dailyProfit : 0}</th>
+                            <th className="text-white py-5">15%</th>
+                        </tr>
+                    </table>
+
+                    <table className="text-white w-full">
+                        <tr className="">
+                            <th className="text-gray-400 py-5">lvl.1 Profit</th>
+                            <th className="text-gray-400 py-5">lvl.2 Profit</th>
+                            <th className="text-gray-400 py-5">lvl.3 Profit</th>
+                        </tr>
+                        <tr className="border-y border-y-gray-700">
+                            <th className="text-white py-5"></th>
+                            <th className="text-white py-5"></th>
+                            <th className="text-white py-5"></th>
+                        </tr>
+                    </table>
                 </Container>
                 <Container>
                     <form onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">

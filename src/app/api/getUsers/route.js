@@ -13,6 +13,7 @@ export async function GET() {
         await dbConnect()
         const users = await UsersModel.find({})
         revalidatePath('/all', 'page')
+        revalidatePath('/withdraw', 'page')
 
         return NextResponse.json(users);
     } catch (err) {
