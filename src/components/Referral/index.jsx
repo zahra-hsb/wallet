@@ -11,45 +11,48 @@ const Referral = () => {
     const [refCode, setRefCode] = useState('')
     const { address } = useAccount()
     // window.Clipboard = (function(window, document, navigator) {
-    //     var textArea,
-    //         copy;
+    var textArea,
+        copy;
 
     //     function isOS() {
     //         return navigator.userAgent.match(/ipad|ipod|iphone/i);
     //     }
+    function isOS() {
+        console.log('yeah this is iphone');
+        return navigator.userAgent.match(/ipad|ipod|iphone/i);
+    }
+    function createTextArea(text) {
+        textArea = document.createElement('textArea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+    }
 
-    //     function createTextArea(text) {
-    //         textArea = document.createElement('textArea');
-    //         textArea.value = text;
-    //         document.body.appendChild(textArea);
-    //     }
+    function selectText() {
+        var range,
+            selection;
 
-    //     function selectText() {
-    //         var range,
-    //             selection;
+        if (isOS()) {
+            range = document.createRange();
+            range.selectNodeContents(textArea);
+            selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            textArea.setSelectionRange(0, 999999);
+        } else {
+            textArea.select();
+        }
+    }
 
-    //         if (isOS()) {
-    //             range = document.createRange();
-    //             range.selectNodeContents(textArea);
-    //             selection = window.getSelection();
-    //             selection.removeAllRanges();
-    //             selection.addRange(range);
-    //             textArea.setSelectionRange(0, 999999);
-    //         } else {
-    //             textArea.select();
-    //         }
-    //     }
+    function copyToClipboard() {
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
 
-    //     function copyToClipboard() {        
-    //         document.execCommand('copy');
-    //         document.body.removeChild(textArea);
-    //     }
-
-    //     copy = function(text) {
-    //         createTextArea(text);
-    //         selectText();
-    //         copyToClipboard();
-    //     };
+    function copy(text) {
+        createTextArea(text);
+        selectText();
+        copyToClipboard();
+    };
 
     //     return {
     //         copy: copy
@@ -93,33 +96,31 @@ const Referral = () => {
     //         copy: copy
     //     };
     // })(window, document, navigator);
-    function isOS() {
-        console.log('yeah this is iphone');
-        return navigator.userAgent.match(/ipad|ipod|iphone/i);
-    }
-    function copyToClipboard(text) {
-        console.log('iphone');
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
 
-        textArea.style.position = 'fixed';
-        document.body.appendChild(textArea);
-        textArea.select();
+    // ?jhsdfjhsjfh
+    // function copyToClipboard(text) {
+    //     console.log('iphone');
+    //     const textArea = document.createElement('textarea');
+    //     textArea.value = text;
 
-        try {
-            document.execCommand('copy');
-            console.log('Text copied to clipboard');
-            setCopy(true)
-            setTimeout(() => {
-                setCopy(false);
-            }, 3000)
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-            setCopy(false)
-        }
+    //     textArea.style.position = 'fixed';
+    //     document.body.appendChild(textArea);
+    //     textArea.select();
 
-        document.body.removeChild(textArea);
-    }
+    //     try {
+    //         document.execCommand('copy');
+    //         console.log('Text copied to clipboard');
+    //         setCopy(true)
+    //         setTimeout(() => {
+    //             setCopy(false);
+    //         }, 3000)
+    //     } catch (err) {
+    //         console.error('Failed to copy: ', err);
+    //         setCopy(false)
+    //     }
+
+    //     document.body.removeChild(textArea);
+    // }
 
     async function getUsers() {
         try {
@@ -154,7 +155,8 @@ const Referral = () => {
             // Clipboard.copy(foundRef)
             if (isOS()) {
                 console.log('iphone here');
-                copyToClipboard(foundRef)
+                // copyToClipboard(foundRef)
+                copy(foundRef)
             } else {
                 navigator.clipboard.writeText(foundRef);
                 setCopy(true);
@@ -168,7 +170,8 @@ const Referral = () => {
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
             if (isOS()) {
-                copyToClipboard(resultRef)
+                // copyToClipboard(resultRef)
+                copy(resultRef)
                 setCopy(true);
                 setTimeout(() => {
                     setCopy(false);
