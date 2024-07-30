@@ -94,6 +94,7 @@ const Referral = () => {
     //     };
     // })(window, document, navigator);
     function isOS() {
+        console.log('yeah this is iphone');
         return navigator.userAgent.match(/ipad|ipod|iphone/i);
     }
     function copyToClipboard(text) {
