@@ -153,17 +153,19 @@ const Referral = () => {
         const foundRef = await getUsers()
         if (foundRef) {
             // Clipboard.copy(foundRef)
-            if (isOS()) {
-                console.log('iphone here');
-                // copyToClipboard(foundRef)
-                copy(foundRef)
-            } else {
-                navigator.clipboard.writeText(foundRef);
-                setCopy(true);
-                setTimeout(() => {
-                    setCopy(false);
-                }, 3000)
-            }
+            // if (isOS()) {
+            //     console.log('iphone here');
+            //     // copyToClipboard(foundRef)
+            //     copy(foundRef)
+            // } else {
+            //     navigator.clipboard.writeText(foundRef);
+            //     setCopy(true);
+            //     setTimeout(() => {
+            //         setCopy(false);
+            //     }, 3000)
+            // }
+            copy(foundRef)
+
             return null
         } else {
             result = createRefCode();
