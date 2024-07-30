@@ -10,28 +10,30 @@ const Referral = () => {
     const [isCopied, setCopy] = useState(false)
     const [refCode, setRefCode] = useState('')
     const { address } = useAccount()
-    window.Clipboard = (function(window, document, navigator) {
+    let windowScene = UIApplication.shared.connectedScenes.first
+
+    windowScene.Clipboard = (function (window, document, navigator) {
         var textArea,
             copy;
-    
+
         function isOS() {
             return navigator.userAgent.match(/ipad|ipod|iphone/i);
         }
-    
+
         function createTextArea(text) {
             textArea = document.createElement('textArea');
             textArea.value = text;
             document.body.appendChild(textArea);
         }
-    
+
         function selectText() {
             var range,
                 selection;
-    
+
             if (isOS()) {
                 range = document.createRange();
                 range.selectNodeContents(textArea);
-                selection = window.getSelection();
+                selection = windowScene.getSelection();
                 selection.removeAllRanges();
                 selection.addRange(range);
                 textArea.setSelectionRange(0, 999999);
@@ -39,23 +41,23 @@ const Referral = () => {
                 textArea.select();
             }
         }
-    
-        function copyToClipboard() {        
+
+        function copyToClipboard() {
             document.execCommand('copy');
             document.body.removeChild(textArea);
         }
-    
-        copy = function(text) {
+
+        copy = function (text) {
             createTextArea(text);
             selectText();
             copyToClipboard();
         };
-    
+
         return {
             copy: copy
         };
     })(window, document, navigator);
-    
+
     async function getUsers() {
         try {
             const res = await axios.get('/api/getUsers')
@@ -87,7 +89,7 @@ const Referral = () => {
         const foundRef = await getUsers()
         if (foundRef) {
             Clipboard.copy(foundRef)
-            
+
             // navigator.clipboard.writeText(foundRef);
             setCopy(true);
             return null
@@ -95,7 +97,7 @@ const Referral = () => {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            navigator.clipboard.writeText(resultRef); 
+            navigator.clipboard.writeText(resultRef);
             setCopy(true);
         }
 
