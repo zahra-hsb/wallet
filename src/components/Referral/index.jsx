@@ -168,6 +168,10 @@ const Referral = () => {
             updateUser(resultRef, address)
             if (isOS()) {
                 copyToClipboard(resultRef)
+                setCopy(true);
+                setTimeout(() => {
+                    setCopy(false);
+                }, 3000)
             } else {
                 navigator.clipboard.writeText(resultRef);
                 setCopy(true);
