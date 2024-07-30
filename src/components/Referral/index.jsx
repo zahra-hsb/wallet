@@ -7,7 +7,7 @@ import { createRefCode } from '@/lib/methods';
 
 const Referral = () => {
 
-    const [isCopied, setCopy] = useState(false)
+    const [isCopied, setCopy] = useState()
     const [refCode, setRefCode] = useState('')
     const { address } = useAccount()
     // window.Clipboard = (function(window, document, navigator) {
@@ -81,8 +81,8 @@ const Referral = () => {
             try {
                 document.execCommand('copy');
                 console.log('Fallback: Copying text command was successful');
-                    setCopy(true)
-                } catch (err) {
+                setCopy(true)
+            } catch (err) {
                 console.error('Fallback: Oops, unable to copy', err);
                 setCopy(false)
             }
@@ -126,14 +126,14 @@ const Referral = () => {
         if (foundRef) {
             Clipboard.copy(foundRef)
 
-            // navigator.clipboard.writeText(foundRef);
+            navigator.clipboard.writeText(foundRef);
             setCopy(true);
             return null
         } else {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            // navigator.clipboard.writeText(resultRef);
+            navigator.clipboard.writeText(resultRef);
             Clipboard.copy(resultRef)
 
             setCopy(true);
@@ -147,7 +147,7 @@ const Referral = () => {
                 <div className='border shadow-main text-white border-[#00F0FF] rounded-3xl flex items-center flex-col p-5 gap-5'>
                     <p className='font-bold text-xl'>Referral</p>
                     <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
-                    {isCopied ? <p className='text-[#00F0FF]'>Referral code copied!</p> : <p className='text-[#f41d1d]'>Referral code does not copied!</p>}
+                    {isCopied && <p className='text-[#00F0FF]'>Referral code copied!</p> }
                 </div>
             </section>
         </>
