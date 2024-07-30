@@ -165,27 +165,34 @@ const Referral = () => {
             //     }, 3000)
             // }
             copy(foundRef)
-
+            setCopy(true);
+            setTimeout(() => {
+                setCopy(false);
+            }, 3000)
             return null
         } else {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            if (isOS()) {
-                // copyToClipboard(resultRef)
-                copy(resultRef)
-                setCopy(true);
-                setTimeout(() => {
-                    setCopy(false);
-                }, 3000)
-            } else {
-                navigator.clipboard.writeText(resultRef);
-                setCopy(true);
-            }
+            // if (isOS()) {
+            //     // copyToClipboard(resultRef)
+            //     copy(resultRef)
+            //     setCopy(true);
+            //     setTimeout(() => {
+            //         setCopy(false);
+            //     }, 3000)
+            // } else {
+            //     navigator.clipboard.writeText(resultRef);
+            //     setCopy(true);
+            // }
             // navigator.clipboard.writeText(resultRef);
             // Clipboard.copy(resultRef)
+            copy(resultRef)
 
             setCopy(true);
+            setTimeout(() => {
+                setCopy(false);
+            }, 3000)
         }
 
     }
