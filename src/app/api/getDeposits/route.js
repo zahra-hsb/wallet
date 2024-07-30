@@ -29,19 +29,20 @@ export async function GET(req) {
 
 
         const usersWithPrices1 = await UsersModel.find({
-            address: { $in: friendsWithLevel1 } 
+            address: { $in: friendsWithLevel1 }
         }).select('price').exec();
         const usersWithPrices2 = await UsersModel.find({
-            address: { $in: friendsWithLevel2 } 
+            address: { $in: friendsWithLevel2 }
         }).select('price').exec();
         const usersWithPrices3 = await UsersModel.find({
-            address: { $in: friendsWithLevel3 } 
+            address: { $in: friendsWithLevel3 }
         }).select('price').exec();
 
         const usersWithPrices = [usersWithPrices1, usersWithPrices2, usersWithPrices3]
-        return NextResponse.json(usersWithPrices);
+        return NextResponse.json({ usersWithPrices });
     } catch (err) {
         return NextResponse.json({ error: err.message });
     }
 }
 
+ 

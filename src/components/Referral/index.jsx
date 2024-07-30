@@ -124,7 +124,7 @@ const Referral = () => {
         let result;
         const foundRef = await getUsers()
         if (foundRef) {
-            Clipboard.copy(foundRef)
+            // Clipboard.copy(foundRef)
 
             navigator.clipboard.writeText(foundRef);
             setCopy(true);
@@ -134,7 +134,7 @@ const Referral = () => {
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
             navigator.clipboard.writeText(resultRef);
-            Clipboard.copy(resultRef)
+            // Clipboard.copy(resultRef)
 
             setCopy(true);
         }
