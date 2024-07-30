@@ -56,43 +56,67 @@ const Referral = () => {
     //     };
     // })(window, document, navigator);
 
+    // gpt
+    // window.Clipboard = (function (window, document, navigator) {
+    //     function copy(text) {
+    //         if (!navigator.clipboard) {
+    //             // اگر Clipboard API پشتیبانی نشود، از روش fallback استفاده کنید.  
+    //             fallbackCopyTextToClipboard(text);
+    //         } else {
+    //             navigator.clipboard.writeText(text).then(function () {
+    //                 console.log('Copying to clipboard was successful!');
+    //                 setCopy(true)
+    //             }, function (err) {
+    //                 setCopy(false)
+    //                 console.error('Could not copy text: ', err);
+    //             });
+    //         }
+    //     }
 
-    window.Clipboard = (function (window, document, navigator) {
-        function copy(text) {
-            if (!navigator.clipboard) {
-                // اگر Clipboard API پشتیبانی نشود، از روش fallback استفاده کنید.  
-                fallbackCopyTextToClipboard(text);
-            } else {
-                navigator.clipboard.writeText(text).then(function () {
-                    console.log('Copying to clipboard was successful!');
-                    setCopy(true)
-                }, function (err) {
-                    setCopy(false)
-                    console.error('Could not copy text: ', err);
-                });
-            }
+    //     function fallbackCopyTextToClipboard(text) {
+    //         var textArea = document.createElement('textarea');
+    //         textArea.value = text;
+    //         document.body.appendChild(textArea);
+    //         textArea.select();
+    //         try {
+    //             document.execCommand('copy');
+    //             console.log('Fallback: Copying text command was successful');
+    //             setCopy(true)
+    //         } catch (err) {
+    //             console.error('Fallback: Oops, unable to copy', err);
+    //             setCopy(false)
+    //         }
+    //         document.body.removeChild(textArea);
+    //     }
+
+    //     return {
+    //         copy: copy
+    //     };
+    // })(window, document, navigator);
+    function isOS() {
+        return navigator.userAgent.match(/ipad|ipod|iphone/i);
+    }
+    function copyToClipboard(text) {
+       
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+
+        textArea.style.position = 'fixed';  
+        document.body.appendChild(textArea);
+        textArea.select();   
+
+        try { 
+            document.execCommand('copy');
+            console.log('Text copied to clipboard');
+            setCopy(true)
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            setCopy(false)
         }
 
-        function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                console.log('Fallback: Copying text command was successful');
-                setCopy(true)
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-                setCopy(false)
-            }
-            document.body.removeChild(textArea);
-        }
-
-        return {
-            copy: copy
-        };
-    })(window, document, navigator);
+        // حذف textarea پس از کپی  
+        document.body.removeChild(textArea);
+    }
 
     async function getUsers() {
         try {
@@ -125,15 +149,24 @@ const Referral = () => {
         const foundRef = await getUsers()
         if (foundRef) {
             // Clipboard.copy(foundRef)
-
-            navigator.clipboard.writeText(foundRef);
-            setCopy(true);
+            if (isOS) {
+                copyToClipboard(foundRef)
+            } else {
+                navigator.clipboard.writeText(foundRef);
+                setCopy(true);
+            }
             return null
         } else {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            navigator.clipboard.writeText(resultRef);
+            if (isOS) {
+                copyToClipboard(resultRef)
+            } else {
+                navigator.clipboard.writeText(resultRef);
+                setCopy(true);
+            }
+            // navigator.clipboard.writeText(resultRef);
             // Clipboard.copy(resultRef)
 
             setCopy(true);
@@ -147,7 +180,7 @@ const Referral = () => {
                 <div className='border shadow-main text-white border-[#00F0FF] rounded-3xl flex items-center flex-col p-5 gap-5'>
                     <p className='font-bold text-xl'>Referral</p>
                     <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
-                    {isCopied && <p className='text-[#00F0FF]'>Referral code copied!</p> }
+                    {isCopied && <p className='text-[#00F0FF]'>Referral code copied!</p>}
                 </div>
             </section>
         </>
