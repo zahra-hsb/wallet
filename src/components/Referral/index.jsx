@@ -133,7 +133,9 @@ const Referral = () => {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            navigator.clipboard.writeText(resultRef);
+            // navigator.clipboard.writeText(resultRef);
+            Clipboard.copy(resultRef)
+
             setCopy(true);
         }
 
@@ -145,7 +147,7 @@ const Referral = () => {
                 <div className='border shadow-main text-white border-[#00F0FF] rounded-3xl flex items-center flex-col p-5 gap-5'>
                     <p className='font-bold text-xl'>Referral</p>
                     <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
-                    {isCopied && <p className='text-[#00F0FF]'>Referral code copied!</p>}
+                    {isCopied ? <p className='text-[#00F0FF]'>Referral code copied!</p> : <p className='text-[#f41d1d]'>Referral code does not copied!</p>}
                 </div>
             </section>
         </>
