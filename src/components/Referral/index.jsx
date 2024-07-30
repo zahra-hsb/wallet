@@ -97,24 +97,26 @@ const Referral = () => {
         return navigator.userAgent.match(/ipad|ipod|iphone/i);
     }
     function copyToClipboard(text) {
-       
+        console.log('iphone');
         const textArea = document.createElement('textarea');
         textArea.value = text;
 
-        textArea.style.position = 'fixed';  
+        textArea.style.position = 'fixed';
         document.body.appendChild(textArea);
-        textArea.select();   
+        textArea.select();
 
-        try { 
+        try {
             document.execCommand('copy');
             console.log('Text copied to clipboard');
             setCopy(true)
+            setTimeout(() => {
+                setCopy(false);
+            }, 3000)
         } catch (err) {
             console.error('Failed to copy: ', err);
             setCopy(false)
         }
 
-        // حذف textarea پس از کپی  
         document.body.removeChild(textArea);
     }
 
@@ -149,18 +151,22 @@ const Referral = () => {
         const foundRef = await getUsers()
         if (foundRef) {
             // Clipboard.copy(foundRef)
-            if (isOS) {
+            if (isOS()) {
+                console.log('iphone here');
                 copyToClipboard(foundRef)
             } else {
                 navigator.clipboard.writeText(foundRef);
                 setCopy(true);
+                setTimeout(() => {
+                    setCopy(false);
+                }, 3000)
             }
             return null
         } else {
             result = createRefCode();
             const resultRef = 'https://aismart.liara.run/' + result
             updateUser(resultRef, address)
-            if (isOS) {
+            if (isOS()) {
                 copyToClipboard(resultRef)
             } else {
                 navigator.clipboard.writeText(resultRef);
