@@ -7,7 +7,7 @@ export async function PUT(req) {
   try {
 
     const data = await req.json();
-
+    console.log(data);
     const address = data.data[0].address;
     const level = data.data[0].level;
     const link = data.data[0].foundRef;
@@ -23,7 +23,7 @@ export async function PUT(req) {
       // 3 lvl 1 0x22
       const updatedDoc = await UsersModel.findOneAndUpdate(
         { referralCode: data.link },
-        { $push: { friends: { address, level } } },
+        { $push: { friends: { address, level: '1' } } },
         { upsert: false, new: true }
       );
 
