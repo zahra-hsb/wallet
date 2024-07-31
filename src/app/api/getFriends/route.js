@@ -16,7 +16,7 @@ export async function GET(req) {
         await dbConnect()
 
         const user = await UsersModel.findOne({ 'address': address })
-        revalidatePath('/guide', 'page')
+        revalidatePath('/bonusvolume', 'page')
 
         return NextResponse.json(user);
     } catch (err) {

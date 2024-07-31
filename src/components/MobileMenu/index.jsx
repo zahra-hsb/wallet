@@ -23,7 +23,7 @@ const MobileMenu = ({ close, isOpen }) => {
         { name: 'Withdraw', url: '/withdraw', icon: Withdraw },
         { name: 'Referral', url: 'referral', icon: Referral },
         { name: 'Support', url: '/support', icon: Support },
-        { name: 'Guide', url: '/guide', icon: guide },
+        { name: 'Bonus Volume', url: '/bonusvolume', icon: guide },
         { name: 'About', url: '/about', icon: about },
     ]
 

@@ -1,5 +1,5 @@
 'use client'
-const Guide = () => {
+const BonusVolume = () => {
 
     const dataArray = [
         ['10$', '99$', '0.7 %'],
@@ -46,4 +46,4 @@ const Guide = () => {
     )
 }
 
-export default Guide
+export default BonusVolume
