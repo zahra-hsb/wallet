@@ -9,6 +9,7 @@ const Referral = () => {
 
     const [isCopied, setCopy] = useState()
     const [refCode, setRefCode] = useState('')
+    const [err, setErr] = useState('')
     const { address } = useAccount()
 
     var textArea,
@@ -54,7 +55,14 @@ const Referral = () => {
         e.target.select()
     }
 
-
+    async function getPrice() {
+        try {
+            const result = await axios.get(`/api/getPrice?address=${encodeURIComponent(address)}`)
+            return result.data.price.price
+        } catch (error) {
+            console.log(error);
+        }
+    }
     async function getUsers() {
         try {
             const res = await axios.get('/api/getUsers')
@@ -82,25 +90,34 @@ const Referral = () => {
 
     async function copyRefCode() {
         let result;
-        const foundRef = await getUsers()
-        if (foundRef) {
-            copy(foundRef)
-            setCopy(true);
-            setRefCode(foundRef)
-            setTimeout(() => {
-                setCopy(false);
-            }, 3000)
-            return null
+        const price = await getPrice()
+        console.log(price);
+        if (price != 0) {
+            const foundRef = await getUsers()
+            if (foundRef) {
+                copy(foundRef)
+                setCopy(true);
+                setRefCode(foundRef)
+                setTimeout(() => {
+                    setCopy(false);
+                }, 3000)
+                return null
+            } else {
+                result = createRefCode();
+                const resultRef = 'https://aismart.liara.run/' + result
+                setRefCode(resultRef)
+                updateUser(resultRef, address)
+                copy(resultRef)
+                setCopy(true);
+                setTimeout(() => {
+                    setCopy(false);
+                }, 3000)
+            }
         } else {
-            result = createRefCode();
-            const resultRef = 'https://aismart.liara.run/' + result
-            setRefCode(resultRef)
-            updateUser(resultRef, address)
-            copy(resultRef)
-            setCopy(true);
+            setErr('please do deposit then get your referral code!')
             setTimeout(() => {
-                setCopy(false);
-            }, 3000)
+                setErr('')
+            }, 5000)
         }
 
     }
@@ -118,7 +135,14 @@ const Referral = () => {
                     <p className='font-bold text-xl'>Referral</p>
                     <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
                     {isCopied && <p className='text-[#00F0FF]'>Referral code copied! (Didn`t get your code on iphone? use the link below👇)</p>}
-                    <input type="text" onClick={(e) => select(e)} className="w-full p-2 rounded text-gray-800 outline-none" contentEditable={false} value={refCode} />
+                    {err &&
+                        <>
+                            <div className='text-red-500'>
+                                {err}
+                            </div>
+                        </>
+                    }
+                    <input type="text" onClick={(e) => select(e)} className="w-full p-2 rounded placeholder:italic text-gray-800 outline-none" contentEditable={false} placeholder={'click on copy button to get the referral code!'} value={refCode} />
                 </div>
             </section>
         </>
