@@ -33,6 +33,7 @@ export async function POST(req) {
             }
             // Process payment data here
         } 
+    
 // else if (data.type === 'payout') {
            // console.log('Received payout callback:', data);
             // Process payout data here
@@ -41,7 +42,6 @@ export async function POST(req) {
           //  } catch (err) {
           //      console.log(err);
          //   }
-        }
 
         return NextResponse.json({ message: 'OK' }, { status: 200 });
     } else {
