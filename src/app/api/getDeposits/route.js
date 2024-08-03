@@ -21,7 +21,7 @@ export async function GET(req) {
         if (!user) {
             return { error: 'the user does not exists' };
         }
-
+ 
 
         const friendsWithLevel1 = user.friends.filter(friend => friend.level === '1').map(friend => friend.address);
         const friendsWithLevel2 = user.friends.filter(friend => friend.level === '2').map(friend => friend.address);
