@@ -85,18 +85,20 @@ const PayStatus = () => {
         } else {
             setPaid(false)
         }
-        // setTimeout(() => {
-        //     localStorage.clear()
-        // }, 8000)
+        setTimeout(() => {
+            if (isPaid) {
+                updatePrice()
+            }
+        }, 3000)
 
     }, [])
 
 
 
     async function clearLocalStrg() {
-        if (isPaid) {
-            await updatePrice()
-        }
+        // if (isPaid) {
+        //     await updatePrice()
+        // }
         localStorage.clear()
     }
     return (
