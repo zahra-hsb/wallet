@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-
+const cron = require('node-cron')
 
 export async function GET(req) {
     try {
@@ -24,7 +24,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
-
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 100 && user.price <= 499) {
             profit = 0.8
             profitValue = user.price * profit / 100
@@ -32,6 +35,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 500 && user.price <= 999) {
             profit = 0.9
             profitValue = user.price * profit / 100
@@ -39,6 +46,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 1000 && user.price <= 4999) {
             profit = 1
             profitValue = user.price * profit / 100
@@ -46,6 +57,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 5000 && user.price <= 9999) {
             profit = 1.1
             profitValue = user.price * profit / 100
@@ -53,6 +68,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 10000 && user.price <= 19999) {
             profit = 1.2
             profitValue = user.price * profit / 100
@@ -60,13 +79,21 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 20000 && user.price <= 29999) {
             profit = 1.3
             profitValue = user.price * profit / 100
             console.log('20000 until 29999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
-
+            
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 30000 && user.price <= 49999) {
             profit = 1.4
             profitValue = user.price * profit / 100
@@ -74,6 +101,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else if (user.price >= 50000 && user.price <= 100000) {
             profit = 1.5
             profitValue = user.price * profit / 100
@@ -81,6 +112,10 @@ export async function GET(req) {
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
+            cron.schedule('0 0 * * *', async () => {
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
+                console.log('updatedUser: ', updatedUser);
+            })
         } else {
             console.log('price: 0 < 10');
             return NextResponse.json({ user })
