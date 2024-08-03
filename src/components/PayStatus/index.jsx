@@ -20,7 +20,7 @@ const PayStatus = () => {
 
     // const url = 'https://api.oxapay.com/api/inquiry';
     // const data = JSON.stringify({
-    //     key: 'S35UYY-T3E96V-A3VNKK-SUDT3H',
+    //     key: PAYMENT_API_CODE,
     //     trackId: trackId
     // });
     // console.log(trackId);
