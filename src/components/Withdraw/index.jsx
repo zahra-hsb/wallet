@@ -78,6 +78,7 @@ const Withdraw = () => {
                 const profitLvl1 = await axios.get(`/api/getLvl1Profit?address=${encodeURIComponent(address)}`)
                 const profitLvl2 = await axios.get(`/api/getLvl2Profit?address=${encodeURIComponent(address)}`)
                 const profitLvl3 = await axios.get(`/api/getLvl3Profit?address=${encodeURIComponent(address)}`)
+                console.log(profitLvl1.data.lvl2Profit); 
                 if (profits.data && profitLvl1.data && profitLvl2.data) {
                     console.log(profitLvl3.data.total);
                     let total = profits?.data.profitValue + profitLvl1?.data.lvl1Profit + profitLvl3?.data.lvl3Profit + profitLvl2?.data.lvl2Profit
@@ -147,7 +148,7 @@ const Withdraw = () => {
                         <tr className="border-y border-y-gray-700">
                             <th className="text-white py-5">{profitlvl1 != 0 ? profitlvl1 : 0}</th>
                             <th className="text-white py-5">{profitlvl2 != 0 ? profitlvl2 : 0}</th>
-                            <th className="text-white py-5">{profitlvl3 != 0 ? profitlvl3 : 0}</th>
+                            <th className="text-white py-5">{profitlvl3 != 0 ? profitlvl3 : 0}</th> 
                         </tr>
                     </table>
                 </Container>
