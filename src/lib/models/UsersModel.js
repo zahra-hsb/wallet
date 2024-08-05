@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     price: {
         type: Number
     },
-    totalInvestment: {
+    investmentValue: {
         type: Number
     },
     totalInvestmentLvl1: {

@@ -24,7 +24,7 @@ const Dashboard = () => {
           address: address,
           referralCode: '',
           price: 0,
-          totalInvestment: 0,
+          investmentValue: 0,
           totalInvestmentLvl1: 0,
           dailyProfit: 0
         });

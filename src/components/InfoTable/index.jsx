@@ -38,17 +38,17 @@ const InfoTable = () => {
         async function getDeposits(address) {
             try {
                 const deposits = await axios.get(`/api/getDeposits?address=${encodeURIComponent(address)}`)
-                console.log(deposits.data);
+                console.log(deposits.data.usersWithPrices[0]);
                 let sum1 = 0
-                deposits.data[0].map(item => sum1 += item.price )
+                deposits.data.usersWithPrices[0].map(item => sum1 += item.price )
                 console.log('object: ', sum1);
                 setDeposit1(sum1)
                 let sum2 = 0
-                deposits.data[1].map(item => sum2 += item.price )
+                deposits.data.usersWithPrices[1].map(item => sum2 += item.price )
                 console.log('object: ', sum2);
                 setDeposit2(sum2)
                 let sum3 = 0
-                deposits.data[2].map(item => sum3 += item.price )
+                deposits.data.usersWithPrices[2].map(item => sum3 += item.price )
                 console.log('object: ', sum3);
                 setDeposit3(sum3)
             } catch (error) {

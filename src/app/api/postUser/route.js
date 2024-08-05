@@ -36,7 +36,7 @@ export async function POST(req, res) {
         await dbConnect();
         const users = await UsersModel.findOne({ address: userBody.address }, {})
         if (users === null) {
-            const user = new UsersModel({ address: userBody.address, referralCode: userBody.referralCode, price: userBody.price, totalInvestment: userBody.totalInvestment, totalInvestmentLvl1: userBody.totalInvestmentLvl1 });
+            const user = new UsersModel({ address: userBody.address, referralCode: userBody.referralCode, price: userBody.price, investmentValue: userBody.investmentValue, totalInvestmentLvl1: userBody.totalInvestmentLvl1 });
             const response = await user.save();
             return NextResponse.json({ result: response });
         } else {

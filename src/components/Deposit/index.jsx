@@ -12,7 +12,6 @@ const Deposit = () => {
     const [payLink, setPayLink] = useState('')
     const [isIos, setIos] = useState(false)
 
-    const router = useRouter()
     const { address } = useAccount()
 
     const isIPhone = () => {
@@ -34,11 +33,6 @@ const Deposit = () => {
         return res.data?.find(item => item.address === address).price;
     }
 
-    async function updatePrice() {
-        const prevPrice = await getPrice()
-        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice }) 
-
-    }
     async function payout() {
         await axios.post('/api/payment', amount)
             .then(response => {
