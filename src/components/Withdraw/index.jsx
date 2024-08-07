@@ -97,10 +97,11 @@ const Withdraw = () => {
         }
         async function getUser() {
             try {
-                const response = await axios.get('/api/getUsers')
-                const price = await response.data.find(item => item.address === address).price
+                const response = await axios.get(`/api/getPrice?address=${encodeURIComponent(address)}`)
+                const price = response.data.price.price 
+                console.log(price);
                 if (price) {
-                    setPriceValue(price);
+                    setPriceValue(price); 
                 } else {
                     console.warn(`No price found: ${price}`);
                 }

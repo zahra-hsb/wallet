@@ -28,6 +28,8 @@ export async function GET(req) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: total } })
                 console.log('updatedUser: ', updatedUser);
             })
+            const decuple = total * 10
+            
         }
         console.log('lvl1: ', total);
         return NextResponse.json({ lvl1Profit: total })

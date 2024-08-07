@@ -14,6 +14,7 @@ export async function GET(req) {
 
         const price = await UsersModel.findOne({ address }).select('price')
         revalidatePath('/referral', 'page')
+        revalidatePath('/withdraw', 'page')
         return NextResponse.json({ price })
     } catch (error) {
         return NextResponse.json({ error })
