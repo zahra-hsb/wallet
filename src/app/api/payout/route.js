@@ -14,10 +14,10 @@ export async function POST(req) {
     }
 
 
-    const apiSecretKey = (data.type === 'payment') ? process.env.PAYMENT_API_KEY : process.env.PAYOUT_API_KEY;
+    // const apiSecretKey = (data.type === 'payment') ? process.env.PAYMENT_API_KEY : process.env.PAYOUT_API_KEY;
     const hmacHeader = req.headers.get('hmac');
     const calculatedHmac = crypto
-        .createHmac('sha512', apiSecretKey)
+        .createHmac('sha512', process.env.PAYMENT_API_KEY)
         .update(postData)
         .digest('hex');
 
@@ -33,17 +33,18 @@ export async function POST(req) {
             // Process payment data here
         }
 
-        else if (data.type === 'payout') {
-            console.log('Received payout callback:', data);
-            // Process payout data here
-            try {
-                await axios.put('/api/putTransaction', data)
-            } catch (err) {
-                console.log(err);
-            }
+        // else if (data.type === 'payout') {
+        //     console.log('Received payout callback:', data);
+        //     // Process payout data here
+        //     try {
+        //         await axios.put('/api/putTransaction', data)
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
 
-            return NextResponse.json({ message: 'OK' }, { status: 200 });
-        } else {
+        //     return NextResponse.json({ message: 'OK' }, { status: 200 });
+        // } else {
+        else {
             // HMAC signature is not valid
             return NextResponse.json({ error: 'Invalid HMAC signature' }, { status: 400 });
         }
