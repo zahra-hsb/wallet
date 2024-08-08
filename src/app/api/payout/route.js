@@ -14,7 +14,7 @@ export async function POST(req) {
     }
 
 
-    const apiSecretKey = (data.type === 'payment') ? process.env.PAYMENT_API_KEY : PAYOUT_API_KEY;
+    const apiSecretKey = (data.type === 'payment') ? process.env.PAYMENT_API_KEY : process.env.PAYOUT_API_KEY;
     const hmacHeader = req.headers.get('hmac');
     const calculatedHmac = crypto
         .createHmac('sha512', apiSecretKey)
