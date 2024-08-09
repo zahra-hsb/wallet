@@ -4,52 +4,19 @@ import styles from '../../app/Home.module.css'
 import axios from 'axios';
 import { useAccount } from 'wagmi';
 import { createRefCode } from '@/lib/methods';
+import ReferralBox from '../ReferralBox';
 
 const Referral = () => {
 
-    const [isCopied, setCopy] = useState()
     const [refCode, setRefCode] = useState('')
     const [err, setErr] = useState('')
     const { address } = useAccount()
+    const [refBoxes, setRefBox] = useState([])
+    let line = 1
+    
 
-    var textArea,
-        copy;
 
-    function isOS() {
-        return navigator.userAgent.match(/ipad|ipod|iphone/i);
-    }
-    function createTextArea(text) {
-        textArea = document.createElement('textArea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-    }
-
-    function selectText() {
-        var range,
-            selection;
-
-        if (isOS()) {
-            range = document.createRange();
-            range.selectNodeContents(textArea);
-            selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            textArea.setSelectionRange(0, 999999);
-        } else {
-            textArea.select();
-        }
-    }
-
-    function copyToClipboard() {
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-    }
-
-    function copy(text) {
-        createTextArea(text);
-        selectText();
-        copyToClipboard();
-    };
+   
     function select(e) {
         const text = e.target.value
         e.target.select()
@@ -73,6 +40,8 @@ const Referral = () => {
             }
 
             const result = res.data?.find(item => item.address === address).referralCode
+            console.log(result);
+            setRefBox(result)
             return result;
         } catch (err) {
             console.error("Error fetching users:", err);
@@ -80,46 +49,30 @@ const Referral = () => {
         }
     }
 
-    async function updateUser(resultRef, address) {
+    async function updateUser(resultRef, address, line) {
         try {
-            await axios.put('/api/editRef', { address, resultRef })
+            await axios.put('/api/editRef', { address, resultRef, line })
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function copyRefCode() {
-        let result;
+   
+    async function addRefBox() {
         const price = await getPrice()
         console.log(price);
         if (price != 0) {
-            const foundRef = await getUsers()
-            if (foundRef) {
-                copy(foundRef)
-                setCopy(true);
-                setRefCode(foundRef)
-                setTimeout(() => {
-                    setCopy(false);
-                }, 3000)
-                return null
-            } else {
-                result = createRefCode();
-                const resultRef = 'https://aismart.liara.run/' + result
-                setRefCode(resultRef)
-                updateUser(resultRef, address)
-                copy(resultRef)
-                setCopy(true);
-                setTimeout(() => {
-                    setCopy(false);
-                }, 3000)
-            }
+            let result = createRefCode();
+            const resultRef = 'https://aismart.liara.run/' + result
+            setRefBox([...refBoxes, resultRef]);
+            updateUser(resultRef, address, line)
+
         } else {
             setErr('please do deposit then get your referral code!')
             setTimeout(() => {
                 setErr('')
             }, 5000)
         }
-
     }
     useEffect(() => {
         async function getReferal() {
@@ -131,18 +84,14 @@ const Referral = () => {
     return (
         <>
             <section className='pt-5'>
-                <div className='border shadow-main text-white border-[#00F0FF] rounded-3xl flex items-center flex-col p-6 gap-5'>
-                    <p className='font-bold text-xl'>Referral</p>
-                    <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
-                    {isCopied && <p className='text-[#00F0FF]'>Referral code copied! (Didn`t get your code on iphone? use the link below👇)</p>}
-                    {err &&
-                        <>
-                            <div className='text-red-500'>
-                                {err}
-                            </div>
-                        </>
-                    }
-                    <input type="text" onClick={(e) => select(e)} className="w-full p-2 rounded placeholder:italic text-gray-800 outline-none" contentEditable={false} placeholder={'click on copy button to get the referral code!'} value={refCode} />
+                {/* <ReferralBox index={-1} copyRefCode={copyRefCode} isCopied={isCopied} err={err} refCode={refCode} select={select} /> */}
+                {refBoxes.map((code, index) => (
+                    <>
+                        <ReferralBox key={index} index={index} err={err} refCode={code.refCode} select={select} />
+                    </>
+                ))}
+                <div className='flex items-center w-full justify-center py-2'>
+                    <button onClick={addRefBox} className='border border-[#00F0FF] shadow-main rounded-full text-white px-3 py-1'>+</button>
                 </div>
             </section>
         </>

@@ -7,21 +7,21 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req) {
     try {
-        const { address, resultRef } = await req.json()
-        // console.log('object', resultRef);
+        let { address, resultRef, line } = await req.json()
+        console.log('object', address);
         if (!address || !resultRef) {
             throw new Error('Missing required fields: address and price');
         }
 
         await dbConnect()
 
-        // const foundRef = await UsersModel.find({ referralCode: resultRef }, {})
-        // console.log('found ref: ', foundRef);
+        const foundRef = await UsersModel.findOne({ address: address }, {}).select('referralCode')
+        console.log('found ref: ', foundRef.referralCode.length);
 
-        const updatedDoc = await UsersModel.findOneAndUpdate({ address: address }, { $set: { referralCode: resultRef } })
-        if (!updatedDoc.modifiedCount) {
-            throw new Error('Document not found or not updated');
-        }
+        const updatedDoc = await UsersModel.findOneAndUpdate({ address: address }, { $push: { referralCode: { refCode: resultRef, line: foundRef.referralCode.length + 1 } } })
+        // if (!updatedDoc.modifiedCount) {
+        //     throw new Error('Document not found or not updated');
+        // }
         return NextResponse.json({ message: 'updated successfully' });
     } catch (err) {
         console.error('Error updating document:', err);

@@ -7,7 +7,14 @@ const UserSchema = new Schema({
         required: true
     },
     referralCode: {
-        type: String
+        type: Array,
+        items: {
+            type: Object,
+            properties: {
+                refCode: { type: String },
+                line: { type: String }
+            }
+        }
     },
     price: {
         type: Number
