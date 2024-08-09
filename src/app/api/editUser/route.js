@@ -20,7 +20,7 @@ export async function PUT(req) {
 
         console.log('address: ', address);
         const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { price: Price } })
-        await UsersModel.updateOne({ address: address }, { $set: { investmentValue: Price } })
+        await UsersModel.updateOne({ address: address }, { $inc: { investmentValue: Price } })
         if (!updatedDoc.modifiedCount) {
             throw new Error('Document not found or not updated');
         }

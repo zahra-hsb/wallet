@@ -13,6 +13,7 @@ export async function GET(req) {
 
         await dbConnect()
         let profit = 0
+        let isDecuple = false
         let profitValue = 0
         const user = await UsersModel.findOne({ address })
 
@@ -27,6 +28,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -43,6 +49,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -59,6 +70,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -75,6 +91,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -91,6 +112,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -107,6 +133,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -118,11 +149,16 @@ export async function GET(req) {
             profitValue = user.price * profit / 100
             console.log('20000 until 29999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
-            
+
             const updatedUserProfit = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -139,6 +175,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -155,6 +196,11 @@ export async function GET(req) {
             cron.schedule('0 0 * * *', async () => {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: profitValue } })
                 console.log('updatedUser: ', updatedUser);
+                const profit = updatedUser.price - updatedUser.investmentValue
+                const isDailyProfit = profit / 10
+                if (isDailyProfit == profit) {
+                    isDecuple = true
+                }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             if (updatedUserProfit.price > triplePrice) {
@@ -163,10 +209,11 @@ export async function GET(req) {
             }
         } else {
             console.log('price: 0 < 10');
+            isDecuple = false
             return NextResponse.json({ user })
         }
         revalidatePath('/withdraw', 'page')
-        return NextResponse.json({ profitValue })
+        return NextResponse.json({ profitValue, isDecuple })
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error })
