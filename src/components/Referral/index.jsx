@@ -85,14 +85,16 @@ const Referral = () => {
         <>
             <section className='pt-5'>
                 {/* <ReferralBox index={-1} copyRefCode={copyRefCode} isCopied={isCopied} err={err} refCode={refCode} select={select} /> */}
-                {refBoxes.map((code, index) => (
+                {refBoxes.length != 0 ? refBoxes.map((code, index) => (
                     <>
                         <ReferralBox key={index} index={index} err={err} refCode={code.refCode} select={select} />
                     </>
-                ))}
-                <div className='text-white text-center py-5'>
-                    please click on the add button for create your referral code!
-                </div>
+                ))
+                    :
+                    <div className='text-white text-center py-5'>
+                        please click on the add button for create your referral code!
+                    </div>
+                }
                 {err &&
                     <>
                         <div className='text-red-500 text-center'>
