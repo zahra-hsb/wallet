@@ -13,10 +13,10 @@ const Referral = () => {
     const { address } = useAccount()
     const [refBoxes, setRefBox] = useState([])
     let line = 1
-    
 
 
-   
+
+
     function select(e) {
         const text = e.target.value
         e.target.select()
@@ -57,7 +57,7 @@ const Referral = () => {
         }
     }
 
-   
+
     async function addRefBox() {
         const price = await getPrice()
         console.log(price);
@@ -90,6 +90,16 @@ const Referral = () => {
                         <ReferralBox key={index} index={index} err={err} refCode={code.refCode} select={select} />
                     </>
                 ))}
+                <div className='text-white text-center py-5'>
+                    please click on the add button for create your referral code!
+                </div>
+                {err &&
+                    <>
+                        <div className='text-red-500 text-center'>
+                            {err}
+                        </div>
+                    </>
+                }
                 <div className='flex items-center w-full justify-center py-2'>
                     <button onClick={addRefBox} className='border border-[#00F0FF] shadow-main rounded-full text-white px-3 py-1'>+</button>
                 </div>

@@ -54,13 +54,6 @@ const ReferralBox = ({ err, refCode, select, index }) => {
                 <p className='font-bold text-xl'>Referral {index + 1}</p>
                 <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
                 {isCopied && <p className='text-[#00F0FF]'>Referral code copied! (Didn`t get your code on iphone? use the link below👇)</p>}
-                {err &&
-                    <>
-                        <div className='text-red-500'>
-                            {err}
-                        </div>
-                    </>
-                }
                 <input type="text" onClick={(e) => select(e)} className="w-full p-2 rounded placeholder:italic text-gray-800 outline-none" contentEditable={false} placeholder={'click on copy button to get the referral code!'} value={refCode} />
             </div>
 
