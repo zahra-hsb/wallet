@@ -22,7 +22,7 @@ const Dashboard = () => {
       try {
         await axios.post("/api/postUser", {
           address: address,
-          referralCode: '',
+          referralCode: [],
           price: 0,
           investmentValue: 0,
           totalInvestmentLvl1: 0,

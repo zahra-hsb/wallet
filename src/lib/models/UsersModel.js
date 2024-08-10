@@ -36,6 +36,7 @@ const UserSchema = new Schema({
                 address: { type: String },
                 // amountOfInvest: { type: Number },
                 level: { type: String },
+                line: { type: String },
                 // refCodeOfFriend: { type: String }
             }
         }

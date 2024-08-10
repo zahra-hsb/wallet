@@ -61,62 +61,34 @@ const Login = () => {
     }
 
     async function checkUser() {
-
-        // get users
-        const users = await getUsers()
-
-        if (users) {
-
-            const foundRef = users?.some(item => item.referralCode === pathname)
-
-            const data = [
-                { address: address, level: '1' }
-            ]
-
-            // setReferralCode(foundRef)
-
-            // referral 
-            if (pathname === `/${foundRef}`) {
-                return router.query.slug
-            }
-
-            if (pathname === '/') {
-                const isExist = await getUser(address)
-
-                if (isExist) {
-                    router.push('/dashboard')
-                    setShowRefField(false)
-                } else {
-                    setShowRefField(true)
-                }
-            } else {
-                router.push('/dashboard')
-                try {
-                    const link = 'https://aismart.liara.run' + pathname
-                    await axios.put('/api/editFriends', { data, link, foundRef })
-
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-            setError(false)
-
-        } else {
-            setError(true)
-        }
-    }
-    async function handleClickSubmit() {
-        const users = await getUsers()
-        const foundRef = users.find(item => item.referralCode === referralCode)
-        console.log(foundRef);
-        const link = foundRef.referralCode
-        // !! create data array and check found ref
+        const referralCode = 'https://aismart.liara.run' + pathname
+        console.log('pathname: ', pathname);
+        const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
+        console.log(result.data);
+        const upAddress = result.data
         const data = [
             { address: address, level: '1' }
         ]
         router.push('/dashboard')
         try {
-            await axios.put('/api/editFriends', { data, link })
+            await axios.put('/api/editFriends', { data, upAddress, referralCode })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async function handleClickSubmit() {
+
+        const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
+        console.log(result.data);
+        console.log(referralCode);
+        const upAddress = result.data
+        // create data array and check found ref
+        const data = [
+            { address: address, level: '1' }
+        ]
+        router.push('/dashboard')
+        try {
+            await axios.put('/api/editFriends', { data, upAddress, referralCode })
         } catch (err) {
             console.log(err);
         }
@@ -134,7 +106,6 @@ const Login = () => {
             setLoad(true)
         }
         loadHandler()
-        console.log('usersArray: ');
     }, [isConn, isConnected])
 
 
