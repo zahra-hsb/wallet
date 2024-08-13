@@ -38,6 +38,12 @@ export async function PUT(request) {
             console.log(totalInvests);
 
         }
+        const userInvestmentTotal = await UsersModel.aggregate([
+            { $match: { address } },
+            { $group: { _id: null, totalInvestment: { $sum: "$investmentValue" } } }
+        ]);
+
+        const totalInvestmentValue = userInvestmentTotal[0]?.totalInvestment || 0;
 
         for (const line in totalInvests) {
             const existingLine = await LineModel.findOne({ address, "lines.line": line });
@@ -54,8 +60,15 @@ export async function PUT(request) {
                 else if (item.total >= 1000000) bonus = 50000;
                 else bonus = 0
 
-                // !! condition for 30 % in another line
                 await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
+                // !! condition for 30 % in another line
+                const conditionMet = totalInvestmentValue > 0 && (item.total / totalInvestmentValue) >= 0.3;
+
+                // !! if there is condition then save and increment the bonus into the price 
+                if (conditionMet) {
+                    console.log(conditionMet)
+                    await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
+                }
             });
 
             if (existingLine) {
@@ -71,10 +84,10 @@ export async function PUT(request) {
                 );
             }
         }
-        const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {  
-            const friendUser = await UsersModel.findOne({ address: item.address });  
-            return friendUser ? friendUser : 0; 
-        }));  
+        const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {
+            const friendUser = await UsersModel.findOne({ address: item.address });
+            return friendUser ? friendUser : 0;
+        }));
 
         console.log(lvlInvestsArray);
 
