@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 
@@ -17,7 +18,7 @@ export async function PUT(req) {
 
         const foundRef = await UsersModel.findOne({ address: address }, {}).select('referralCode')
         console.log('found ref: ', foundRef.referralCode.length);
-
+        revalidatePath('/referral', 'page')
         const updatedDoc = await UsersModel.findOneAndUpdate({ address: address }, { $push: { referralCode: { refCode: resultRef, line: foundRef.referralCode.length + 1 } } })
         // if (!updatedDoc.modifiedCount) {
         //     throw new Error('Document not found or not updated');

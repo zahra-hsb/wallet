@@ -63,7 +63,10 @@ const Dashboard = () => {
     const data = await getUsers()
   }
 
- 
+  async function putBonus() {
+    console.log('object');
+    await axios.put('/api/putBonus', { address })
+  }
 
   useEffect(() => {
     getUser();
@@ -99,7 +102,7 @@ const Dashboard = () => {
         ref={tawkMessengerRef}
         onLoad={onLoad}
       />
-      {/* <button onClick={() => editFriends()}>edit friend</button> */}
+      <button onClick={() => putBonus()}>edit friend</button>
     </>
   );
 };
