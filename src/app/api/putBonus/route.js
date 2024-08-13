@@ -62,6 +62,8 @@ export async function PUT(request) {
                 else if (item.total >= 500000) bonus = 20000;
                 else if (item.total >= 1000000) bonus = 50000;
                 else bonus = 0
+                
+                // !! condition for 30 % in another line
                 await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
             });
 
