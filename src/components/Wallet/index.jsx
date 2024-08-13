@@ -102,7 +102,7 @@ const Wallet = () => {
                         </tr>
                     </table>
                     <div className="flex gap-5">
-                        <p className="text-gray-400">all profits seems today: </p>
+                        <p className="text-gray-400">all profits since today: </p>
                         <p className="text-white">{allProfit != 0 ? allProfit : 0}</p>
                     </div>
                 </Container>

@@ -1,7 +1,7 @@
 import MobileNav from "@/components/MobileNav"
 import Wallet from "@/components/Wallet"
 
-const withdraw = () => {
+const profits = () => {
     return (
         <>
             <MobileNav />
@@ -10,4 +10,4 @@ const withdraw = () => {
     )
 }
 
-export default withdraw
+export default profits
