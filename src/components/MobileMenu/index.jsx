@@ -21,6 +21,7 @@ const MobileMenu = ({ close, isOpen }) => {
         { name: 'Dashboard', url: '/dashboard', icon: DashboardIcon },
         { name: 'Deposit', url: '/deposit', icon: DepositIcon },
         { name: 'Withdraw', url: '/withdraw', icon: Withdraw },
+        { name: 'Wallet', url: '/wallet', icon: Withdraw },
         { name: 'Referral', url: 'referral', icon: Referral },
         { name: 'Support', url: '/support', icon: Support },
         { name: 'Bonus Volume', url: '/bonusvolume', icon: guide },
