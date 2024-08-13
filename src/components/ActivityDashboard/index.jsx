@@ -67,7 +67,7 @@ const ActivityDashboard = () => {
                             <div className="overflow-hidden">  
                                 <h3 className="text-white">{item.address}</h3>  
                                 <p className="text-gray-500">{item.level}</p>  
-                                <p className="text-gray-500">{investValues[index].investmentValue}</p>
+                                <p className="text-gray-500">{investValues[index]?.investmentValue}</p>
                             </div>  
                         </div>  
                     )) : (  
