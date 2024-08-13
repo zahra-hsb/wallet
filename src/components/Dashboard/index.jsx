@@ -64,7 +64,6 @@ const Dashboard = () => {
   }
 
   async function putBonus() {
-    console.log('object');
     await axios.put('/api/putBonus', { address })
   }
 

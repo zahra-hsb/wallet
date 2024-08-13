@@ -14,10 +14,11 @@ export async function GET(req) {
 
         const price = await UsersModel.findOne({ address }).select('price')
         const investmentValue = await UsersModel.findOne({ address }).select('investmentValue')
+        const dailyProfit = await UsersModel.findOne({ address }).select('dailyProfit')
         revalidatePath('/referral', 'page')
         revalidatePath('/withdraw', 'page')
         revalidatePath('/wallet', 'page')
-        return NextResponse.json({ price, investmentValue })
+        return NextResponse.json({ price, investmentValue, dailyProfit })
     } catch (error) {
         return NextResponse.json({ error })
     }

@@ -10,12 +10,14 @@ const Wallet = () => {
     const router = useRouter()
     const [priceValue, setPriceValue] = useState(0)
     const [dailyProfit, setDailyProfit] = useState(0)
-    const { address } = useAccount() 
+    const { address } = useAccount()
     const [profitlvl1, setProfitLvl1] = useState(0)
     const [profitlvl2, setProfitLvl2] = useState(0)
     const [profitlvl3, setProfitLvl3] = useState(0)
     const [totalProfit, setTotalProfit] = useState(0)
     const [allProfit, setAllProfit] = useState(0)
+    const [limit, setLimit] = useState(false)
+
     useEffect(() => {
         async function getProfits() {
             try {
@@ -44,10 +46,13 @@ const Wallet = () => {
             try {
                 const response = await axios.get(`/api/getPrice?address=${encodeURIComponent(address)}`)
                 const price = await response.data.price.price
+                const dailyProfit = await response.data.dailyProfit.dailyProfit
                 const investmentValue = await response.data.investmentValue.investmentValue
-                const allProfits = price - investmentValue 
+                const allProfits = price - investmentValue
                 setAllProfit(allProfits)
-                console.log(allProfits); 
+                const decuple = dailyProfit * 10
+                console.log(allProfits >= decuple);
+                setLimit(decuple) 
                 if (price) {
                     setPriceValue(price);
                 } else {
@@ -107,6 +112,8 @@ const Wallet = () => {
                     </div>
                 </Container>
                 <Container>
+                    <p className="text-gray-400">your profit limit for withdrawal: </p>
+                    <p className="text-white">{limit != 0 ? limit : 0}</p>
                     <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
 
                 </Container>
