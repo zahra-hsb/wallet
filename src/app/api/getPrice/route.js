@@ -13,9 +13,11 @@ export async function GET(req) {
         await dbConnect()
 
         const price = await UsersModel.findOne({ address }).select('price')
+        const investmentValue = await UsersModel.findOne({ address }).select('investmentValue')
         revalidatePath('/referral', 'page')
         revalidatePath('/withdraw', 'page')
-        return NextResponse.json({ price })
+        revalidatePath('/wallet', 'page')
+        return NextResponse.json({ price, investmentValue })
     } catch (error) {
         return NextResponse.json({ error })
     }

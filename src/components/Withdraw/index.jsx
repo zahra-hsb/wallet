@@ -126,7 +126,7 @@ const Withdraw = () => {
                         <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>
                     </div>
                 </Container>
-                <Container>
+                {/* <Container>
                     <h3 className="text-lg font-bold">Profits</h3>
 
                     <table className="text-white w-full">
@@ -152,7 +152,7 @@ const Withdraw = () => {
                             <th className="text-white py-5">{profitlvl3 != 0 ? profitlvl3 : 0}</th> 
                         </tr>
                     </table>
-                </Container>
+                </Container> */}
                 <Container>
                     <form onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">
                         <p id="withdraw">Submit a withdrawal request</p>
