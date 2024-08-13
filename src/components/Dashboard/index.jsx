@@ -70,6 +70,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser();
+    putBonus()
   }, []);
 
   // on disconnect from wallet  
@@ -102,7 +103,7 @@ const Dashboard = () => {
         ref={tawkMessengerRef}
         onLoad={onLoad}
       />
-      <button onClick={() => putBonus()}>edit friend</button>
+      {/* <button onClick={() => putBonus()}>edit friend</button> */}
     </>
   );
 };
