@@ -8,11 +8,22 @@ const LineSchema = new Schema({
         type: String,
         required: true
     },
-    total: {
-        type: Number
-    },
-    line: {
-        type: String
+    lines: {
+        type: Array,
+        items: {
+            type: Object,
+            properties: {
+                total: {
+                    type: Number
+                },
+                line: {
+                    type: String
+                },
+                bonus: {
+                    type: Number
+                }
+            }
+        }
     }
 })
 
