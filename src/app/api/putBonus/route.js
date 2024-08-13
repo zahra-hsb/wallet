@@ -6,7 +6,7 @@ export async function PUT(request) {
     try {
         const { address } = await request.json();
 
-        const user = await UsersModel.findOne({ address }); // پیدا کردن کاربر بر اساس آدرس  
+        const user = await UsersModel.findOne({ address });
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -35,19 +35,10 @@ export async function PUT(request) {
 
 
             totalInvests[referral.line] = (totalInvests[referral.line] || 0) + lineTotal;
-            // console.log(bonus);
+            console.log(totalInvests);
 
         }
 
-
-        // // به‌روزرسانی کاربر با بونوس  
-        // await UsersModel.findOneAndUpdate(  
-        //     { address },  
-        //     { $set: { dailyProfit: bonus } },  
-        //     { new: true }  
-        // );  
-
-        // ذخیره مجموع سرمایه‌گذاری‌ها در LineModel  
         for (const line in totalInvests) {
             const existingLine = await LineModel.findOne({ address, "lines.line": line });
             const total = totalInvests[line];
@@ -62,7 +53,7 @@ export async function PUT(request) {
                 else if (item.total >= 500000) bonus = 20000;
                 else if (item.total >= 1000000) bonus = 50000;
                 else bonus = 0
-                
+
                 // !! condition for 30 % in another line
                 await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
             });
@@ -76,12 +67,18 @@ export async function PUT(request) {
                 await LineModel.findOneAndUpdate(
                     { address },
                     { $push: { lines: { line, total } } },
-                    { new: true, upsert: true } // اگر موجود نبود، یک مستند جدید ایجاد کنید  
+                    { new: true, upsert: true }
                 );
             }
         }
+        const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {  
+            const friendUser = await UsersModel.findOne({ address: item.address });  
+            return friendUser ? friendUser : 0; 
+        }));  
 
-        return NextResponse.json({ success: true, totalInvests, bonus });
+        console.log(lvlInvestsArray);
+
+        return NextResponse.json({ success: true, totalInvests, bonus, lvlInvestsArray });
     } catch (error) {
         console.error('Update status failed: ', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
