@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import axios from "axios"
+import Web3 from "web3"
 
 const Wallet = () => {
     const router = useRouter()
@@ -35,12 +36,25 @@ const Wallet = () => {
             }, 3000)
         } else {
             // ?? deposit from user wallet
-            await axios.put('/api/editUser', { address: address, price: amount })
-            setStatus({ message: 'successful', messageColor: 'text-green-500' })  
-            setTimeout(() => {
-                setStatus('')
-            }, 3000)
-            setAmount('') 
+            // const web3 = new Web3(window.ethereum);
+            // await window.ethereum.enable();
+            
+            // const contract = new web3.eth.Contract(contractABI, contractAddress);
+    
+    
+            // try {
+            //   const tx = await contract.transfer(contractAddress, ethers.utils.parseUnits(amount, 'ether'));
+            //   await tx.wait();
+            //   setStatus({ message: 'successful', messageColor: 'text-green-500' });
+            // } catch (error) {
+            //   console.error(error);
+            //   setStatus({ message: 'failed', messageColor: 'text-red-500' });
+            // } finally {
+            //   setTimeout(() => {
+            //     setStatus('');
+            //   }, 3000);
+            //   setAmount('');
+            // }
         }
     }
     useEffect(() => {
@@ -96,7 +110,7 @@ const Wallet = () => {
                 const price = await response.data.price.price
                 const dailyProfit = await response.data.dailyProfit.dailyProfit
                 const investmentValue = await response.data.investmentValue.investmentValue
-                console.log('price: ', price, investmentValue); 
+                console.log('price: ', price, investmentValue);
                 const allProfits = price - investmentValue
                 setAllProfit(allProfits)
                 const decuple = dailyProfit * 10
@@ -109,7 +123,7 @@ const Wallet = () => {
                 console.log(getablePro);
                 setTopupValue(getablePro / profit)
                 setLimit(decuple)
-                if(allProfits > decuple) {
+                if (allProfits > decuple) {
                     setShowTopup(true)
                 }
                 if (price) {
@@ -170,21 +184,21 @@ const Wallet = () => {
                         <p className="text-white">{allProfit != 0 ? allProfit : 0}</p>
                     </div>
                 </Container>
-                {isShowTopup && <Container>
-                    <p className="text-gray-400">your profit limit for withdrawal: </p>
+                <Container>
+                    <p className="text-gray-400">your profit limit for withdrawal: </p> 
                     <p className="text-white">{limit != 0 ? limit : 0}</p>
-                    <p className="text-gray-400">you can Topup:
+                    {isShowTopup && <p className="text-gray-400">you can Topup:
                         <span className="text-white px-2">{topupValue}</span>
                         to get
                         <span className="text-white px-2">{getableProfit}</span>
-                    </p>
+                    </p>}
                     <form className="flex flex-col gap-5">
                         <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
 
                         <button type="submit" onClick={(e) => showTopupField(e)} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
                     </form>
                     {status && renderAlert(status)}
-                </Container>}
+                </Container>
             </section>
         </>
     )
