@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
+import LineModel from "@/lib/models/LinesModel";
 import UsersModel from "@/lib/models/UsersModel";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
@@ -35,7 +36,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -56,7 +64,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -77,7 +92,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -98,7 +120,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -119,7 +148,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -140,7 +176,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -161,7 +204,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -182,7 +232,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
@@ -203,7 +260,14 @@ export async function GET(req) {
                 }
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
-            if (updatedUserProfit.price > triplePrice) {
+            const invest = await LineModel.findOne({ address })
+            let resultTriplePrice;
+            invest.lines.forEach(item => {
+                if(item.bonus > 0) {
+                    resultTriplePrice = updatedUserProfit.price - item.bonus
+                }
+            });
+            if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
