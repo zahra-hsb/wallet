@@ -83,7 +83,7 @@ export async function PUT(request) {
         // !! if there is condition then save and increment the bonus into the price 
         let hasReceivedBonus = false
         // if (conditionMet) {
-        //     if (!hasReceivedBonus) {
+        //     if (!hasReceivedBonus) { 
         //         const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
         //         hasReceivedBonus = true
         //         console.log('inc: ', inc);
