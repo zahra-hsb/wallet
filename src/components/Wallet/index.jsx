@@ -17,7 +17,16 @@ const Wallet = () => {
     const [totalProfit, setTotalProfit] = useState(0)
     const [allProfit, setAllProfit] = useState(0)
     const [limit, setLimit] = useState(false)
+    const [amount, setAmount] = useState(0)
+    const [getableProfit, setGetableProfit] = useState(0)
+    const [topupValue, setTopupValue] = useState(0)
 
+    function handleChange(e) {
+        setAmount(e.target.value)
+    }
+    function showTopupField() {
+
+    }
     useEffect(() => {
         async function getProfits() {
             try {
@@ -42,6 +51,29 @@ const Wallet = () => {
                 console.log(error);
             }
         }
+        function getDailyProfit(investmentValue) {
+            if(investmentValue >= 10 && investmentValue <= 99) {
+                return 0.007
+            } else if(investmentValue >= 100 && investmentValue <= 499) {
+                return 0.008
+            } else if(investmentValue >= 500 && investmentValue <= 999) {
+                return 0.009
+            } else if(investmentValue >= 1000 && investmentValue <= 4999) {
+                return 0.01
+            } else if(investmentValue >= 5000 && investmentValue <= 9999) {
+                return 0.011
+            } else if(investmentValue >= 10000 && investmentValue <= 19999) {
+                return 0.012
+            } else if(investmentValue >= 20000 && investmentValue <= 29999) {
+                return 0.013
+            } else if(investmentValue >= 30000 && investmentValue <= 49999) {
+                return 0.014
+            } else if(investmentValue >= 50000 && investmentValue <= 100000) {
+                return 0.015
+            } else {
+                return 0
+            }
+        }
         async function getUser() {
             try {
                 const response = await axios.get(`/api/getPrice?address=${encodeURIComponent(address)}`)
@@ -51,8 +83,15 @@ const Wallet = () => {
                 const allProfits = price - investmentValue
                 setAllProfit(allProfits)
                 const decuple = dailyProfit * 10
-                console.log(allProfits >= decuple);
-                setLimit(decuple) 
+                console.log(allProfits >= decuple); 
+                const getableProfitValue = allProfits - decuple
+                console.log(allProfits); 
+                setGetableProfit(getableProfitValue)
+                const getablePro = getableProfitValue / 10 
+                const profit = getDailyProfit(investmentValue) 
+                console.log(getablePro);
+                setTopupValue(getablePro / profit)
+                setLimit(decuple)
                 if (price) {
                     setPriceValue(price);
                 } else {
@@ -114,7 +153,15 @@ const Wallet = () => {
                 <Container>
                     <p className="text-gray-400">your profit limit for withdrawal: </p>
                     <p className="text-white">{limit != 0 ? limit : 0}</p>
-                    <button onClick={() => router.push('/deposit')} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
+                    <p className="text-gray-400">you can Topup: 
+                        <span className="text-white px-2">{topupValue}</span> 
+                         to get  
+                        <span className="text-white px-2">{getableProfit}</span> 
+                    </p>
+
+                    <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
+
+                    <button onClick={() => showTopupField()} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
 
                 </Container>
             </section>

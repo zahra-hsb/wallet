@@ -18,10 +18,10 @@ export async function GET(req) {
         let profitValue = 0
         const user = await UsersModel.findOne({ address })
 
-        if (user.price >= 10 && user.price <= 99) {
+        if (user.investmentValue >= 10 && user.investmentValue <= 99) {
             console.log('10 until 99');
             profit = 0.7
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
 
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -47,9 +47,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 100 && user.price <= 499) {
+        } else if (user.investmentValue >= 100 && user.investmentValue <= 499) {
             profit = 0.8
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('100 until 499');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -75,9 +75,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 500 && user.price <= 999) {
+        } else if (user.investmentValue >= 500 && user.investmentValue <= 999) {
             profit = 0.9
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('500 until 999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -103,9 +103,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 1000 && user.price <= 4999) {
+        } else if (user.investmentValue >= 1000 && user.investmentValue <= 4999) {
             profit = 1
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('1000 until 4999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -131,9 +131,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 5000 && user.price <= 9999) {
+        } else if (user.investmentValue >= 5000 && user.investmentValue <= 9999) {
             profit = 1.1
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('5000 until 9999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -159,9 +159,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 10000 && user.price <= 19999) {
+        } else if (user.investmentValue >= 10000 && user.investmentValue <= 19999) {
             profit = 1.2
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('10000 until 19999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -187,9 +187,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 20000 && user.price <= 29999) {
+        } else if (user.investmentValue >= 20000 && user.investmentValue <= 29999) {
             profit = 1.3
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('20000 until 29999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -215,9 +215,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 30000 && user.price <= 49999) {
+        } else if (user.investmentValue >= 30000 && user.investmentValue <= 49999) {
             profit = 1.4
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('30000 until 49999');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
@@ -243,9 +243,9 @@ export async function GET(req) {
                 // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
-        } else if (user.price >= 50000 && user.price <= 100000) {
+        } else if (user.investmentValue >= 50000 && user.investmentValue <= 100000) {
             profit = 1.5
-            profitValue = user.price * profit / 100
+            profitValue = user.investmentValue * profit / 100
             console.log('50000 until 100000');
             const updatedUserPrice = await UsersModel.findOneAndUpdate({ address }, { $set: { dailyProfit: profitValue } })
 
