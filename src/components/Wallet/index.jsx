@@ -17,15 +17,24 @@ const Wallet = () => {
     const [totalProfit, setTotalProfit] = useState(0)
     const [allProfit, setAllProfit] = useState(0)
     const [limit, setLimit] = useState(false)
-    const [amount, setAmount] = useState(0)
+    const [amount, setAmount] = useState('')
     const [getableProfit, setGetableProfit] = useState(0)
     const [topupValue, setTopupValue] = useState(0)
+    const [status, setStatus] = useState('');
 
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    function showTopupField() {
-
+    function showTopupField(e) {
+        e.preventDefault()
+        if (amount === '') {
+            setStatus({ message: 'please input the topup value', messageColor: 'text-red-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 3000)
+        } else {
+            // ?? deposit from user wallet
+        }
     }
     useEffect(() => {
         async function getProfits() {
@@ -52,23 +61,23 @@ const Wallet = () => {
             }
         }
         function getDailyProfit(investmentValue) {
-            if(investmentValue >= 10 && investmentValue <= 99) {
+            if (investmentValue >= 10 && investmentValue <= 99) {
                 return 0.007
-            } else if(investmentValue >= 100 && investmentValue <= 499) {
+            } else if (investmentValue >= 100 && investmentValue <= 499) {
                 return 0.008
-            } else if(investmentValue >= 500 && investmentValue <= 999) {
+            } else if (investmentValue >= 500 && investmentValue <= 999) {
                 return 0.009
-            } else if(investmentValue >= 1000 && investmentValue <= 4999) {
+            } else if (investmentValue >= 1000 && investmentValue <= 4999) {
                 return 0.01
-            } else if(investmentValue >= 5000 && investmentValue <= 9999) {
+            } else if (investmentValue >= 5000 && investmentValue <= 9999) {
                 return 0.011
-            } else if(investmentValue >= 10000 && investmentValue <= 19999) {
+            } else if (investmentValue >= 10000 && investmentValue <= 19999) {
                 return 0.012
-            } else if(investmentValue >= 20000 && investmentValue <= 29999) {
+            } else if (investmentValue >= 20000 && investmentValue <= 29999) {
                 return 0.013
-            } else if(investmentValue >= 30000 && investmentValue <= 49999) {
+            } else if (investmentValue >= 30000 && investmentValue <= 49999) {
                 return 0.014
-            } else if(investmentValue >= 50000 && investmentValue <= 100000) {
+            } else if (investmentValue >= 50000 && investmentValue <= 100000) {
                 return 0.015
             } else {
                 return 0
@@ -83,12 +92,12 @@ const Wallet = () => {
                 const allProfits = price - investmentValue
                 setAllProfit(allProfits)
                 const decuple = dailyProfit * 10
-                console.log(allProfits >= decuple); 
+                console.log(allProfits >= decuple);
                 const getableProfitValue = allProfits - decuple
-                console.log(allProfits); 
+                console.log(allProfits);
                 setGetableProfit(getableProfitValue)
-                const getablePro = getableProfitValue / 10 
-                const profit = getDailyProfit(investmentValue) 
+                const getablePro = getableProfitValue / 10
+                const profit = getDailyProfit(investmentValue)
                 console.log(getablePro);
                 setTopupValue(getablePro / profit)
                 setLimit(decuple)
@@ -153,20 +162,28 @@ const Wallet = () => {
                 <Container>
                     <p className="text-gray-400">your profit limit for withdrawal: </p>
                     <p className="text-white">{limit != 0 ? limit : 0}</p>
-                    <p className="text-gray-400">you can Topup: 
-                        <span className="text-white px-2">{topupValue}</span> 
-                         to get  
-                        <span className="text-white px-2">{getableProfit}</span> 
+                    <p className="text-gray-400">you can Topup:
+                        <span className="text-white px-2">{topupValue}</span>
+                        to get
+                        <span className="text-white px-2">{getableProfit}</span>
                     </p>
+                    <form className="flex flex-col gap-5">
+                        <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
 
-                    <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
-
-                    <button onClick={() => showTopupField()} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
-
+                        <button type="submit" onClick={(e) => showTopupField(e)} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
+                    </form>
+                    {status && renderAlert(status)}
                 </Container>
             </section>
         </>
     )
 }
+
+const renderAlert = ({ message, messageColor }) => (
+    <div className={`px-4 py-3 leading-normal ${messageColor} rounded-xl backdrop-blur-sm border border-[#00F0FF] shadow-main mb-5 text-center`}>
+        <p>{message}</p>
+    </div>
+)
+
 
 export default Wallet
