@@ -44,7 +44,7 @@ export async function PUT(request) {
         ]);
 
         const totalInvestmentValue = userInvestmentTotal[0]?.totalInvestment || 0;
-
+        let conditionMet = false;
         for (const line in totalInvests) {
             const existingLine = await LineModel.findOne({ address, "lines.line": line });
             const total = totalInvests[line];
@@ -62,14 +62,10 @@ export async function PUT(request) {
 
                 await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
                 // !! condition for 30 % in another line
-                const conditionMet = totalInvestmentValue > 0 && (item.total / totalInvestmentValue) >= 0.3;
+                conditionMet = totalInvestmentValue > 0 && (item.total / totalInvestmentValue) >= 0.3;
 
-                // !! if there is condition then save and increment the bonus into the price 
-                if (conditionMet) {
-                    console.log(conditionMet)
-                    await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
-                }
             });
+            
 
             if (existingLine) {
                 await LineModel.updateOne(
@@ -82,6 +78,19 @@ export async function PUT(request) {
                     { $push: { lines: { line, total } } },
                     { new: true, upsert: true }
                 );
+            }
+            // !! if there is condition then save and increment the bonus into the price 
+            if (conditionMet) {
+                console.log(conditionMet)
+                const selectedUser = await UsersModel.findOne({ address }).select('price')
+                const selectedBonus = await LineModel.findOne({ address, 'lines.line': line }).select('bonus')
+                const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
+                const resultProfit = inc.price - selectedUser.price
+                // if (resultProfit == selectedBonus.bonus) {
+                //     break
+                // } 
+                console.log('inc: ', inc);
+
             }
         }
         const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {
