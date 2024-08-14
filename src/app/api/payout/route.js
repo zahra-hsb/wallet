@@ -25,11 +25,11 @@ export async function POST(req) {
         // HMAC signature is valid
         if (data.type === 'payment') {
             console.log('Received payment callback:', data);
-            // try {
-            //     await axios.put('/api/putTransaction', data)
-            // } catch (err) {
-            //     console.log(err);
-            // }
+            try {
+                await axios.put('/api/putTransaction', data)
+            } catch (err) {
+                console.log(err);
+            }
             // Process payment data here
         }
 
