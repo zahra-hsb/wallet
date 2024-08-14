@@ -38,7 +38,7 @@ const Wallet = () => {
             // ?? deposit from user wallet
             // const web3 = new Web3(window.ethereum);
             // await window.ethereum.enable();
-            
+            // const contractAddress = 0x9AABC792478ca988c45d2C762c5e4265cb5bE39c
             // const contract = new web3.eth.Contract(contractABI, contractAddress);
     
     

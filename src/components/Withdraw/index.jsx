@@ -20,14 +20,15 @@ const Withdraw = () => {
     const [profitlvl2, setProfitLvl2] = useState(0)
     const [profitlvl3, setProfitLvl3] = useState(0)
     const [totalProfit, setTotalProfit] = useState(0)
-
+    const [withdrawableAmount, setWithdrawableAmount] = useState(0)
     const [priceValue, setPriceValue] = useState(0)
     const router = useRouter()
+    const [status, setStatus] = useState('');
+    const [isChecked, setChecked] = useState(false);
 
     const [values, setValues] = useState({
         amount: '',
-        note: '',
-        password: ''
+        address: ''
     })
 
     const dataArray = [
@@ -58,9 +59,29 @@ const Withdraw = () => {
             [e.target.name]: e.target.value
         })
     }
-
-    function handleSubmit(e) {
+    function handleChangeCheckBox(e) {
+        setChecked(e.target.checked)
+    }
+    async function handleSubmit(e) {
         e.preventDefault()
+        if (values.amount === '' || values.address === '') {
+            setStatus({ message: 'please enter a value!', messageColor: 'text-red-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 3000)
+        } else if (values.amount > withdrawableAmount) {
+            setValues({
+                amount: '',
+                address: ''
+            })
+            setStatus({ message: 'please enter less than withdrawable value!', messageColor: 'text-red-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 3000)
+        } else {
+            // !! withdrawal
+            // await axios.put('/api/putPrice', { address, amount: values.amount })
+        }
     }
 
     const result1 = useReadContract({
@@ -78,7 +99,7 @@ const Withdraw = () => {
                 const profitLvl1 = await axios.get(`/api/getLvl1Profit?address=${encodeURIComponent(address)}`)
                 const profitLvl2 = await axios.get(`/api/getLvl2Profit?address=${encodeURIComponent(address)}`)
                 const profitLvl3 = await axios.get(`/api/getLvl3Profit?address=${encodeURIComponent(address)}`)
-                console.log(profitLvl1.data.lvl2Profit); 
+                console.log(profitLvl1.data.lvl2Profit);
                 if (profits.data && profitLvl1.data && profitLvl2.data) {
                     console.log(profitLvl3.data.total);
                     let total = profits?.data.profitValue + profitLvl1?.data.lvl1Profit + profitLvl3?.data.lvl3Profit + profitLvl2?.data.lvl2Profit
@@ -98,10 +119,13 @@ const Withdraw = () => {
         async function getUser() {
             try {
                 const response = await axios.get(`/api/getPrice?address=${encodeURIComponent(address)}`)
-                const price = response.data.price.price 
+                const investmentValue = await response.data.investmentValue.investmentValue
+                const price = await response.data.price.price
+
                 console.log(price);
                 if (price) {
-                    setPriceValue(price); 
+                    setPriceValue(price);
+                    setWithdrawableAmount(price - investmentValue)
                 } else {
                     console.warn(`No price found: ${price}`);
                 }
@@ -154,27 +178,34 @@ const Withdraw = () => {
                     </table>
                 </Container> */}
                 <Container>
-                    <form onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">
-                        <p id="withdraw">Submit a withdrawal request</p>
+                    <p className="text-lg ">the withdrawable amount is: </p>
+                    {withdrawableAmount} USDT
+                </Container>
+                <Container>
+                    <form id="withdraw" onSubmit={(e) => handleSubmit(e)} className="w-full flex flex-col gap-3 items-start">
+                        <p>Submit a withdrawal request</p>
+                        {!isChecked && <div className="flex flex-col w-full gap-1">
+                            <label>wallet address</label>
+                            <input type="text" value={values.walletAddress} onChange={(e) => handleChange(e)} name="walletAddress" className="p-2 rounded text-gray-800 outline-none" placeholder="Enter receipt wallet address" />
+                        </div>}
                         <div className="flex flex-col w-full gap-1">
                             <label>Amount</label>
                             <input type="number" value={values.amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
                         </div>
-                        <div className="flex flex-col w-full gap-1">
-                            <label>Note</label>
-                            <input type="text" value={values.note} onChange={(e) => handleChange(e)} name="note" className="p-2 rounded text-gray-800 outline-none" placeholder="Enter notes (Optimal)" />
-                        </div>
-                        <div className="flex flex-col w-full gap-1">
+                        {/* <div className="flex flex-col w-full gap-1">
                             <label>Password</label>
                             <input type="password" value={values.password} onChange={(e) => handleChange(e)} name='password' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter your password" />
-                        </div>
+                        </div> */}
                         <div className="flex gap-1 justify-start w-full">
-                            <input type="checkbox" id="remember" className="rounded" />
-                            <label htmlFor="remember" className="text-[#00FF5E]">Remember this choice as default</label>
+                            <input type="checkbox" onChange={(e) =>
+                                handleChangeCheckBox(e)} checked={isChecked} id="remember" className="rounded" />
+                            <label htmlFor="remember" className="text-[#00FF5E]">Use your current wallet address?</label>
                         </div>
                         <div className="w-full text-center">
                             <button className="py-1 px-6 border rounded-full border-[#20FF44] text-center">Submit</button>
                         </div>
+                        {status && renderAlert(status)}
+
                     </form>
 
                 </Container>
@@ -205,5 +236,11 @@ const Withdraw = () => {
         </>
     )
 }
+
+const renderAlert = ({ message, messageColor }) => (
+    <div className={`px-4 py-3 leading-normal ${messageColor} rounded-xl backdrop-blur-sm border border-[#00F0FF] shadow-main mb-5 text-center`}>
+        <p>{message}</p>
+    </div>
+)
 
 export default Withdraw
