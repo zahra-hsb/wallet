@@ -25,7 +25,7 @@ const Wallet = () => {
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    function showTopupField(e) {
+    async function showTopupField(e) {
         e.preventDefault()
         if (amount === '') {
             setStatus({ message: 'please input the topup value', messageColor: 'text-red-500' })
@@ -34,6 +34,11 @@ const Wallet = () => {
             }, 3000)
         } else {
             // ?? deposit from user wallet
+            await axios.put('/api/editUser', { address: address, price: amount })
+            setStatus({ message: 'successful', messageColor: 'text-green-500' })  
+            setTimeout(() => {
+                setStatus('')
+            }, 3000)
         }
     }
     useEffect(() => {

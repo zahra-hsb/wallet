@@ -8,10 +8,9 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req) {
     try {
-        const { address, price, prevPrice } = await req.json()
-        let Price = Number(prevPrice)
-        let newPrice = Number(price)
-        Price += newPrice
+        const { address, price } = await req.json()
+        let Price = Number(price)
+
         if (!address || !price) {
             throw new Error('Missing required fields: address and price');
         }
@@ -19,7 +18,7 @@ export async function PUT(req) {
         await dbConnect()
 
         console.log('address: ', address);
-        const updatedDoc = await UsersModel.updateOne({ address: address }, { $set: { price: Price } })
+        const updatedDoc = await UsersModel.updateOne({ address: address }, { $inc: { price: Price } })
         await UsersModel.updateOne({ address: address }, { $inc: { investmentValue: Price } })
         if (!updatedDoc.modifiedCount) {
             throw new Error('Document not found or not updated');

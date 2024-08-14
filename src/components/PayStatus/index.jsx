@@ -24,14 +24,11 @@ const PayStatus = () => {
     //     trackId: trackId
     // });
     // console.log(trackId);
-    async function getPrice() {
-        const res = await axios.get('/api/getUsers')
-        return res.data?.find(item => item.address === address).price;
-    }
+    
 
     async function updatePrice() {
         const prevPrice = await getPrice()
-        await axios.put('/api/editUser', { address: address, price: amount, prevPrice: prevPrice })
+        await axios.put('/api/editUser', { address: address, price: amount })
 
     }
 
