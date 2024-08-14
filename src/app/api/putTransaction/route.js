@@ -5,13 +5,22 @@ import { NextResponse } from "next/server"
 
 export async function PUT(req) {
     try {
-        const { trackId, status } = await req.json()
+        const { trackId, status, date, address, amount } = await req.json()
         await dbConnect()
         const updatedStatus = await TransactionModel.updateOne({
-            trackId: trackId
+            address: address
         }, {
             $set: {
-                status: status
+                status
+            },
+            $set: {
+                date
+            },
+            $set: {
+                address
+            },
+            $set: {
+                amount
             }
         })
         return NextResponse.json({ updatedStatus })

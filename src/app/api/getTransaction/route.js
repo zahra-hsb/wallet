@@ -5,10 +5,11 @@ import { NextResponse } from "next/server";
 
 
 
-export async function GET() {
+export async function GET(req) {
     try {
+        const date = req.nextUrl.searchParams.get("date");
         await dbConnect()
-        const transactions = await TransactionModel.find({})
+        const transactions = await TransactionModel.find({ date })
 
         return NextResponse.json({ transactions })
     } catch (error) {

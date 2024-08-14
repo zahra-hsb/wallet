@@ -9,9 +9,9 @@ import Web3 from "web3"
 
 const Wallet = () => {
     const router = useRouter()
+    const { address } = useAccount()
     const [priceValue, setPriceValue] = useState(0)
     const [dailyProfit, setDailyProfit] = useState(0)
-    const { address } = useAccount()
     const [profitlvl1, setProfitLvl1] = useState(0)
     const [profitlvl2, setProfitLvl2] = useState(0)
     const [profitlvl3, setProfitLvl3] = useState(0)
@@ -40,11 +40,12 @@ const Wallet = () => {
             // await window.ethereum.enable();
             // const contractAddress = 0x9AABC792478ca988c45d2C762c5e4265cb5bE39c
             // const contract = new web3.eth.Contract(contractABI, contractAddress);
-    
-    
+
+
             // try {
             //   const tx = await contract.transfer(contractAddress, ethers.utils.parseUnits(amount, 'ether'));
             //   await tx.wait();
+            // axios.put('/api/editUser', { address, price: amount })
             //   setStatus({ message: 'successful', messageColor: 'text-green-500' });
             // } catch (error) {
             //   console.error(error);
@@ -185,7 +186,7 @@ const Wallet = () => {
                     </div>
                 </Container>
                 <Container>
-                    <p className="text-gray-400">your profit limit for withdrawal: </p> 
+                    <p className="text-gray-400">your profit limit for withdrawal: </p>
                     <p className="text-white">{limit != 0 ? limit : 0}</p>
                     {isShowTopup && <p className="text-gray-400">you can Topup:
                         <span className="text-white px-2">{topupValue}</span>

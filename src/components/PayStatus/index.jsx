@@ -24,12 +24,14 @@ const PayStatus = () => {
     //     trackId: trackId
     // });
     // console.log(trackId);
-    
+    const today = new Date();
+    const formattedDate = today.toDateString();
+    console.log(formattedDate);
 
     async function updatePrice() {
         const prevPrice = await getPrice()
         await axios.put('/api/editUser', { address: address, price: amount })
-
+        await axios.put('/api/putTransaction', { date: formattedDate })
     }
 
 
