@@ -58,7 +58,7 @@ const ActivityDashboard = () => {
         <section className="pt-10">
             <div className="border shadow-main backdrop-blur-sm text-white border-[#00F0FF] rounded-3xl flex items-center flex-col mb-10 p-5">
                 <div><span className="text-gray-400 text-lg">total sales: </span>{totalInvest}</div>
-                <div><span className="text-gray-400 text-lg">total friends: </span>{friends.length}</div>
+                <div><span className="text-gray-400 text-lg">total friends: </span>{friends.length}</div> 
 
             </div>
             <div className='border shadow-main backdrop-blur-sm text-white border-[#00F0FF] rounded-3xl flex items-center flex-col'>

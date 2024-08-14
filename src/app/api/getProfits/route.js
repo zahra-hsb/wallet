@@ -11,7 +11,7 @@ export async function GET(req) {
         if (!address) {
             console.log('address does not exists!!!');
         }
-
+ 
         await dbConnect()
         let profit = 0
         let isDecuple = false
@@ -44,7 +44,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 100 && user.price <= 499) {
@@ -72,7 +72,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 500 && user.price <= 999) {
@@ -100,7 +100,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 1000 && user.price <= 4999) {
@@ -128,7 +128,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 5000 && user.price <= 9999) {
@@ -156,7 +156,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 10000 && user.price <= 19999) {
@@ -184,7 +184,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 20000 && user.price <= 29999) {
@@ -212,7 +212,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 30000 && user.price <= 49999) {
@@ -240,7 +240,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.price >= 50000 && user.price <= 100000) {
@@ -268,7 +268,7 @@ export async function GET(req) {
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else {

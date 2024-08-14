@@ -79,20 +79,16 @@ export async function PUT(request) {
                     { new: true, upsert: true }
                 );
             }
-            // !! if there is condition then save and increment the bonus into the price 
-            if (conditionMet) {
-                console.log(conditionMet)
-                const selectedUser = await UsersModel.findOne({ address }).select('price')
-                const selectedBonus = await LineModel.findOne({ address, 'lines.line': line }).select('bonus')
-                const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
-                const resultProfit = inc.price - selectedUser.price
-                // if (resultProfit == selectedBonus.bonus) {
-                //     break
-                // } 
-                console.log('inc: ', inc);
-
-            }
         }
+        // !! if there is condition then save and increment the bonus into the price 
+        let hasReceivedBonus = false
+        // if (conditionMet) {
+        //     if (!hasReceivedBonus) {
+        //         const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
+        //         hasReceivedBonus = true
+        //         console.log('inc: ', inc);
+        //     } 
+        // }
         const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {
             const friendUser = await UsersModel.findOne({ address: item.address });
             return friendUser ? friendUser : 0;
