@@ -21,6 +21,7 @@ const Wallet = () => {
     const [getableProfit, setGetableProfit] = useState(0)
     const [topupValue, setTopupValue] = useState(0)
     const [status, setStatus] = useState('');
+    const [isShowTopup, setShowTopup] = useState(false)
 
     function handleChange(e) {
         setAmount(e.target.value)
@@ -39,6 +40,7 @@ const Wallet = () => {
             setTimeout(() => {
                 setStatus('')
             }, 3000)
+            setAmount('') 
         }
     }
     useEffect(() => {
@@ -94,6 +96,7 @@ const Wallet = () => {
                 const price = await response.data.price.price
                 const dailyProfit = await response.data.dailyProfit.dailyProfit
                 const investmentValue = await response.data.investmentValue.investmentValue
+                console.log('price: ', price, investmentValue); 
                 const allProfits = price - investmentValue
                 setAllProfit(allProfits)
                 const decuple = dailyProfit * 10
@@ -106,6 +109,9 @@ const Wallet = () => {
                 console.log(getablePro);
                 setTopupValue(getablePro / profit)
                 setLimit(decuple)
+                if(allProfits > decuple) {
+                    setShowTopup(true)
+                }
                 if (price) {
                     setPriceValue(price);
                 } else {
@@ -164,7 +170,7 @@ const Wallet = () => {
                         <p className="text-white">{allProfit != 0 ? allProfit : 0}</p>
                     </div>
                 </Container>
-                <Container>
+                {isShowTopup && <Container>
                     <p className="text-gray-400">your profit limit for withdrawal: </p>
                     <p className="text-white">{limit != 0 ? limit : 0}</p>
                     <p className="text-gray-400">you can Topup:
@@ -178,7 +184,7 @@ const Wallet = () => {
                         <button type="submit" onClick={(e) => showTopupField(e)} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
                     </form>
                     {status && renderAlert(status)}
-                </Container>
+                </Container>}
             </section>
         </>
     )
