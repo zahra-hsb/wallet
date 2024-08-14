@@ -41,10 +41,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 100 && user.investmentValue <= 499) {
@@ -69,10 +72,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 500 && user.investmentValue <= 999) {
@@ -93,14 +99,18 @@ export async function GET(req) {
             })
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
+            console.log('invest ', invest);
             let resultTriplePrice;
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 1000 && user.investmentValue <= 4999) {
@@ -125,10 +135,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 5000 && user.investmentValue <= 9999) {
@@ -153,10 +166,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 10000 && user.investmentValue <= 19999) {
@@ -181,10 +197,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 20000 && user.investmentValue <= 29999) {
@@ -209,10 +228,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 30000 && user.investmentValue <= 49999) {
@@ -237,10 +259,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else if (user.investmentValue >= 50000 && user.investmentValue <= 100000) {
@@ -265,10 +290,13 @@ export async function GET(req) {
             invest.lines.forEach(item => {
                 if(item.bonus > 0) {
                     resultTriplePrice = updatedUserProfit.price - item.bonus
+                    console.log('result: ', resultTriplePrice);
+                    console.log('result: ', updatedUserProfit.price);
+                    console.log('result: ', triplePrice);
                 }
             });
             if (resultTriplePrice > triplePrice) {
-                // const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
+                const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
             }
         } else {
