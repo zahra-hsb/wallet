@@ -18,8 +18,8 @@ export async function PUT(req) {
       console.log('upAddress does not exists!!');
     }
     const lineData = await UsersModel.findOne(  
-      { 'referralCode.refCode': referral }, // جستجو برای refCode مشخص شده  
-      { 'referralCode.$': 1 } // تنها LINE مربوط به refcode را انتخاب می‌کنیم  
+      { 'referralCode.refCode': referral }, 
+      { 'referralCode.$': 1 }   
     );
     const line = lineData.referralCode[0].line
     const existingFriend = await UsersModel.find({ friends: { address, level: '1' } });

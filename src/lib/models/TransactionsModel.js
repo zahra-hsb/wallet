@@ -17,6 +17,9 @@ const TransactionSchema = new Schema({
     },
     amount: {
         type: Number
+    },
+    transactionType: {
+        type: String
     }
 })
 

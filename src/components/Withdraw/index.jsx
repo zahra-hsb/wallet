@@ -79,8 +79,11 @@ const Withdraw = () => {
                 setStatus('')
             }, 3000)
         } else {
+            const today = new Date();
+            const formattedDate = today.toDateString();
             // !! withdrawal
             // await axios.put('/api/putPrice', { address, amount: values.amount })
+            await axios.put('/api/putTransaction', { address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
         }
     }
 

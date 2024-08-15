@@ -12,7 +12,9 @@ const UserSchema = new Schema({
             type: Object,
             properties: {
                 refCode: { type: String },
-                line: { type: String }
+                line: { type: String },
+                users: { type: Number },
+                balance: { type: Number }
             }
         }
     },

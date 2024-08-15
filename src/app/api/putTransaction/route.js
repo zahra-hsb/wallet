@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 
 export async function PUT(req) {
     try {
-        const { trackId, status, date, address, amount } = await req.json()
+        const { trackId, status, date, address, amount, transactionType } = await req.json()
         await dbConnect()
         const updatedStatus = await TransactionModel.updateOne({
             address: address
@@ -21,6 +21,9 @@ export async function PUT(req) {
             },
             $set: {
                 amount
+            },
+            $set: {
+                transactionType
             }
         })
         return NextResponse.json({ updatedStatus })

@@ -81,7 +81,7 @@ const Dashboard = () => {
   const formattedDate = today.toDateString();
   async function getTransaction() {
     setTime(formattedDate)
-    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}`)
+    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}?transactionType=withdraw`)
     let total = 0
     transactions.data.transactions?.map(item => {
       total += item.amount
