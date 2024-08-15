@@ -63,8 +63,15 @@ const Login = () => {
     async function checkUser() {
         const referralCode = 'https://aismart.liara.run' + pathname
         console.log('pathname: ', pathname);
-        if (pathname != '/') {
-            const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
+        const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
+        const resultUser = await axios.get(`/api/getUser?address=${encodeURIComponent(address)}`)
+        console.log('result user: ', resultUser.data.isExist);
+        const isExistUser = await resultUser.data.isExist
+        if (isExistUser && pathname == '/') {
+            router.push('/dashboard')
+        } else if (!isExistUser && pathname == '/') {
+            setShowRefField(true)
+        } else {
             const upAddress = await result.data
             console.log('68=> ', result.data, upAddress);
             const data = [
@@ -76,8 +83,6 @@ const Login = () => {
             } catch (err) {
                 console.log(err);
             }
-        } else {
-            setShowRefField(true)
         }
     }
     async function handleClickSubmit() {

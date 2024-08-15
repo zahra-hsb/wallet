@@ -18,14 +18,14 @@ export async function PUT(req) {
       { 'referralCode.$': 1 }
     );
     const line = lineData.referralCode[0].line
-    const existingFriend = await UsersModel.find({ friends: { address: data.address, level: '1' } });
-    const existingUser = await UsersModel.find({ address: data.address }, {})
+    const existingFriend = await UsersModel.find({ friends: { address: data[0].address, level: '1' } });
+    const existingUser = await UsersModel.find({ address: data[0].address }, {})
 
     if (existingFriend.length === 0 && existingUser.length === 0) {
     // 3 lvl 1 0x22
     const updatedDoc = await UsersModel.findOneAndUpdate(
       { address: upAddress.address },
-      { $push: { friends: { address: data.address, level: '1', line, refCode: referralCode } } }
+      { $push: { friends: { address: data[0].address, level: '1', line, refCode: referralCode } } }
     );
 
     if (!updatedDoc) {
@@ -36,7 +36,7 @@ export async function PUT(req) {
     // 2 lvl 2 0x59 !!!! 0x22
     let user = await UsersModel.findOneAndUpdate(
       { 'friends': { 'address': updatedDoc.address, 'level': '1' } },
-      { $push: { friends: { address: data.address, level: '2', line, refCode: referralCode } } }
+      { $push: { friends: { address: data[0].address, level: '2', line, refCode: referralCode } } }
     )
 
 
@@ -48,7 +48,7 @@ export async function PUT(req) {
       // 1 lvl 3
       let user2 = await UsersModel.findOneAndUpdate(
         { 'friends': { 'address': user.address, 'level': '1' } },
-        { $push: { friends: { address: data.address, level: '3', line, refCode: referralCode } } }
+        { $push: { friends: { address: data[0].address, level: '3', line, refCode: referralCode } } }
       )
 
       console.log(user.address);
