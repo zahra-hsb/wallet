@@ -54,7 +54,7 @@ const ActivityDashboard = () => {
                 console.error('Error fetching friends:', error);
             }
         };
-
+        
         fetchFriends();
     }, [address]);
 
