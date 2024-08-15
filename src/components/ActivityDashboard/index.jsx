@@ -5,6 +5,7 @@ import chainIcon from '../../../public/icons/Icon.png'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import Container from "../Container";
 
 const ActivityDashboard = () => {
     const [friends, setFriends] = useState([]);
@@ -16,13 +17,13 @@ const ActivityDashboard = () => {
         const fetchInvestments = async () => {
             try {
                 const response = await axios.put('/api/putBonus', { address });
-                return response.data.lvlInvestsArray;
+                return response.data;
             } catch (error) {
                 console.error('Error fetching investments: ', error);
                 return [];
             }
         };
-
+        
         const fetchFriends = async () => {
             try {
                 const response = await fetch('/api/getUsers');
@@ -33,16 +34,19 @@ const ActivityDashboard = () => {
 
                 const data = await response.json();
                 const userFriends = data.find(item => item.address === address)?.friends || [];
-                const investments = await fetchInvestments();
-                console.log(investments);
+                const investments = await fetchInvestments(); 
+                const investArray = investments.lvlInvestsArray
+                console.log('in: ', investments);
                 let total = 0
-                investments.map((item) => {
+                investArray.map((item) => {
+                    console.log(item.investmentValue);
                     total += item.investmentValue
                 })
+                console.log(total);
                 setTotalInvest(total)
                 if (userFriends.length > 0) {
                     setFriends(userFriends);
-                    setInvestValues(investments);
+                    setInvestValues(investArray);
                 } else {
                     console.warn(`No friends found for address: ${address}`);
                 }

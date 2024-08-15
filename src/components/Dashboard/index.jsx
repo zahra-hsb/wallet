@@ -66,13 +66,8 @@ const Dashboard = () => {
     const data = await getUsers()
   }
 
-  async function putBonus() {
-    await axios.put('/api/putBonus', { address })
-  }
-
   useEffect(() => {
     getUser();
-    putBonus()
     getTransaction()
   }, []);
 

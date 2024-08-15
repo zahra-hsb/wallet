@@ -81,14 +81,16 @@ export async function PUT(request) {
             }
         }
         // !! if there is condition then save and increment the bonus into the price 
-        let hasReceivedBonus = false
-        // if (conditionMet) {
-        //     if (!hasReceivedBonus) { 
-        //         const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
-        //         hasReceivedBonus = true
-        //         console.log('inc: ', inc);
-        //     } 
-        // }
+        let hasReceivedBonus 
+        if (conditionMet) {
+            hasReceivedBonus = false
+            // if (!hasReceivedBonus) { 
+            //     const inc = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } });
+            //     hasReceivedBonus = true
+            //     console.log('inc: ', inc);
+            // } 
+            
+        }
         const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {
             const friendUser = await UsersModel.findOne({ address: item.address });
             return friendUser ? friendUser : 0;
@@ -96,7 +98,7 @@ export async function PUT(request) {
 
         console.log(lvlInvestsArray);
 
-        return NextResponse.json({ success: true, totalInvests, bonus, lvlInvestsArray });
+        return NextResponse.json({ success: true, totalInvests, bonus, lvlInvestsArray, hasReceivedBonus });
     } catch (error) {
         console.error('Update status failed: ', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
