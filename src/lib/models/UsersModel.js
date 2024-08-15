@@ -12,9 +12,7 @@ const UserSchema = new Schema({
             type: Object,
             properties: {
                 refCode: { type: String },
-                line: { type: String },
-                users: { type: Number },
-                balance: { type: Number }
+                line: { type: String }
             }
         }
     },
@@ -39,7 +37,7 @@ const UserSchema = new Schema({
                 // amountOfInvest: { type: Number },
                 level: { type: String },
                 line: { type: String },
-                // refCodeOfFriend: { type: String }
+                refCode: { type: String }
             }
         }
     }

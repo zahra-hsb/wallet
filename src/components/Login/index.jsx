@@ -63,17 +63,21 @@ const Login = () => {
     async function checkUser() {
         const referralCode = 'https://aismart.liara.run' + pathname
         console.log('pathname: ', pathname);
-        const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
-        // console.log(result.data);
-        const upAddress = result.data
-        const data = [
-            { address: address, level: '1' }
-        ]
-        router.push('/dashboard')
-        try {
-            await axios.put('/api/editFriends', { data, upAddress, referralCode })
-        } catch (err) {
-            console.log(err);
+        if (pathname != '/') {
+            const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
+            const upAddress = await result.data
+            console.log('68=> ', result.data, upAddress);
+            const data = [
+                { address: address, level: '1' }
+            ]
+            router.push('/dashboard')
+            try {
+                await axios.put('/api/editFriends', { data, upAddress, referralCode })
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            setShowRefField(true)
         }
     }
     async function handleClickSubmit() {
@@ -81,7 +85,8 @@ const Login = () => {
         const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
         console.log(result.data);
         console.log(referralCode);
-        const upAddress = result.data
+        const upAddress = await result.data
+        console.log('85=> ', upAddress);
         // create data array and check found ref
         const data = [
             { address: address, level: '1' }
