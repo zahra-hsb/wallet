@@ -31,6 +31,7 @@ export async function GET(req) {
             const decuple = total * 10
 
         }
+        revalidatePath('/bonusvolume', 'page')
         
         console.log('lvl2: ', usersWithPrices);
         console.log('lvl2: ', total);

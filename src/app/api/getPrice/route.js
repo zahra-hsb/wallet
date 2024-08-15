@@ -18,6 +18,7 @@ export async function GET(req) {
         revalidatePath('/referral', 'page')
         revalidatePath('/withdraw', 'page')
         revalidatePath('/wallet', 'page')
+        revalidatePath('/bonusvolume', 'page')
         return NextResponse.json({ price, investmentValue, dailyProfit })
     } catch (error) {
         return NextResponse.json({ error })

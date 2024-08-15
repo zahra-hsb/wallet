@@ -30,6 +30,7 @@ export async function GET(req) {
             })
             
         }
+        revalidatePath('/bonusvolume', 'page')
         console.log('lvl1: ', total);
         return NextResponse.json({ lvl1Profit: total })
     } catch (error) { 

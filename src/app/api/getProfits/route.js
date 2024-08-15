@@ -304,7 +304,8 @@ export async function GET(req) {
             isDecuple = false
             return NextResponse.json({ user })
         }
-        revalidatePath('/withdraw', 'page')
+        revalidatePath('/bonusvolume', 'page')
+        revalidatePath('/withdraw', 'page') 
         return NextResponse.json({ profitValue, isDecuple })
     } catch (error) {
         console.log(error);
