@@ -18,6 +18,8 @@ const Dashboard = () => {
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
   const [transactionsArray, setTransactions] = useState([])
   const [totalSales, setTotalSales] = useState(0)
+  const [time, setTime] = useState('')
+
   const addUser = useCallback(
     async () => {
       try {
@@ -82,8 +84,8 @@ const Dashboard = () => {
   });
   const today = new Date();
   const formattedDate = today.toDateString();
-
   async function getTransaction() {
+    setTime(formattedDate)
     const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}`)
     let total = 0
     transactions.data.transactions?.map(item => {
@@ -111,8 +113,8 @@ const Dashboard = () => {
             <p>{totalSales} USDT</p>
           </Container>
           <Container>
-            <p className="text-lg">withdraw requests today:</p>
-            {transactionsArray.map(item => (
+            <p className="text-lg">withdraw requests today: {time}</p>
+            {transactionsArray.length != 0 ? transactionsArray.map(item => (
               <>
                 <div className="w-full p-5 mx-2 border-b border-b-gray-400">
                   <ul className="w-full flex items-start justify-start gap-24 p-2 font-bold">
@@ -125,11 +127,13 @@ const Dashboard = () => {
                   </ul>
                 </div>
               </>
-            ))
+            )) :
+            <div className="text-gray-400">there is no any activity today...</div>
             }
           
 
           </Container>
+
         </section>
       </>
     )
