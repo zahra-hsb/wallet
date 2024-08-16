@@ -120,8 +120,8 @@ const Dashboard = () => {
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
-    if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
+  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
+    // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
       <>
         <MobileNav />
