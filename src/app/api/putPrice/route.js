@@ -6,10 +6,11 @@ import { NextResponse } from "next/server"
 
 export async function PUT(req) {
     try {
-        const { address, amount } = req.json()
+        const { address, amount } = await req.json()
         await dbConnect()
 
-        const updatedUser = UsersModel.findOneAndUpdate({ address }, { $inc: { price: -amount }, $inc: { investmentValue: -amount } })
+        const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: -amount } })
+        console.log('update: ', updatedUser);
         return NextResponse.json({ message: 'successful decrement from price', updatedUser })
     } catch (error) {
         return NextResponse.json({ error })

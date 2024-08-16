@@ -76,7 +76,7 @@ const Withdraw = () => {
             let time = today.toLocaleTimeString();
             console.log('t ', time);
             // !! withdrawal
-            // await axios.put('/api/putPrice', { address, amount: values.amount })
+            await axios.put('/api/putPrice', { address, amount: values.amount })
             if (isChecked) {
                 const result = await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw', time: time })
                 if (result) {
@@ -84,11 +84,12 @@ const Withdraw = () => {
                         amount: '',
                         address: ''
                     })
-                    setStatus({ message: 'wathdraw request sent successfully!', messageColor: 'text-green-500' })
+                    setStatus({ message: 'withdraw request sent successfully!', messageColor: 'text-green-500' })
                     setTimeout(() => {
                         setStatus('')
                     }, 3000)
-                } 
+                    window.location.reload()
+                }
             } else {
                 const result = await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw', time: time })
                 if (result) {
@@ -96,10 +97,11 @@ const Withdraw = () => {
                         amount: '',
                         address: ''
                     })
-                    setStatus({ message: 'wathdraw request sent successfully!', messageColor: 'text-green-500' })
+                    setStatus({ message: 'withdraw request sent successfully!', messageColor: 'text-green-500' })
                     setTimeout(() => {
                         setStatus('')
                     }, 3000)
+                    window.location.reload()
                 }
             }
         }
@@ -171,33 +173,7 @@ const Withdraw = () => {
                         <Link href={'#withdraw'} className="py-1 px-6 border rounded-full shadow-red border-[#FF2020]">Withdraw</Link>
                     </div>
                 </Container>
-                {/* <Container>
-                    <h3 className="text-lg font-bold">Profits</h3>
 
-                    <table className="text-white w-full">
-                        <tr className="">
-                            <th className="text-gray-400 py-5">Daily Profit</th>
-                            <th className="text-gray-400 py-5">Total Profit</th>
-                        </tr>
-                        <tr className="border-y border-y-gray-700">
-                            <th className="text-white py-5">{dailyProfit ? dailyProfit : 0}</th>
-                            <th className="text-white py-5">{totalProfit ? totalProfit : 0}</th>
-                        </tr>
-                    </table>
-
-                    <table className="text-white w-full">
-                        <tr className="">
-                            <th className="text-gray-400 py-5">lvl.1 Profit</th>
-                            <th className="text-gray-400 py-5">lvl.2 Profit</th>
-                            <th className="text-gray-400 py-5">lvl.3 Profit</th>
-                        </tr>
-                        <tr className="border-y border-y-gray-700">
-                            <th className="text-white py-5">{profitlvl1 != 0 ? profitlvl1 : 0}</th>
-                            <th className="text-white py-5">{profitlvl2 != 0 ? profitlvl2 : 0}</th>
-                            <th className="text-white py-5">{profitlvl3 != 0 ? profitlvl3 : 0}</th> 
-                        </tr>
-                    </table>
-                </Container> */}
                 <Container>
                     <p className="text-lg ">the withdrawable amount is: </p>
                     {withdrawableAmount} USDT
@@ -213,10 +189,7 @@ const Withdraw = () => {
                             <label>Amount</label>
                             <input type="number" value={values.amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
                         </div>
-                        {/* <div className="flex flex-col w-full gap-1">
-                            <label>Password</label>
-                            <input type="password" value={values.password} onChange={(e) => handleChange(e)} name='password' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter your password" />
-                        </div> */}
+
                         <div className="flex gap-1 justify-start w-full">
                             <input type="checkbox" onChange={(e) =>
                                 handleChangeCheckBox(e)} checked={isChecked} id="remember" className="rounded" />

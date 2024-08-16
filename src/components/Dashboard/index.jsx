@@ -96,10 +96,11 @@ const Dashboard = () => {
   }
 
   const tawkMessengerRef = useRef();
-  const decline = async (id) => {
+  const decline = async (id, address, amount) => {
     console.log('id: ', id);
     try {
-      await axios.put('/api/putTransaction', { address, status: 'decline', date: formattedDate, _id: id })
+      await axios.put('/api/putTransaction', { status: 'decline', _id: id })
+      await axios.put('/api/editPrice', { address: address, price: amount })
       window.location.reload()
 
     } catch (error) {
@@ -109,7 +110,7 @@ const Dashboard = () => {
   const approve = async (id) => {
     console.log('time: ', id);
     try {
-      await axios.put('/api/putTransaction', { address, status: 'approve', date: formattedDate, _id: id })
+      await axios.put('/api/putTransaction', { status: 'approve', _id: id })
       // setApprove(true)
       window.location.reload()
     } catch (error) {
@@ -119,8 +120,8 @@ const Dashboard = () => {
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
-  // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
+  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
+    if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
       <>
         <MobileNav />
