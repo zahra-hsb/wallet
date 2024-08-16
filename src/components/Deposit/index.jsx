@@ -22,9 +22,11 @@ const Deposit = () => {
 
 
     async function postTransactions(response) {
+        const today = new Date();
+        const formattedDate = today.toDateString();
         try {
-            await axios.post('/api/postTransaction', response)
-        } catch(error) {
+            await axios.post('/api/postTransaction', { trackId: response.trackId, address, status: response.message, date: formattedDate, amount, transactionType: 'deposit' })
+        } catch (error) {
             console.log(error);
         }
     }
@@ -39,21 +41,21 @@ const Deposit = () => {
                 console.log(response.data.response);
                 setPayLink(response.data.response.payLink);
                 if (response.data.response.payLink) {
-                    postTransactions(response.data.response) 
-                    
-                        window.open(response.data.response.payLink)
-                        setPayLink(response.data.response.payLink)
-                        localStorage.setItem('trackId', response.data?.response.trackId)
-                        console.log('object', response.data.response.payLink);
-                        setIos(false)
-                    
+                    postTransactions(response.data.response)
+
+                    window.open(response.data.response.payLink)
+                    setPayLink(response.data.response.payLink)
+                    localStorage.setItem('trackId', response.data?.response.trackId)
+                    console.log('object', response.data.response.payLink);
+                    setIos(false)
+
                 }
 
                 if (response.data?.response.message === 'success') {
                     console.log('success');
                     // updatePrice()
-                    localStorage.setItem('message', response.data?.response.message) 
-                    localStorage.setItem('amount', amount) 
+                    localStorage.setItem('message', response.data?.response.message)
+                    localStorage.setItem('amount', amount)
                 } else if (response.data?.response.message === 'failed') {
                     console.log('failed');
                 }
@@ -66,7 +68,7 @@ const Deposit = () => {
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    
+
 
 
     async function handleSubmit(e) {
@@ -85,10 +87,10 @@ const Deposit = () => {
                         <label htmlFor="amount">Amount</label>
                         <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
                     </div>
-                    
+
                     <div className="w-full text-center py-5">
-                    
-                            <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
+
+                        <button type="submit" className="py-1 px-6 border rounded-full border-[#20FF44] text-center shadow-green">Submit</button>
                     </div>
                 </form>
             </Container>
