@@ -17,7 +17,8 @@ export async function GET(req) {
         await dbConnect()
 
         const referrals = await UsersModel.findOne({ referralCode: { $elemMatch: { refCode: referralCode } } });  
-        // revalidatePath('/bonusvolume', 'page')
+        revalidatePath('/bonusvolume', 'page')
+        revalidatePath('/referral', 'page')
         // console.log(referrals);
         return NextResponse.json(referrals);
     } catch (err) {

@@ -12,8 +12,8 @@ export async function PUT(req) {
         console.log(address, bonus);
         const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $inc: { price: bonus } })
         console.log('object', updatedUser);
-        revalidatePath('wathdraw', 'page')
-        revalidatePath('profits', 'page')
+        revalidatePath('/wathdraw', 'page')
+        revalidatePath('/profits', 'page')
         return NextResponse.json({ message: 'successful' })
     } catch (error) {
         return NextResponse.json({ error })

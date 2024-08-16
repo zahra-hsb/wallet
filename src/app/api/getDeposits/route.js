@@ -37,8 +37,8 @@ export async function GET(req) {
         const usersWithPrices3 = await UsersModel.find({
             address: { $in: friendsWithLevel3 }
         }).select('price').exec();
-
-        const usersWithPrices = [usersWithPrices1, usersWithPrices2, usersWithPrices3]
+        revalidatePath('/bonusvolume', 'page') 
+        const usersWithPrices = [usersWithPrices1, usersWithPrices2, usersWithPrices3] 
         return NextResponse.json({ usersWithPrices });
     } catch (err) {
         return NextResponse.json({ error: err.message });

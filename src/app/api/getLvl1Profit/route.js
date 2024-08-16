@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UsersModel from "@/lib/models/UsersModel";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 const cron = require('node-cron')
 

@@ -12,6 +12,7 @@ import axios from "axios";
 import { createRefCode } from "@/lib/methods";
 import TawkMessengerReactUmd from "@tawk.to/tawk-messenger-react";
 import Container from "../Container";
+import LastTransactions from "../LastTransactions";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -77,8 +78,10 @@ const Dashboard = () => {
       router.push("/");
     },
   });
+
   const today = new Date();
   const formattedDate = today.toDateString();
+
   async function getTransaction() {
     setTime(formattedDate)
     const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}?transactionType=withdraw`)
@@ -89,16 +92,15 @@ const Dashboard = () => {
     setTotalSales(total)
     setTransactions(transactions.data.transactions);
   }
+
   const tawkMessengerRef = useRef();
 
-  const handleMinimize = () => {
-    tawkMessengerRef.current.minimize();
-  };
+  
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32')
-  // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024')
+  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32')
+  if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024')
     return (
       <>
         <MobileNav />
@@ -128,6 +130,8 @@ const Dashboard = () => {
           
 
           </Container>
+
+          <LastTransactions />
 
         </section>
       </>
