@@ -28,7 +28,7 @@ const Withdraw = () => {
         address: ''
     })
 
-   
+
 
     const { address } = useAccount()
 
@@ -76,11 +76,30 @@ const Withdraw = () => {
             // !! withdrawal
             // await axios.put('/api/putPrice', { address, amount: values.amount })
             if (isChecked) {
-                await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                const result = await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                if (result) {
+                    setValues({
+                        amount: '',
+                        address: ''
+                    })
+                    setStatus({ message: 'wathdraw request sent successfully!', messageColor: 'text-green-500' })
+                    setTimeout(() => {
+                        setStatus('')
+                    }, 3000)
+                } 
             } else {
-                await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                const result = await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                if (result) {
+                    setValues({
+                        amount: '',
+                        address: ''
+                    })
+                    setStatus({ message: 'wathdraw request sent successfully!', messageColor: 'text-green-500' })
+                    setTimeout(() => {
+                        setStatus('')
+                    }, 3000)
+                }
             }
-
         }
     }
 
@@ -212,7 +231,7 @@ const Withdraw = () => {
 
                 </Container>
 
-                
+
             </section>
         </>
     )
