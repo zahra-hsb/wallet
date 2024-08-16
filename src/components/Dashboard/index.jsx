@@ -19,7 +19,6 @@ const Dashboard = () => {
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
   const [transactionsArray, setTransactions] = useState([])
   const [totalSales, setTotalSales] = useState(0)
-  const [time, setTime] = useState('')
   const [isApprove, setApprove] = useState(false)
 
   const addUser = useCallback(
@@ -84,7 +83,6 @@ const Dashboard = () => {
   const formattedDate = today.toDateString();
 
   async function getTransaction() {
-    setTime(formattedDate)
     const transactionsDeposit = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=deposit`)
     const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=withdraw`)
     let total = 0

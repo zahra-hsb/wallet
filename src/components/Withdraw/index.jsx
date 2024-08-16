@@ -7,6 +7,8 @@ import { abi } from "@/app/abi"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import LastTransactions from "../LastTransactions"
+import UserTransactions from "../UserTransactions"
 
 const Withdraw = () => {
     const [amount, setAmount] = useState('')
@@ -22,13 +24,20 @@ const Withdraw = () => {
     const router = useRouter()
     const [status, setStatus] = useState('');
     const [isChecked, setChecked] = useState(false);
+    const [transactionsArray, setTransactions] = useState([])
 
     const [values, setValues] = useState({
         amount: '',
         address: ''
     })
-
-
+    const today = new Date();
+    const formattedDate = today.toDateString();
+  
+    async function getTransaction() {
+        const transactions = await axios.get(`/api/getTransaction?address=${encodeURIComponent(address)}&date=${encodeURIComponent(formattedDate)}`)
+        console.log('38=> ', transactions);
+        setTransactions(transactions.data.userTransactions);
+      }
 
     const { address } = useAccount()
 
@@ -138,6 +147,7 @@ const Withdraw = () => {
             } catch (error) {
                 console.log(error);
             }
+            getTransaction()
         }
         async function getUser() {
             try {
@@ -205,6 +215,7 @@ const Withdraw = () => {
                     </form>
 
                 </Container>
+                <UserTransactions transactionsArray={transactionsArray} />
 
 
             </section>
