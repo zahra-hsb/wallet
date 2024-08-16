@@ -73,10 +73,12 @@ const Withdraw = () => {
         } else {
             const today = new Date();
             const formattedDate = today.toDateString();
+            let time = today.toLocaleTimeString();
+            console.log('t ', time);
             // !! withdrawal
             // await axios.put('/api/putPrice', { address, amount: values.amount })
             if (isChecked) {
-                const result = await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                const result = await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw', time: time })
                 if (result) {
                     setValues({
                         amount: '',
@@ -88,7 +90,7 @@ const Withdraw = () => {
                     }, 3000)
                 } 
             } else {
-                const result = await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+                const result = await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw', time: time })
                 if (result) {
                     setValues({
                         amount: '',

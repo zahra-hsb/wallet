@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [transactionsArray, setTransactions] = useState([])
   const [totalSales, setTotalSales] = useState(0)
   const [time, setTime] = useState('')
+  const [isApprove, setApprove] = useState(false)
 
   const addUser = useCallback(
     async () => {
@@ -84,9 +85,10 @@ const Dashboard = () => {
 
   async function getTransaction() {
     setTime(formattedDate)
+    const transactionsDeposit = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=deposit`)
     const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=withdraw`)
     let total = 0
-    transactions.data.transactions?.map(item => {
+    transactionsDeposit.data.transactions?.map(item => {
       total += item.amount
     })
     setTotalSales(total)
@@ -94,13 +96,31 @@ const Dashboard = () => {
   }
 
   const tawkMessengerRef = useRef();
+  const decline = async (id) => {
+    console.log('id: ', id);
+    try {
+      await axios.put('/api/putTransaction', { address, status: 'decline', date: formattedDate, _id: id })
+      window.location.reload()
 
-
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const approve = async (id) => {
+    console.log('time: ', id);
+    try {
+      await axios.put('/api/putTransaction', { address, status: 'approve', date: formattedDate, _id: id })
+      // setApprove(true)
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const onLoad = () => {
     console.log('onLoad works!');
   };
   if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
-    // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024')
+  // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
       <>
         <MobileNav />
@@ -109,10 +129,7 @@ const Dashboard = () => {
             <p className="text-lg text-gray-400 font-bold">total sales today:</p>
             <p>{totalSales} USDT</p>
           </Container>
-
-
-          <LastTransactions transactionsArray={transactionsArray} />
-
+          <LastTransactions isApprove={isApprove} approve={approve} decline={decline} transactionsArray={transactionsArray} />
         </section>
       </>
     )

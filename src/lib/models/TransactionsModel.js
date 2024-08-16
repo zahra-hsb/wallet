@@ -20,6 +20,9 @@ const TransactionSchema = new Schema({
     },
     transactionType: {
         type: String
+    },
+    time: {
+        type: String
     }
 })
 

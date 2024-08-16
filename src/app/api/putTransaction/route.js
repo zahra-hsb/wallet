@@ -5,27 +5,18 @@ import { NextResponse } from "next/server"
 
 export async function PUT(req) {
     try {
-        const { trackId, status, date, address, amount, transactionType } = await req.json()
+        const { trackId, status, date, address, amount, _id } = await req.json()
         await dbConnect()
+        console.log('s', status);
+        console.log('s', _id);
         const updatedStatus = await TransactionModel.updateOne({
-            address: address
+            _id: _id
         }, {
             $set: {
-                status
-            },
-            $set: {
-                date
-            },
-            $set: {
-                address
-            },
-            $set: {
-                amount
-            },
-            $set: {
-                transactionType
+                'status': status
             }
         })
+        console.log('update: ', updatedStatus);
         return NextResponse.json({ updatedStatus })
     } catch (error) {
         console.log('update status failed: ', error);
