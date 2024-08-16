@@ -11,7 +11,7 @@ export async function GET(req) {
         if (!address) {
             console.log('address does not exists!!!');
         }
- 
+
         await dbConnect()
         let profit = 0
         let isDecuple = false
@@ -38,14 +38,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -69,14 +71,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -101,14 +105,16 @@ export async function GET(req) {
             const invest = await LineModel.findOne({ address })
             console.log('invest ', invest);
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -132,14 +138,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -163,14 +171,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -194,14 +204,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -225,14 +237,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -256,14 +270,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -287,14 +303,16 @@ export async function GET(req) {
             const triplePrice = updatedUserProfit.investmentValue * 3
             const invest = await LineModel.findOne({ address })
             let resultTriplePrice;
-            invest.lines.forEach(item => {
-                if(item.bonus > 0) {
-                    resultTriplePrice = updatedUserProfit.price - item.bonus
-                    console.log('result: ', resultTriplePrice);
-                    console.log('result: ', updatedUserProfit.price);
-                    console.log('result: ', triplePrice);
-                }
-            });
+            if (invest) {
+                invest.lines.forEach(item => {
+                    if (item.bonus > 0) {
+                        resultTriplePrice = updatedUserProfit.price - item.bonus
+                        console.log('result: ', resultTriplePrice);
+                        console.log('result: ', updatedUserProfit.price);
+                        console.log('result: ', triplePrice);
+                    }
+                });
+            }
             if (resultTriplePrice > triplePrice) {
                 const updatedUser = await UsersModel.findOneAndUpdate({ address }, { $set: { price: 0 } })
                 console.log('the price have refresh to 0 => ', updatedUser);
@@ -305,7 +323,7 @@ export async function GET(req) {
             return NextResponse.json({ user })
         }
         revalidatePath('/bonusvolume', 'page')
-        revalidatePath('/withdraw', 'page') 
+        revalidatePath('/withdraw', 'page')
         return NextResponse.json({ profitValue, isDecuple })
     } catch (error) {
         console.log(error);

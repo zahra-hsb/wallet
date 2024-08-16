@@ -84,7 +84,7 @@ const Dashboard = () => {
 
   async function getTransaction() {
     setTime(formattedDate)
-    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}?transactionType=withdraw`)
+    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=withdraw`)
     let total = 0
     transactions.data.transactions?.map(item => {
       total += item.amount
@@ -95,48 +95,28 @@ const Dashboard = () => {
 
   const tawkMessengerRef = useRef();
 
-  
+
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32')
-  if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024')
+  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32') {
+    // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024')
     return (
       <>
         <MobileNav />
-        <section className={'bg-main py-24 px-10 min-h-screen h-full'}>
+        <section className={'bg-main py-24 min-h-screen h-full'}>
           <Container>
             <p className="text-lg text-gray-400 font-bold">total sales today:</p>
             <p>{totalSales} USDT</p>
           </Container>
-          <Container>
-            <p className="text-lg">withdraw requests today: {time}</p>
-            {transactionsArray.length != 0 ? transactionsArray.map(item => (
-              <>
-                <div className="w-full p-5 mx-2 border-b border-b-gray-400">
-                  <ul className="w-full flex items-start justify-start gap-24 p-2 font-bold">
-                    <li className="text-gray-400">wallet</li>
-                    <li>{item.address}</li>
-                  </ul>
-                  <ul className="w-full flex items-start justify-start gap-20 text-white font-bold p-2">
-                    <li className="text-gray-400">amount</li>
-                    <li>{item.amount} USDT</li>
-                  </ul>
-                </div>
-              </>
-            )) :
-            <div className="text-gray-400">there is no any activity today...</div>
-            }
-          
 
-          </Container>
 
-          <LastTransactions />
+          <LastTransactions transactionsArray={transactionsArray} />
 
         </section>
       </>
     )
-  else
+  } else {
     return (
       <>
         <MobileNav />
@@ -155,6 +135,6 @@ const Dashboard = () => {
         {/* <button onClick={() => putBonus()}>edit friend</button> */}
       </>
     );
-};
-
+  };
+}
 export default Dashboard;
