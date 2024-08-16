@@ -93,11 +93,7 @@ const Referral = () => {
             <section className='pt-5'>
                 {refBoxes.length !== 0 ? refBoxes.map((code, index) => (
                     <div key={index}>
-                        <ReferralBox index={index} err={err} refCode={code.refCode} select={select} />
-                        <div className='text-gray-400 text-center'>
-                            <span>{friendCounts[index] ? friendCounts[index].count : 0} friends | </span>
-                            <span>{investmentSummary[index] ? investmentSummary[index].total : 0} USDT </span>
-                        </div>
+                        <ReferralBox friendCounts={friendCounts[index] ? friendCounts[index].count : 0} investmentSummary={investmentSummary[index] ? investmentSummary[index].total : 0} index={index} err={err} refCode={code.refCode} select={select} />
                     </div>
                 )) : (
                     <div className='text-white text-center py-5'>

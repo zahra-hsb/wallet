@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 
-const ReferralBox = ({ err, refCode, select, index }) => {
+const ReferralBox = ({ err, refCode, select, index, friendCounts, investmentSummary }) => {
     const [isCopied, setCopy] = useState()
     var textArea,
-    copy;
-    
+        copy;
+
     function isOS() {
         return navigator.userAgent.match(/ipad|ipod|iphone/i);
     }
-    
 
-   
+
+
     function createTextArea(text) {
         textArea = document.createElement('textArea');
         textArea.value = text;
@@ -55,6 +55,10 @@ const ReferralBox = ({ err, refCode, select, index }) => {
                 <button onClick={copyRefCode} className='border cursor-pointer border-[#00F0FF] py-1 px-7 rounded-3xl shadow-main'>Click to Copy!</button>
                 {isCopied && <p className='text-[#00F0FF]'>Referral code copied! (Didn`t get your code on iphone? use the link below👇)</p>}
                 <input type="text" onClick={(e) => select(e)} className="w-full p-2 rounded placeholder:italic text-gray-800 outline-none" contentEditable={false} placeholder={'click on copy button to get the referral code!'} value={refCode} />
+                <div className='text-gray-400 text-center'>
+                    <span>{friendCounts} Users | </span>
+                    <span>{investmentSummary} USDT</span>
+                </div>
             </div>
 
         </>
