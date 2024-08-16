@@ -17,7 +17,7 @@ const Deposit = () => {
     const isIPhone = () => {
         const userAgent = window.navigator.userAgent;
         console.log(userAgent);
-        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); // Exclude iPads
+        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); 
     };
 
 

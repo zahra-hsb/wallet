@@ -27,7 +27,16 @@ const Wallet = () => {
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    async function showTopupField(e) {
+    async function postTransactions() {
+        const today = new Date();
+        const formattedDate = today.toDateString();
+        try {
+            await axios.post('/api/postTransaction', { address, status: 'pending', date: formattedDate, amount, transactionType: 'topUp' })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async function doTopup(e) {
         e.preventDefault()
         if (amount === '') {
             setStatus({ message: 'please input the topup value', messageColor: 'text-red-500' })
@@ -35,6 +44,7 @@ const Wallet = () => {
                 setStatus('')
             }, 3000)
         } else {
+            postTransactions()
             // ?? deposit from user wallet
             // const web3 = new Web3(window.ethereum);
             // await window.ethereum.enable();
@@ -196,7 +206,7 @@ const Wallet = () => {
                     <form className="flex flex-col gap-5">
                         <input type="number" id="amount" value={amount} onChange={(e) => handleChange(e)} name='amount' className="p-2 rounded text-gray-800 outline-none" placeholder="Enter Amount" />
 
-                        <button type="submit" onClick={(e) => showTopupField(e)} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
+                        <button type="submit" onClick={(e) => doTopup(e)} className="py-1 px-6 border rounded-full shadow-main border-[#00F0FF]">Topup</button>
                     </form>
                     {status && renderAlert(status)}
                 </Container>
