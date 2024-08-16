@@ -9,7 +9,7 @@ export async function POST(req) {
         const data = await req.json()
         await dbConnect()
 
-        const transaction = new TransactionModel({ trackId: data.trackId })
+        const transaction = new TransactionModel({ trackId: data.trackId, address: data.address, status: data.status, date: data.date, amount: data.amount, transactionType: data.transactionType })
         const response = await transaction.save()
 
         return NextResponse.json({ response })

@@ -54,17 +54,19 @@ const Withdraw = () => {
     // console.log(result.data?.value);
 
     function handleChange(e) {
+        console.log(e.target.value);
         setValues({
             ...values,
             [e.target.name]: e.target.value
         })
+
     }
     function handleChangeCheckBox(e) {
         setChecked(e.target.checked)
     }
     async function handleSubmit(e) {
         e.preventDefault()
-        if (values.amount === '' || values.address === '') {
+        if (values.amount === '' || values.address === '' && !isChecked) {
             setStatus({ message: 'please enter a value!', messageColor: 'text-red-500' })
             setTimeout(() => {
                 setStatus('')
@@ -83,7 +85,12 @@ const Withdraw = () => {
             const formattedDate = today.toDateString();
             // !! withdrawal
             // await axios.put('/api/putPrice', { address, amount: values.amount })
-            await axios.put('/api/putTransaction', { address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+            if (isChecked) {
+                await axios.post('/api/postTransaction', { status: 'pending', address: address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+            } else {
+                await axios.post('/api/postTransaction', { status: 'pending', address: values.address, date: formattedDate, amount: values.amount, transactionType: 'withdraw' })
+            }
+
         }
     }
 
@@ -189,7 +196,7 @@ const Withdraw = () => {
                         <p>Submit a withdrawal request</p>
                         {!isChecked && <div className="flex flex-col w-full gap-1">
                             <label>wallet address</label>
-                            <input type="text" value={values.walletAddress} onChange={(e) => handleChange(e)} name="walletAddress" className="p-2 rounded text-gray-800 outline-none" placeholder="Enter receipt wallet address" />
+                            <input type="text" value={values.address} onChange={(e) => handleChange(e)} name="address" className="p-2 rounded text-gray-800 outline-none" placeholder="Enter receipt wallet address" />
                         </div>}
                         <div className="flex flex-col w-full gap-1">
                             <label>Amount</label>
@@ -207,7 +214,9 @@ const Withdraw = () => {
                         <div className="w-full text-center">
                             <button className="py-1 px-6 border rounded-full border-[#20FF44] text-center">Submit</button>
                         </div>
-                        {status && renderAlert(status)}
+                        <div className="flex w-full items-center justify-center">
+                            {status && renderAlert(status)}
+                        </div>
 
                     </form>
 
@@ -241,7 +250,7 @@ const Withdraw = () => {
 }
 
 const renderAlert = ({ message, messageColor }) => (
-    <div className={`px-4 py-3 leading-normal ${messageColor} rounded-xl backdrop-blur-sm border border-[#00F0FF] shadow-main mb-5 text-center`}>
+    <div className={`px-4 py-3 mt-5 leading-normal ${messageColor} rounded-full backdrop-blur-sm border border-${messageColor} mb-5 text-center`}>
         <p>{message}</p>
     </div>
 )
