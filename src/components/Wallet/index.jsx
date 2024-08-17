@@ -109,11 +109,16 @@ const Wallet = () => {
                 if (profits.data && profitLvl1.data && profitLvl2.data) {
                     console.log(profitLvl3.data.total);
                     let total = profits?.data.profitValue + profitLvl1?.data.lvl1Profit + profitLvl3?.data.lvl3Profit + profitLvl2?.data.lvl2Profit
-                    setDailyProfit(profits?.data.profitValue)
-                    setProfitLvl1(profitLvl1?.data.lvl1Profit)
-                    setProfitLvl2(profitLvl2?.data.lvl2Profit)
-                    setProfitLvl3(profitLvl3?.data.lvl3Profit)
-                    setTotalProfit(total)
+                    let fixed = profits?.data.profitValue.toFixed(2)
+                    setDailyProfit(fixed) 
+                    let fixed1 = profitLvl1?.data.lvl1Profit.toFixed(2)
+                    setProfitLvl1(fixed1)
+                    let fixed2 = profitLvl2?.data.lvl2Profit.toFixed(2)
+                    setProfitLvl2(fixed2)
+                    let fixed3 = profitLvl3?.data.lvl3Profit.toFixed(2)
+                    setProfitLvl3(fixed3)
+                    let fixed4 = total.toFixed(2)
+                    setTotalProfit(fixed4)
                 } else {
                     console.log('error');
                 }
@@ -162,8 +167,11 @@ const Wallet = () => {
                 const getablePro = getableProfitValue / 10
                 const profit = getDailyProfit(investmentValue)
                 console.log(getablePro);
-                setTopupValue(getablePro / profit)
-                setLimit(decuple)
+                let getable = getablePro / profit
+                let fixedPro = getable.toFixed(2) 
+                setTopupValue(fixedPro)
+                let fixedDecuple = decuple.toFixed(2)
+                setLimit(fixedDecuple)
                 if (allProfits > decuple) {
                     setShowTopup(true)
                 }

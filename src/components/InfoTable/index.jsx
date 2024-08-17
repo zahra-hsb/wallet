@@ -42,15 +42,18 @@ const InfoTable = () => {
                 let sum1 = 0
                 deposits.data.usersWithPrices[0].map(item => sum1 += item.price )
                 console.log('object: ', sum1);
-                setDeposit1(sum1)
+                let fixedSum1 = sum1.toFixed(2)
+                setDeposit1(fixedSum1)
                 let sum2 = 0
                 deposits.data.usersWithPrices[1].map(item => sum2 += item.price )
                 console.log('object: ', sum2);
-                setDeposit2(sum2)
+                let fixedSum2 = sum2.toFixed(2)
+                setDeposit2(fixedSum2)
                 let sum3 = 0
                 deposits.data.usersWithPrices[2].map(item => sum3 += item.price )
                 console.log('object: ', sum3);
-                setDeposit3(sum3)
+                let fixedSum3 = sum3.toFixed(2)
+                setDeposit3(fixedSum3)
             } catch (error) {
                 console.log(error);
             }

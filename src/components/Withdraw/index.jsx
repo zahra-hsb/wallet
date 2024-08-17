@@ -158,7 +158,9 @@ const Withdraw = () => {
                 console.log(price);
                 if (price) {
                     setPriceValue(price);
-                    setWithdrawableAmount(price - investmentValue)
+                    let withdrawable = price - investmentValue
+                    let fixedAmount = withdrawable.toFixed(2)
+                    setWithdrawableAmount(fixedAmount)
                 } else {
                     console.warn(`No price found: ${price}`);
                 }

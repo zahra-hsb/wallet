@@ -10,7 +10,7 @@ import { usdtAddress, usdtAbi } from "../../../back-end/helperContract";
 import { useEthersSigner } from "../../../back-end/getSigner";
 
 const Deposit = () => {
-    const signer = useEthersSigner();
+    const signer = useEthersSigner(); 
 
     const [amount, setAmount] = useState(0)
     const [payLink, setPayLink] = useState('')
@@ -109,7 +109,8 @@ const Deposit = () => {
                 ethers.utils.parseUnits(amount, 6)
             );
 
-            const txr2 = tx2.wait();
+            const txr2 = await tx2.wait();
+            console.log('113=> ', txr2);
             const response = { address, status: 'success', amount }
             await postTransactions(response)
             await updatePrice()
