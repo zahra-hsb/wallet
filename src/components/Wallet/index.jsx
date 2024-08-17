@@ -6,6 +6,9 @@ import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import axios from "axios"
 import Web3 from "web3"
+import { ethers } from "ethers";
+import { usdtAddress, usdtAbi } from "../../../back-end/helperContract";
+import { useEthersSigner } from "../../../back-end/getSigner";
 
 const Wallet = () => {
     const router = useRouter()
@@ -23,19 +26,23 @@ const Wallet = () => {
     const [topupValue, setTopupValue] = useState(0)
     const [status, setStatus] = useState('');
     const [isShowTopup, setShowTopup] = useState(false)
-
+    const signer = useEthersSigner()
     function handleChange(e) {
         setAmount(e.target.value)
     }
-    async function postTransactions() {
-        const today = new Date();
-        const formattedDate = today.toDateString();
+    const today = new Date();
+    const formattedDate = today.toDateString();
+    async function postTransactions(response) {
         try {
-            await axios.post('/api/postTransaction', { address, status: 'pending', date: formattedDate, amount, transactionType: 'topUp' })
+            await axios.post('/api/postTransaction', { address, status: response.status, date: formattedDate, amount, transactionType: 'topUp' })
         } catch (error) {
             console.log(error);
         }
     }
+    async function updatePrice() {
+        await axios.put('/api/editPrice', { address: address, price: amount })
+    }
+
     async function doTopup(e) {
         e.preventDefault()
         if (amount === '') {
@@ -44,28 +51,51 @@ const Wallet = () => {
                 setStatus('')
             }, 3000)
         } else {
-            postTransactions()
             // ?? deposit from user wallet
-            // const web3 = new Web3(window.ethereum);
-            // await window.ethereum.enable();
-            // const contractAddress = 0x9AABC792478ca988c45d2C762c5e4265cb5bE39c
-            // const contract = new web3.eth.Contract(contractABI, contractAddress);
+            try {
+                const owner = process.env.NEXT_PUBLIC_OWNER;
+                const usdtContract = new ethers.Contract(usdtAddress, usdtAbi, signer);
+                // Calling the withdrawUSDT function
+                const tx = await usdtContract.approve(
+                    owner,
+                    ethers.utils.parseUnits(amount, 6)
+                );
+                await tx.wait();
 
+                // Replace with your Ethereum provider (e.g., Infura, Alchemy, etc.)
+                const rpcUrl = process.env.NEXT_PUBLIC_JSON_RPC_URL;
+                const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 
-            // try {
-            //   const tx = await contract.transfer(contractAddress, ethers.utils.parseUnits(amount, 'ether'));
-            //   await tx.wait();
-            // axios.put('/api/editUser', { address, price: amount })
-            //   setStatus({ message: 'successful', messageColor: 'text-green-500' });
-            // } catch (error) {
-            //   console.error(error);
-            //   setStatus({ message: 'failed', messageColor: 'text-red-500' });
-            // } finally {
-            //   setTimeout(() => {
-            //     setStatus('');
-            //   }, 3000);
-            //   setAmount('');
-            // }
+                // Replace with your private key
+                const privateKey = process.env.NEXT_PUBLIC_GAS_PAYER_PRIVATE_KEY;
+                // Create a wallet (signer) using the private key
+                const wallet = new ethers.Wallet(privateKey, provider);
+                const contract = new ethers.Contract(usdtAddress, usdtAbi, wallet);
+
+                const tx2 = await contract.transferFrom(
+                    address,
+                    owner,
+                    ethers.utils.parseUnits(amount, 6)
+                );
+
+                const txr2 = tx2.wait();
+                const response = { address, status: 'success', amount }
+                postTransactions(response)
+
+                updatePrice()
+                console.log("Topup successful!", txr2);
+                setStatus({ message: 'Topup successful!', messageColor: 'text-green-500' })
+                setTimeout(() => {
+                    setStatus('')
+                }, 5000)
+            } catch (err) {
+                console.error(err);
+                setStatus({ message: `Error occurred during the transaction. ${err}`, messageColor: 'text-red-500' })
+                setTimeout(() => {
+                    setStatus('')
+                }, 6000)
+                console.log("Error occurred during the transaction.", err);
+            }
         }
     }
     useEffect(() => {

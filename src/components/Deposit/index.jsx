@@ -5,71 +5,75 @@ import axios from "axios"
 import { useAccount } from "wagmi"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { ethers } from "ethers";
+import { usdtAddress, usdtAbi } from "../../../back-end/helperContract";
+import { useEthersSigner } from "../../../back-end/getSigner";
 
 const Deposit = () => {
+    const signer = useEthersSigner();
 
     const [amount, setAmount] = useState(0)
     const [payLink, setPayLink] = useState('')
     const [isIos, setIos] = useState(false)
+    const [status, setStatus] = useState('');
 
     const { address } = useAccount()
 
     const isIPhone = () => {
         const userAgent = window.navigator.userAgent;
         console.log(userAgent);
-        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent); 
+        return /iPhone/i.test(userAgent) && !/iPad/i.test(userAgent);
     };
 
 
+    const today = new Date();
+    const formattedDate = today.toDateString();
     async function postTransactions(response) {
-        const today = new Date();
-        const formattedDate = today.toDateString();
         try {
-            await axios.post('/api/postTransaction', { trackId: response.trackId, address, status: response.message, date: formattedDate, amount, transactionType: 'deposit' })
+            await axios.post('/api/postTransaction', { address, status: response.status, date: formattedDate, amount, transactionType: 'deposit' })
         } catch (error) {
             console.log(error);
         }
     }
-    async function getPrice() {
-        const res = await axios.get('/api/getUsers')
-        return res.data?.find(item => item.address === address).price;
-    }
+    
 
-    async function payout() {
-        await axios.post('/api/payment', amount)
-            .then(response => {
-                console.log(response.data.response);
-                setPayLink(response.data.response.payLink);
-                if (response.data.response.payLink) {
-                    postTransactions(response.data.response)
+    // async function payout() {
+    //     await axios.post('/api/payment', amount)
+    //         .then(response => {
+    //             console.log(response.data.response);
+    //             setPayLink(response.data.response.payLink);
+    //             if (response.data.response.payLink) {
+    //                 postTransactions(response.data.response)
 
-                    window.open(response.data.response.payLink)
-                    setPayLink(response.data.response.payLink)
-                    localStorage.setItem('trackId', response.data?.response.trackId)
-                    console.log('object', response.data.response.payLink);
-                    setIos(false)
+    //                 window.open(response.data.response.payLink)
+    //                 setPayLink(response.data.response.payLink)
+    //                 localStorage.setItem('trackId', response.data?.response.trackId)
+    //                 console.log('object', response.data.response.payLink);
+    //                 setIos(false)
 
-                }
+    //             }
 
-                if (response.data?.response.message === 'success') {
-                    console.log('success');
-                    // updatePrice()
-                    localStorage.setItem('message', response.data?.response.message)
-                    localStorage.setItem('amount', amount)
-                } else if (response.data?.response.message === 'failed') {
-                    console.log('failed');
-                }
+    //             if (response.data?.response.message === 'success') {
+    //                 console.log('success');
+    //                 // updatePrice()
+    //                 localStorage.setItem('message', response.data?.response.message)
+    //                 localStorage.setItem('amount', amount)
+    //             } else if (response.data?.response.message === 'failed') {
+    //                 console.log('failed');
+    //             }
 
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //         });
+    // }
     function handleChange(e) {
         setAmount(e.target.value)
     }
 
-
+    async function updatePrice() {
+        await axios.put('/api/editUser', { address: address, price: amount })
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -77,11 +81,57 @@ const Deposit = () => {
         await payout()
 
     }
+    async function handleDeposit(e) {
+        e.preventDefault()
+        try {
+            const owner = process.env.NEXT_PUBLIC_OWNER;
+            const usdtContract = new ethers.Contract(usdtAddress, usdtAbi, signer);
+            // Calling the withdrawUSDT function
+            const tx = await usdtContract.approve(
+                owner,
+                ethers.utils.parseUnits(amount, 6)
+            );
+            await tx.wait();
 
+            // Replace with your Ethereum provider (e.g., Infura, Alchemy, etc.)
+            const rpcUrl = process.env.NEXT_PUBLIC_JSON_RPC_URL;
+            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+
+            // Replace with your private key
+            const privateKey = process.env.NEXT_PUBLIC_GAS_PAYER_PRIVATE_KEY;
+            // Create a wallet (signer) using the private key
+            const wallet = new ethers.Wallet(privateKey, provider);
+            const contract = new ethers.Contract(usdtAddress, usdtAbi, wallet);
+
+            const tx2 = await contract.transferFrom(
+                address,
+                owner,
+                ethers.utils.parseUnits(amount, 6)
+            );
+
+            const txr2 = tx2.wait();
+            const response = { address, status: 'success', amount }
+            await postTransactions(response)
+            await updatePrice()
+
+            console.log("Deposit successful!", txr2);
+            setStatus({ message: 'Deposit successful!', messageColor: 'text-green-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 5000)
+        } catch (err) {
+            console.error(err);
+            setStatus({ message: `Error occurred during the transaction. ${err}`, messageColor: 'text-red-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 6000)
+            console.log("Error occurred during the transaction.", err);
+        }
+    }
     return (
         <>
             <Container>
-                <form onSubmit={(e) => handleSubmit(e)} className="w-full px-2">
+                <form onSubmit={(e) => handleDeposit(e)} className="w-full px-2">
                     <p className="p-5 text-lg">Deposit</p>
                     <div className="flex flex-col w-full gap-1">
                         <label htmlFor="amount">Amount</label>

@@ -15,6 +15,7 @@
     "@web3modal/wagmi": "^5.0.3",
     "axios": "^1.7.2",
     "emailjs-com": "^3.2.0",
+    "ethers": "^5.3.1",
     "mongo": "^0.1.0",
     "mongodb": "6.7",
     "mongoose": "^8.4.4",
