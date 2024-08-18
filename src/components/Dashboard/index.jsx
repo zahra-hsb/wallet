@@ -122,7 +122,8 @@ const Dashboard = () => {
   };
   if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32' ||
     address === '0x707dbEB3e7CC1eAC69471ccFC44FfdeC096eC028' ||
-    address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA'
+    address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA' ||
+    address === '0x5c94aaba5BAFda827def1BDFf9d510041a14AE3f'
   ) {
     // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
