@@ -120,11 +120,11 @@ const Dashboard = () => {
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32' ||
-  //   address === '0x707dbEB3e7CC1eAC69471ccFC44FfdeC096eC028' ||
-  //   address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA'
-  // ) {
-    if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
+  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32' ||
+    address === '0x707dbEB3e7CC1eAC69471ccFC44FfdeC096eC028' ||
+    address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA'
+  ) {
+    // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
       <>
         <MobileNav />
