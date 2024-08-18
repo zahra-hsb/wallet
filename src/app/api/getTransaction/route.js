@@ -11,15 +11,17 @@ export async function GET(req) {
         const date = req.nextUrl.searchParams.get("date");
         const address = req.nextUrl.searchParams.get("address");
         const transactionType = req.nextUrl.searchParams.get("transactionType");
+        const status = req.nextUrl.searchParams.get("status");
 
         console.log('object', transactionType);
         await dbConnect()
 
         const transactions = await TransactionModel.find({ date, transactionType })
+        const total = await TransactionModel.find({ date, transactionType, status })
         const userTransactions = await TransactionModel.find({ date, address })
 
         revalidatePath('/dashboard', 'page')
-        return NextResponse.json({ transactions, userTransactions })
+        return NextResponse.json({ transactions, userTransactions, total })
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error })

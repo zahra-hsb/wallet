@@ -84,9 +84,9 @@ const Dashboard = () => {
 
   async function getTransaction() {
     const transactionsDeposit = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=deposit`)
-    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=withdraw`)
+    const transactions = await axios.get(`/api/getTransaction?date=${encodeURIComponent(formattedDate)}&transactionType=withdraw&status=pending`)
     let total = 0
-    transactionsDeposit.data.transactions?.map(item => {
+    transactions.data.total?.map(item => {
       total += item.amount
     })
     setTotalSales(total)
@@ -105,11 +105,13 @@ const Dashboard = () => {
       console.log(error);
     }
   }
-  const approve = async (id) => {
+  const approve = async (id, amount) => {
     console.log('time: ', id);
     try {
       await axios.put('/api/putTransaction', { status: 'approve', _id: id })
       // setApprove(true)
+      const finalAmount = totalSales - amount
+      setTotalSales(finalAmount)
       window.location.reload()
     } catch (error) {
       console.log(error);
@@ -118,11 +120,11 @@ const Dashboard = () => {
   const onLoad = () => {
     console.log('onLoad works!');
   };
-  if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32' ||
-    address === '0x707dbEB3e7CC1eAC69471ccFC44FfdeC096eC028' ||
-    address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA'
-  ) {
-    // if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
+  // if (address === '0x9268Aa2CE60e66587f31CceA16a0a28D1Be48a32' ||
+  //   address === '0x707dbEB3e7CC1eAC69471ccFC44FfdeC096eC028' ||
+  //   address === '0x1C4C36C3c6AE93fb58a2C0413E589F4D3A22C2DA'
+  // ) {
+    if (address === '0xbB7Fca6a970E2D57A1A601BcaBe66834db5a2024') {
     return (
       <>
         <MobileNav />

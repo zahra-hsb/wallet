@@ -46,7 +46,7 @@ const LastTransactions = ({ transactionsArray, approve, decline }) => {
                                             <p>{item.amount} USDT</p>
                                         </span>
                                         <div className="flex flex-col gap-2">
-                                            <button onClick={() => approve(item._id)} className={`py-1 px-6 border rounded-full ${item.status === 'approve' || item.status === 'decline' ? `bg-gray-500 cursor-not-allowed` : `shadow-green border-[#20FF44]`} text-center `} disabled={item.status === 'approve' || item.status === 'decline' ? true : false}>approve</button>
+                                            <button onClick={() => approve(item._id, item.amount)} className={`py-1 px-6 border rounded-full ${item.status === 'approve' || item.status === 'decline' ? `bg-gray-500 cursor-not-allowed` : `shadow-green border-[#20FF44]`} text-center `} disabled={item.status === 'approve' || item.status === 'decline' ? true : false}>approve</button>
                                             <button onClick={() => decline(item._id, item.address, item.amount)} className={`py-1 px-6 border rounded-full text-center  ${item.status === 'approve' || item.status === 'decline' ? `bg-gray-500 cursor-not-allowed` : `shadow-red border-[#FD625E]`}`} disabled={item.status === 'approve' || item.status === 'decline' ? true : false} >decline</button>
                                         </div>
                                     </div>
