@@ -23,6 +23,7 @@ const Login = () => {
     const [showRefField, setShowRefField] = useState(false)
     // const [addressState, setAddress] = useState('')
     const pathname = usePathname()
+    const [status, setStatus] = useState('');
 
     // console.log(data);
     useAccountEffect({
@@ -61,7 +62,7 @@ const Login = () => {
     }
 
     async function checkUser() {
-        const referralCode = 'https://aismart.liara.run' + pathname
+        const referralCode = 'https://aismart.network' + pathname
         console.log('pathname: ', pathname);
         const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
         const resultUser = await axios.get(`/api/getUser?address=${encodeURIComponent(address)}`)
@@ -96,11 +97,18 @@ const Login = () => {
         const data = [
             { address: address, level: '1' }
         ]
-        router.push('/dashboard')
-        try {
-            await axios.put('/api/editFriends', { data, upAddress, referralCode })
-        } catch (err) {
-            console.log(err);
+        if (upAddress.isExist === true) {
+            try {
+                await axios.put('/api/editFriends', { data, upAddress: upAddress.refCode, referralCode })
+            } catch (err) {
+                console.log(err);
+            }
+            router.push('/dashboard')
+        } else {
+            setStatus({ message: 'the referral code does not exists. please enter a valid referral code!!!', messageColor: 'text-red-500' })
+            setTimeout(() => {
+                setStatus('')
+            }, 5000)
         }
     }
     async function handleClick() {
@@ -140,6 +148,7 @@ const Login = () => {
                                     className={isConn ? 'bg-transparent border border-[#20A1FF] shadow-main cursor-pointer w-full py-2 rounded-full  my-2' : styles.button}
                                     disabled={isConn ? false : true}
                                 >{'Submit'}</button>
+                                {status && renderAlert(status)}
                             </>
                         }
                         {!showRefField && <button
@@ -164,5 +173,10 @@ const Login = () => {
         </>
     )
 }
+const renderAlert = ({ message, messageColor }) => (
+    <div className={`px-4 py-3 leading-normal ${messageColor} rounded-xl backdrop-blur-sm border border-[#00F0FF] shadow-main mb-5 text-center`}>
+        <p>{message}</p>
+    </div>
+)
 
 export default Login

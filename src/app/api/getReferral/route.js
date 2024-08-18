@@ -20,8 +20,8 @@ export async function GET(req) {
         revalidatePath('/bonusvolume', 'page')
         revalidatePath('/referral', 'page')
         // console.log(referrals);
-        return NextResponse.json(referrals);
+        return NextResponse.json({ isExist: true, refCode: referrals });
     } catch (err) {
-        return NextResponse.json({ error: err.message });
+        return NextResponse.json({ error: err.message, isExist: false });
     }
 }
