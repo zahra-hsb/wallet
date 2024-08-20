@@ -80,7 +80,7 @@ const Login = () => {
             ]
             router.push('/dashboard')
             try {
-                await axios.put('/api/editFriends', { data, upAddress, referralCode })
+                await axios.put('/api/editFriends', { data, upAddress: upAddress.refCode, referralCode })
             } catch (err) {
                 console.log(err);
             }
