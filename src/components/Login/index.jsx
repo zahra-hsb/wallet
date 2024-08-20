@@ -62,7 +62,7 @@ const Login = () => {
     }
 
     async function checkUser() {
-        const referralCode = 'https://aismart.network' + pathname
+        const referralCode = 'https://aismart.liara.run' + pathname
         console.log('pathname: ', pathname);
         const result = await axios.get(`/api/getReferral?referralCode=${encodeURIComponent(referralCode)}`)
         const resultUser = await axios.get(`/api/getUser?address=${encodeURIComponent(address)}`)
