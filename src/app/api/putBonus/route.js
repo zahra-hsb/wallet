@@ -48,24 +48,26 @@ export async function PUT(request) {
         for (const line in totalInvests) {
             const existingLine = await LineModel.findOne({ address, "lines.line": line });
             const total = totalInvests[line];
-            // console.log(existingLine.lines);
-            existingLine.lines.forEach(async item => {
-                console.log(item.total, bonus);
-                if (item.total >= 10000) bonus = 200;
-                else if (item.total >= 20000) bonus = 500;
-                else if (item.total >= 50000) bonus = 1500;
-                else if (item.total >= 100000) bonus = 3000;
-                else if (item.total >= 200000) bonus = 6000;
-                else if (item.total >= 500000) bonus = 20000;
-                else if (item.total >= 1000000) bonus = 50000;
-                else bonus = 0
+            console.log('existing line: ', existingLine);
+            if (existingLine) {
+                existingLine.lines.forEach(async item => {
+                    console.log(item.total, bonus);
+                    if (item.total >= 10000) bonus = 200;
+                    else if (item.total >= 20000) bonus = 500;
+                    else if (item.total >= 50000) bonus = 1500;
+                    else if (item.total >= 100000) bonus = 3000;
+                    else if (item.total >= 200000) bonus = 6000;
+                    else if (item.total >= 500000) bonus = 20000;
+                    else if (item.total >= 1000000) bonus = 50000;
+                    else bonus = 0
 
-                await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
-                // !! condition for 30 % in another line
-                conditionMet = totalInvestmentValue > 0 && (item.total / totalInvestmentValue) >= 0.3;
+                    await LineModel.findOneAndUpdate({ address, "lines.line": item.line }, { $set: { "lines.$.bonus": bonus } });
+                    // !! condition for 30 % in another line
+                    conditionMet = totalInvestmentValue > 0 && (item.total / totalInvestmentValue) >= 0.3;
 
-            });
-            
+                });
+            }
+
 
             if (existingLine) {
                 await LineModel.updateOne(
@@ -81,7 +83,7 @@ export async function PUT(request) {
             }
         }
         // !! if there is condition then save and increment the bonus into the price 
-        let hasReceivedBonus 
+        let hasReceivedBonus
         if (conditionMet) {
             hasReceivedBonus = false
             // if (!hasReceivedBonus) { 
@@ -89,7 +91,7 @@ export async function PUT(request) {
             //     hasReceivedBonus = true
             //     console.log('inc: ', inc);
             // } 
-            
+
         }
         const lvlInvestsArray = await Promise.all(friendsArray.map(async (item) => {
             const friendUser = await UsersModel.findOne({ address: item.address });

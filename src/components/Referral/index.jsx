@@ -69,7 +69,7 @@ const Referral = () => {
         const price = await getPrice();
         if (price !== 0) {
             let result = createRefCode();
-            const resultRef = 'https://aismart.liara.run' + result;
+            const resultRef = 'https://aismart.liara.run/' + result;
             setRefCode(resultRef)
             setRefBox(prevBoxes => [...prevBoxes, { refCode: resultRef }]);
             updateUser(resultRef, address, line);
