@@ -12,7 +12,8 @@ if (!projectId) throw new Error('Project ID is not defined')
 const metadata = {
   name: 'crypto',
   description: '',
-  url: 'https://aismart.liara.run', // origin must match your domain & subdomain
+  // url: 'https://aismart.liara.run', // origin must match your domain & subdomain
+  url: 'https://aismart.network', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
